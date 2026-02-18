@@ -13,7 +13,7 @@ if (keystorePropertiesFile.exists()) {
 // ==================================
 
 android {
-    namespace = "com.example.appdac"  // CAMBIA por tu package name
+    namespace = "com.nextgonsas.imrdcota"  // CAMBIA por tu package name
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 

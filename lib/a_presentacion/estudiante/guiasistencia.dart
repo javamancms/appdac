@@ -1,5 +1,5 @@
 import 'package:appdac/a_presentacion/tema/tema.dart';
-import 'package:appdac/b_control/estudiantes.dart';
+import 'package:appdac/b_control/bsestudiantes.dart';
 import 'package:appdac/b_control/util/metodos.dart';
 import 'package:appdac/generated/l10n.dart';
 import 'package:flutter/material.dart';

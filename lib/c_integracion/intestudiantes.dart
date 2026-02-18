@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:appdac/c_integracion/intprofesores.dart';
 import 'package:appdac/config/app_config.dart';
 import 'package:appdac/config/log.dart';
 import 'package:http/http.dart' as http;
@@ -139,6 +140,247 @@ class ActualizacionEstudianteRequest {
               })
           .toList(),
     };
+  }
+}
+
+class Estudiante {
+  final String id;
+  final DateTime createdTime;
+  final String idEstudiante;
+  final String nombre;
+  final int documento;
+  final String email;
+  bool activo;
+  final List<String> matriculas;
+  final List<String> deporte;
+  final List<String> usuario;
+  final String passwordHash;
+  final List<Archivo> identificacion;
+  final String estadoRevision;
+  final String? comentarios;
+  final String eps;
+  final String? alergias;
+  final String? nombreMedicamento;
+  final String? condicionesMedicas;
+  final bool? actualizacionDatos;
+  final String apellidosDeportista;
+  final int consecutivo;
+  final List<String> usuarioBuscado;
+  final List<String> usuario2;
+  final CreadoPor creadoPor;
+  final List<Archivo>? consentimiento;
+  final String nombresAcudiente1;
+  final String apellidosAcudiente1;
+  final String celularAcudiente1;
+  final int documentoAcudiente1;
+  final String lugarExpedicion;
+  final String genero;
+  final String lugarNacimiento;
+  final String veredaSector;
+  final String direccion;
+  final String institucionEducativa;
+  final String tipoInstitucion;
+  final String gradoEscolar;
+  final String tipoPoblacion;
+  final String tipoRegimenEps;
+  final String grupoSanguineo;
+  final String enfermedadesPrevias;
+  final String cirugiasPrevias;
+  final String tomaMedicamentos;
+  final String lesionesPrevias;
+  final List<Archivo> copiaCertificadoEps;
+
+  Estudiante({
+    required this.id,
+    required this.createdTime,
+    required this.idEstudiante,
+    required this.nombre,
+    required this.documento,
+    required this.email,
+    required this.activo,
+    required this.matriculas,
+    required this.deporte,
+    required this.usuario,
+    required this.passwordHash,
+    required this.identificacion,
+    required this.estadoRevision,
+    this.comentarios,
+    required this.eps,
+    this.alergias,
+    this.nombreMedicamento,
+    this.condicionesMedicas,
+    this.actualizacionDatos,
+    required this.apellidosDeportista,
+    required this.consecutivo,
+    required this.usuarioBuscado,
+    required this.usuario2,
+    required this.creadoPor,
+    this.consentimiento,
+    required this.nombresAcudiente1,
+    required this.apellidosAcudiente1,
+    required this.celularAcudiente1,
+    required this.documentoAcudiente1,
+    required this.lugarExpedicion,
+    required this.genero,
+    required this.lugarNacimiento,
+    required this.veredaSector,
+    required this.direccion,
+    required this.institucionEducativa,
+    required this.tipoInstitucion,
+    required this.gradoEscolar,
+    required this.tipoPoblacion,
+    required this.tipoRegimenEps,
+    required this.grupoSanguineo,
+    required this.enfermedadesPrevias,
+    required this.cirugiasPrevias,
+    required this.tomaMedicamentos,
+    required this.lesionesPrevias,
+    required this.copiaCertificadoEps,
+  });
+
+  factory Estudiante.fromJson(Map<String, dynamic> json) {
+    return Estudiante(
+      id: json['id'] ?? '',
+      createdTime: DateTime.parse(json['createdTime'] ?? DateTime.now().toIso8601String()),
+      idEstudiante: json['Id_estudiante'] ?? '',
+      nombre: json['Nombre'] ?? '',
+      documento: json['Documento'] ?? 0,
+      email: json['Email'] ?? '',
+      activo: json['Activo'] ?? false,
+      matriculas: List<String>.from(json['Matriculas'] ?? []),
+      deporte: List<String>.from(json['Deporte (de Matriculas)'] ?? []),
+      usuario: List<String>.from(json['Usuario'] ?? []),
+      passwordHash: json['Password_hash'] ?? '',
+      identificacion: (json['Identificacion'] as List?)?.map((item) => Archivo.fromJson(item)).toList() ?? [],
+      estadoRevision: json['Estado de revision'] ?? '',
+      comentarios: json['Comentarios'],
+      eps: json['EPS'] ?? '',
+      alergias: json['Alergias'],
+      nombreMedicamento: json['NOMBRE DEL MEDICAMENTO'],
+      condicionesMedicas: json['Condiciones medicas'],
+      actualizacionDatos: json['Actualizacion de datos'],
+      apellidosDeportista: json['APELLIDOS DEPORTISTA'] ?? '',
+      consecutivo: json['Consecutivo'] ?? 0,
+      usuarioBuscado: List<String>.from(json['Usuario buscado'] ?? []),
+      usuario2: List<String>.from(json['Usuario2'] ?? []),
+      creadoPor: CreadoPor.fromJson(json['Creado por'] ?? {}),
+      consentimiento: json['Consentimiento'] != null ? (json['Consentimiento'] as List).map((item) => Archivo.fromJson(item)).toList() : null,
+      nombresAcudiente1: json['NOMBRES DEL ACUDIENTE 1'] ?? '',
+      apellidosAcudiente1: json['APELLIDOS DEL ACUDIENTE 1'] ?? '',
+      celularAcudiente1: json['NÚMERO DE CELULAR DEL ACUDIENTE 1'] ?? '',
+      documentoAcudiente1: json['NÚMERO DE DOCUMENTO DE IDENTIDAD DE ACUDIENTE 1'] ?? 0,
+      lugarExpedicion: json['LUGAR DE EXPEDICIÓN DOCUMENTO DE IDENTIDAD DEPORTISTA'] ?? '',
+      genero: json['GENERO DEL DEPORTISTA'] ?? '',
+      lugarNacimiento: json['LUGAR DE NACIMIENTO DEL DEPORTISTA'] ?? '',
+      veredaSector: json['VEREDA O SECTOR DE VIVIENDA DEL DEPORTISTA'] ?? '',
+      direccion: json['DIRECCIÓN O CONJUNTO DE RESIDENCIA DEL DEPORTISTA'] ?? '',
+      institucionEducativa: json['NOMBRE DE INSTITUCIÓN EDUCATIVA DEL DEPORTISTA'] ?? '',
+      tipoInstitucion: json['TIPO DE INSTITUCIÓN EDUCATIVA DEL DEPORTISTA'] ?? '',
+      gradoEscolar: json['GRADO ESCOLAR DEL DEPORTISTA'] ?? '',
+      tipoPoblacion: json['TIPO DE POBLACIÓN'] ?? '',
+      tipoRegimenEps: json['TIPO DE RÉGIMEN EPS'] ?? '',
+      grupoSanguineo: json['GRUPO SANGUINEO RH'] ?? '',
+      enfermedadesPrevias: json['ENFERMEDADES PREVIAS'] ?? '',
+      cirugiasPrevias: json['CIRUGÍAS PREVIAS'] ?? '',
+      tomaMedicamentos: json['TOMA MEDICAMENTOS'] ?? '',
+      lesionesPrevias: json['LESIONES PREVIAS'] ?? '',
+      copiaCertificadoEps: (json['COPIA DEL CERTIFICADO DE LA EPS ACTIVO, NO SE ACEPTA CERTIFICADO DE LA PLATAFORMA ADRES '] as List?)?.map((item) => Archivo.fromJson(item)).toList() ?? [],
+    );
+  }
+}
+
+class Archivo {
+  final String id;
+  final int? width;
+  final int? height;
+  final String url;
+  final String filename;
+  final int size;
+  final String type;
+  final Thumbnails? thumbnails;
+
+  Archivo({
+    required this.id,
+    this.width,
+    this.height,
+    required this.url,
+    required this.filename,
+    required this.size,
+    required this.type,
+    this.thumbnails,
+  });
+
+  factory Archivo.fromJson(Map<String, dynamic> json) {
+    return Archivo(
+      id: json['id'] ?? '',
+      width: json['width'],
+      height: json['height'],
+      url: json['url'] ?? '',
+      filename: json['filename'] ?? '',
+      size: json['size'] ?? 0,
+      type: json['type'] ?? '',
+      thumbnails: json['thumbnails'] != null ? Thumbnails.fromJson(json['thumbnails']) : null,
+    );
+  }
+}
+
+class Thumbnails {
+  final Thumbnail small;
+  final Thumbnail large;
+  final Thumbnail full;
+
+  Thumbnails({
+    required this.small,
+    required this.large,
+    required this.full,
+  });
+
+  factory Thumbnails.fromJson(Map<String, dynamic> json) {
+    return Thumbnails(
+      small: Thumbnail.fromJson(json['small'] ?? {}),
+      large: Thumbnail.fromJson(json['large'] ?? {}),
+      full: Thumbnail.fromJson(json['full'] ?? {}),
+    );
+  }
+}
+
+class Thumbnail {
+  final String url;
+  final int width;
+  final int height;
+
+  Thumbnail({
+    required this.url,
+    required this.width,
+    required this.height,
+  });
+
+  factory Thumbnail.fromJson(Map<String, dynamic> json) {
+    return Thumbnail(
+      url: json['url'] ?? '',
+      width: json['width'] ?? 0,
+      height: json['height'] ?? 0,
+    );
+  }
+}
+
+class CreadoPor {
+  final String id;
+  final String email;
+  final String name;
+
+  CreadoPor({
+    required this.id,
+    required this.email,
+    required this.name,
+  });
+
+  factory CreadoPor.fromJson(Map<String, dynamic> json) {
+    return CreadoPor(
+      id: json['id'] ?? '',
+      email: json['email'] ?? '',
+      name: json['name'] ?? '',
+    );
   }
 }
 
@@ -423,8 +665,9 @@ class ClienteEstudiantes {
   }
 
   static Future<DeportesResponse> consultarDeportesDisponibles(String idEstudiante) async {
+    logear('-->>$idEstudiante');
     try {
-      String baseUrl = 'https://n8n.nextgonsas.com.co/webhook/deportes/ofrecidos/estudiantes';
+      String baseUrl = AppConfig.instance.parametros['urlconsultardeportesdisponibles'];
 
       final response = await http.post(
         Uri.parse(baseUrl),
@@ -463,7 +706,7 @@ class ClienteEstudiantes {
         deportes: deportes,
       );
 
-      String baseUrl = 'https://n8n.nextgonsas.com.co/webhook/actualizar/elementos/administrador/estudiante';
+      String baseUrl = AppConfig.instance.parametros['urlactualizarinscripcionestudiante'];
 
       final response = await http.post(
         Uri.parse(baseUrl),
@@ -475,6 +718,13 @@ class ClienteEstudiantes {
       );
 
       // Log para debugging
+
+      print('XX------------------------------------------------------');
+      for (var element in request.deportes) {
+        print(element.nombreDeporte);
+        print(element.existe);
+      }
+      print('XX------------------------------------------------------');
       print('Status Code: ${response.statusCode}');
       print('Request Body: ${jsonEncode(request.toJson())}');
 
@@ -487,6 +737,97 @@ class ClienteEstudiantes {
       }
     } catch (e) {
       print('Error al conectar con el servidor: $e');
+      return false;
+    }
+  }
+
+  Future<List<Estudiante>> consultarEstudiantes() async {
+    try {
+      String baseUrl = AppConfig.instance.parametros['urlverestudiantesadministrador'];
+      // Realizar la petición POST sin body
+      final response = await http.post(
+        Uri.parse(baseUrl),
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+      );
+
+      // Verificar si la petición fue exitosa
+      if (response.statusCode == 200) {
+        // Decodificar la respuesta JSON
+        final List<dynamic> jsonData = json.decode(response.body);
+
+        // Convertir cada elemento de la lista a un objeto Estudiante
+        return jsonData.map((item) => Estudiante.fromJson(item)).toList();
+      } else {
+        // Si hay error en la respuesta, lanzar excepción
+        throw Exception('Error al consultar estudiantes. Código: ${response.statusCode}');
+      }
+    } catch (e) {
+      // Capturar cualquier error de red o de procesamiento
+      logear('Error en la petición: $e');
+      return [];
+    }
+  }
+
+  Future<bool> cambiarEstado(String codigoEstudiante) async {
+    try {
+      String urlCambiarEstado = AppConfig.instance.parametros['urlcambiarestado'];
+      final request = CambioEstadoRequest(
+        codigo: codigoEstudiante,
+      );
+
+      final respuesta = await http.post(
+        Uri.parse(urlCambiarEstado),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(request.toJson()),
+      );
+
+      // Verificar el código de respuesta
+      if (respuesta.statusCode == 200) {
+        return true;
+      } else if (respuesta.statusCode == 401) {
+        return false;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      return false;
+    }
+  }
+
+  Future<bool> cambiarEstadoRevision({
+    required String idEstudiante,
+    required String estadoRevision,
+    String comentario = '',
+  }) async {
+    String baseUrl = AppConfig.instance.parametros['urlcambiarestadorevision'];
+    try {
+      // Crear el cuerpo de la petición
+      final Map<String, dynamic> body = {
+        'id_estudiante': idEstudiante,
+        'Estado de revision': estadoRevision,
+        'Comentario': comentario,
+      };
+
+      // Realizar la petición POST
+      final response = await http.post(
+        Uri.parse(baseUrl),
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: json.encode(body),
+      );
+
+      // Verificar si la petición fue exitosa (código 200)
+      return response.statusCode == 200;
+    } catch (e) {
+      // En caso de error de red o de procesamiento, retornar false
+      print('Error al cambiar estado de revisión: $e');
       return false;
     }
   }

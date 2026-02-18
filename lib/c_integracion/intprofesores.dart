@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:appdac/config/app_config.dart';
+import 'package:appdac/config/log.dart';
 import 'package:http/http.dart' as http;
 
 class Profesor {
@@ -8,7 +9,7 @@ class Profesor {
   final String email;
   final String telefono;
   final String usuario;
-  final bool activo;
+  bool activo;
   final List<String> nombreDeporte;
 
   Profesor({
@@ -91,6 +92,18 @@ class RespuestaProfesores {
   }
 }
 
+class CambioEstadoRequest {
+  final String codigo;
+
+  CambioEstadoRequest({
+    required this.codigo,
+  });
+
+  Map<String, dynamic> toJson() => {
+        "Codigo": codigo,
+      };
+}
+
 class ClienteProfesores {
   Future<RespuestaProfesores> consultarProfesores(String idAdministrador) async {
     try {
@@ -163,6 +176,72 @@ class ClienteProfesores {
         mensaje: 'Error procesando respuesta: ${e.toString()}',
         statusCode: respuesta.statusCode,
       );
+    }
+  }
+
+  Future<bool> cambiarEstado(String codigoProfesor) async {
+    logear('codigo recibido en el servicio $codigoProfesor');
+    try {
+      String urlCambiarEstado = AppConfig.instance.parametros['urlcambiarestado'];
+      final request = CambioEstadoRequest(
+        codigo: codigoProfesor,
+      );
+
+      final respuesta = await http.post(
+        Uri.parse(urlCambiarEstado),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(request.toJson()),
+      );
+
+      // Verificar el código de respuesta
+      if (respuesta.statusCode == 200) {
+        return true;
+      } else if (respuesta.statusCode == 401) {
+        return false;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      return false;
+    }
+  }
+
+  Future<bool> asignarDeportesAProfesor({
+    required String tipo,
+    required String idProfesor,
+    required List<String> nombreDeporte,
+  }) async {
+    try {
+      logear('--->>>> $tipo $idProfesor $nombreDeporte');
+      // Construir el cuerpo de la petición
+      Map<String, dynamic> body = {
+        "tipo": tipo,
+        "id_profesor": idProfesor,
+        "nombre_deporte": nombreDeporte,
+      };
+
+      logear('paso 2');
+      // URL del servicio
+      final url = Uri.parse(AppConfig.instance.parametros['asignardeportesaprofesor']);
+      logear('paso 3');
+      // Realizar la petición POST
+      final response = await http.post(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode(body),
+      );
+      logear('paso 4');
+      logear('paso 5 ${response.statusCode}');
+      // Retornar true si el estado es 200, false en caso contrario
+      return response.statusCode == 200;
+    } catch (e) {
+      // En caso de error (sin conexión, timeout, etc.), retornar false
+      print('Error al asignar deportes: $e');
+      return false;
     }
   }
 }

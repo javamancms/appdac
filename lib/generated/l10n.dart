@@ -494,6 +494,76 @@ class S {
       args: [],
     );
   }
+
+  /// `Error al seleccionar archivo`
+  String get msj_errorseleccarchivo {
+    return Intl.message(
+      'Error al seleccionar archivo',
+      name: 'msj_errorseleccarchivo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Debe seleccionar los tres documentos para enviar`
+  String get msj_errorselecctresarchivos {
+    return Intl.message(
+      'Debe seleccionar los tres documentos para enviar',
+      name: 'msj_errorselecctresarchivos',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Documentos enviados exitosamente`
+  String get msj_docsenviados {
+    return Intl.message(
+      'Documentos enviados exitosamente',
+      name: 'msj_docsenviados',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Error al enviar documentos:`
+  String get msj_errorenvdocs {
+    return Intl.message(
+      'Error al enviar documentos:',
+      name: 'msj_errorenvdocs',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Inscripción exitosa, próximante te contactaremos para que selecciones tu talla de uniforme`
+  String get msj_inscexitosa {
+    return Intl.message(
+      'Inscripción exitosa, próximante te contactaremos para que selecciones tu talla de uniforme',
+      name: 'msj_inscexitosa',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `inscripción no exitosa`
+  String get msj_inscnoexitosa {
+    return Intl.message(
+      'inscripción no exitosa',
+      name: 'msj_inscnoexitosa',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Usuario o Clave erronea... intente de nuevo`
+  String get msj_errorlogin {
+    return Intl.message(
+      'Usuario o Clave erronea... intente de nuevo',
+      name: 'msj_errorlogin',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

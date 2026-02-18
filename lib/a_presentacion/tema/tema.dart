@@ -8,6 +8,7 @@ class AppColors {
   static const Color naranja = Color(0xFFFF9800);
   static const Color negro = Colors.black;
   static const Color gris = Color.fromARGB(255, 119, 119, 119);
+  static const Color rojo = Colors.red;
 
 
   static ButtonStyle botonverde = ButtonStyle(

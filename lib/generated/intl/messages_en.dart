@@ -116,6 +116,27 @@ class MessageLookup extends MessageLookupByLibrary {
     "msj_contrasenas_iguales": MessageLookupByLibrary.simpleMessage(
       "Passwords match",
     ),
+    "msj_docsenviados": MessageLookupByLibrary.simpleMessage(
+      "Documentos enviados exitosamente",
+    ),
+    "msj_errorenvdocs": MessageLookupByLibrary.simpleMessage(
+      "Error sending documents:",
+    ),
+    "msj_errorlogin": MessageLookupByLibrary.simpleMessage(
+      "Incorrect username or password... please try again",
+    ),
+    "msj_errorseleccarchivo": MessageLookupByLibrary.simpleMessage(
+      "Error when selecting file",
+    ),
+    "msj_errorselecctresarchivos": MessageLookupByLibrary.simpleMessage(
+      "You must select the three documents to send",
+    ),
+    "msj_inscexitosa": MessageLookupByLibrary.simpleMessage(
+      "Registration successful, we will contact you soon so you can select your uniform size",
+    ),
+    "msj_inscnoexitosa": MessageLookupByLibrary.simpleMessage(
+      "unsuccessful registration",
+    ),
     "msj_token_enviado": MessageLookupByLibrary.simpleMessage(
       "A token has been sent to your associated email address",
     ),

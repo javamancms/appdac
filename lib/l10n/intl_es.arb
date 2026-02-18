@@ -51,6 +51,14 @@
 
   "msj_token_enviado":"un token se ha enviado a su correo asociado",
   "msj_contrasenas_iguales":"Las contraseñas coinciden",
-  "msj_contrasenas_diferentes":"Las contraseñas no coinciden"
+  "msj_contrasenas_diferentes":"Las contraseñas no coinciden",
+  "msj_errorseleccarchivo":"Error al seleccionar archivo",
+  "msj_errorselecctresarchivos":"Debe seleccionar los tres documentos para enviar",
+  "msj_docsenviados":"Documentos enviados exitosamente",
+  "msj_errorenvdocs":"Error al enviar documentos:",
+  "msj_inscexitosa":"Inscripción exitosa, próximante te contactaremos para que selecciones tu talla de uniforme",
+  "msj_inscnoexitosa":"inscripción no exitosa",
+  "msj_errorlogin":"Usuario o Clave erronea... intente de nuevo"
+
   
 }

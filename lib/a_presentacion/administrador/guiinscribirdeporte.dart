@@ -7,11 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-class InscribirDeporteScreen extends StatelessWidget {
-  const InscribirDeporteScreen({super.key});
+class VerDeportesEstudiantesScreen extends StatelessWidget {
+  const VerDeportesEstudiantesScreen({super.key});
 
   // Método estático para mostrar el diálogo
-  static Future<List<Deporte>?> mostrarDialogo(BuildContext context) async {
+  static Future<List<Deporte>?> mostrarDialogo(BuildContext context, Estudiante estudiante) async {
     final key = GlobalKey<_DialogContentState>();
 
     return await showDialog<List<Deporte>>(
@@ -23,7 +23,6 @@ class InscribirDeporteScreen extends StatelessWidget {
           title: Column(
             children: [
               Container(
-                //color: AppColors.blanco, // Fondo verde
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -48,10 +47,10 @@ class InscribirDeporteScreen extends StatelessWidget {
             ),
             ElevatedButton(
               style: AppColors.botonverde,
-              onPressed: ()  async {
+              onPressed: () async {
                 // Obtener los deportes editados desde el estado
-                final deportesEditados = key.currentState?.deportesEditables;
-                if (await ControlInscribirDeportes.actualizarInscripcion(context, deportesEditados!)) {
+                final deportesEditados = key.currentState?.deportesEditablesPublico;
+                if (await ControlInscribirDeportes.actualizarInscripcionDesdeAdministrador(context, estudiante.idEstudiante, deportesEditados!)) {
                   mostrarMensajeInferior(context, S.of(context).msj_inscexitosa);
                 } else {
                   mostrarMensajeInferior(context, S.of(context).msj_inscnoexitosa, colorFondo: Colors.red, colorFuente: Colors.yellow);
@@ -75,11 +74,11 @@ class InscribirDeporteScreen extends StatelessWidget {
       body: Center(
         child: ElevatedButton(
           onPressed: () async {
-            final deportesEditados = await InscribirDeporteScreen.mostrarDialogo(context);
+            /*final deportesEditados = await VerDeportesEstudiantesScreen.mostrarDialogo(context);
             if (deportesEditados != null) {
               print('Deportes editados: ${deportesEditados.length}');
               // Aquí procesas los deportes editados
-            }
+            }*/
           },
           child: Text('Mostrar diálogo de deportes'),
         ),
@@ -111,7 +110,6 @@ class _DialogContentState extends State<_DialogContent> {
     deportesEditables = List<Deporte>.from(control.deportes);
   }
 
-  // Resto del código permanece igual...
   int get seleccionadosCount {
     return deportesEditables.where((d) => d.existe).length;
   }
@@ -120,17 +118,12 @@ class _DialogContentState extends State<_DialogContent> {
     return deportesOriginales.where((d) => d.existe).length;
   }
 
-  bool _esDeshabilitado(int index) {
-    return deportesOriginales[index].existe;
-  }
+  void _actualizarDeporte(int index, bool? nuevoValor) {
+    if (nuevoValor == null) return;
 
-  void _actualizarDeporte(int index, bool nuevoValor) {
     final deporte = deportesEditables[index];
 
-    if (_esDeshabilitado(index)) {
-      return;
-    }
-
+    // Si intenta seleccionar y ya tiene 2 seleccionados
     if (nuevoValor && seleccionadosCount >= 2) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -159,7 +152,6 @@ class _DialogContentState extends State<_DialogContent> {
       height: altura,
       child: Column(
         children: [
-          // Resto del contenido permanece igual...
           Container(
             padding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
             decoration: BoxDecoration(
@@ -184,23 +176,19 @@ class _DialogContentState extends State<_DialogContent> {
               ],
             ),
           ),
-
           SizedBox(height: 12),
-
           Expanded(
             child: ListView.builder(
               shrinkWrap: true,
               itemCount: deportesEditables.length,
               itemBuilder: (context, index) {
                 final deporte = deportesEditables[index];
-                final esDeshabilitado = _esDeshabilitado(index);
-                final maximoAlcanzado = !esDeshabilitado && deporte.existe == false && seleccionadosCount >= 2;
+                final maximoAlcanzado = !deporte.existe && seleccionadosCount >= 2;
 
                 return _DeporteCardItem(
                   deporte: deporte,
-                  esDeshabilitado: esDeshabilitado,
                   maximoAlcanzado: maximoAlcanzado,
-                  onChanged: (value) => _actualizarDeporte(index, value ?? false),
+                  onChanged: (value) => _actualizarDeporte(index, value),
                 );
               },
             ),
@@ -211,41 +199,40 @@ class _DialogContentState extends State<_DialogContent> {
   }
 }
 
-// Widget _DeporteCardItem permanece igual...
+// Widget _DeporteCardItem modificado
 class _DeporteCardItem extends StatelessWidget {
   final Deporte deporte;
-  final bool esDeshabilitado;
   final bool maximoAlcanzado;
   final ValueChanged<bool?> onChanged;
 
   const _DeporteCardItem({
     required this.deporte,
-    required this.esDeshabilitado,
     required this.maximoAlcanzado,
     required this.onChanged,
   });
 
   @override
   Widget build(BuildContext context) {
-    final deshabilitado = esDeshabilitado || maximoAlcanzado;
+    final bool estaSeleccionado = deporte.existe;
+    final bool deshabilitado = !estaSeleccionado && maximoAlcanzado;
 
     return Card(
       margin: EdgeInsets.symmetric(vertical: 4),
       elevation: 1,
-      color: esDeshabilitado
-          ? Colors.grey[50]
-          : maximoAlcanzado
-              ? Colors.grey[100]
+      color: deshabilitado
+          ? Colors.grey[100]
+          : estaSeleccionado
+              ? Colors.green.withOpacity(0.05)
               : Colors.white,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8),
         side: BorderSide(
-          color: esDeshabilitado
-              ? Colors.green.withOpacity(0.3)
-              : maximoAlcanzado
+          color: estaSeleccionado
+              ? Colors.green.withOpacity(0.5)
+              : deshabilitado
                   ? Colors.grey.withOpacity(0.4)
                   : Colors.blue.withOpacity(0.2),
-          width: 1,
+          width: estaSeleccionado ? 2 : 1,
         ),
       ),
       child: Padding(
@@ -253,14 +240,14 @@ class _DeporteCardItem extends StatelessWidget {
         child: Row(
           children: [
             Icon(
-              esDeshabilitado
-                  ? Icons.lock
-                  : maximoAlcanzado
+              estaSeleccionado
+                  ? Icons.check_circle
+                  : deshabilitado
                       ? Icons.block
                       : Icons.sports_soccer,
-              color: esDeshabilitado
-                  ? AppColors.verde
-                  : maximoAlcanzado
+              color: estaSeleccionado
+                  ? Colors.green
+                  : deshabilitado
                       ? AppColors.gris
                       : AppColors.verde,
               size: 24,
@@ -270,30 +257,19 @@ class _DeporteCardItem extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-
                   Text(
                     deporte.nombreDeporte,
                     style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: esDeshabilitado ? FontWeight.bold : FontWeight.normal,
-                      color: deshabilitado ? AppColors.gris : AppColors.verde,
+                      fontSize: 14,
+                      fontWeight: estaSeleccionado ? FontWeight.bold : FontWeight.normal,
+                      color: deshabilitado ? AppColors.gris : Colors.black87,
                     ),
-                    maxLines: null, // Permite tantas líneas como necesite
-                    overflow: TextOverflow.visible, // Permite que el texto se salga si es necesario
-                    softWrap: true, // Permite dividir el texto en múltiples líneas
+                    maxLines: null,
+                    overflow: TextOverflow.visible,
+                    softWrap: true,
                   ),
-
                   SizedBox(height: 2),
-                  if (esDeshabilitado)
-                    Text(
-                      'Ya inscrito - No se puede modificar',
-                      style: TextStyle(
-                        fontSize: 11,
-                        color: Colors.green,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  /*if (maximoAlcanzado && !esDeshabilitado)
+                  if (deshabilitado)
                     Text(
                       'Límite de 2 deportes alcanzado',
                       style: TextStyle(
@@ -301,7 +277,16 @@ class _DeporteCardItem extends StatelessWidget {
                         color: Colors.red,
                         fontWeight: FontWeight.w500,
                       ),
-                    ),*/
+                    ),
+                  if (estaSeleccionado)
+                    Text(
+                      'Seleccionado',
+                      style: TextStyle(
+                        fontSize: 11,
+                        color: Colors.green,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
                 ],
               ),
             ),
@@ -309,9 +294,9 @@ class _DeporteCardItem extends StatelessWidget {
             Container(
               padding: EdgeInsets.all(4),
               decoration: BoxDecoration(
-                color: esDeshabilitado
+                color: estaSeleccionado
                     ? Colors.green.withOpacity(0.1)
-                    : maximoAlcanzado
+                    : deshabilitado
                         ? Colors.grey[100]
                         : Colors.blue.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(20),
@@ -321,25 +306,23 @@ class _DeporteCardItem extends StatelessWidget {
                   Checkbox(
                     value: deporte.existe,
                     onChanged: deshabilitado ? null : onChanged,
-                    activeColor: esDeshabilitado ? Colors.green : Colors.blue,
+                    activeColor: Colors.green,
                     checkColor: Colors.white,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(4),
                     ),
                   ),
                   Text(
-                    esDeshabilitado
-                        ? S.of(context).label_yainscrito
-                        : maximoAlcanzado
-                            ? '-'
-                            : deporte.existe
-                                ? ''
-                                : S.of(context).label_seleccionar,
+                    estaSeleccionado
+                        ? 'no disponible'
+                        : deshabilitado
+                            ? 'no disponible'
+                            : S.of(context).label_seleccionar,
                     style: TextStyle(
                       fontSize: 9,
-                      color: esDeshabilitado
+                      color: estaSeleccionado
                           ? Colors.green
-                          : maximoAlcanzado
+                          : deshabilitado
                               ? Colors.grey[600]
                               : Colors.blue,
                       fontWeight: FontWeight.bold,

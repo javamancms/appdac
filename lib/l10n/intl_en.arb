@@ -51,6 +51,13 @@
  
   "msj_token_enviado":"A token has been sent to your associated email address",
   "msj_contrasenas_iguales":"Passwords match",
-  "msj_contrasenas_diferentes":"The passwords do not match"
+  "msj_contrasenas_diferentes":"The passwords do not match",
+  "msj_errorseleccarchivo":"Error when selecting file",
+  "msj_errorselecctresarchivos":"You must select the three documents to send",
+  "msj_docsenviados":"Documentos enviados exitosamente",
+  "msj_errorenvdocs":"Error sending documents:",
+  "msj_inscexitosa":"Registration successful, we will contact you soon so you can select your uniform size",
+  "msj_inscnoexitosa":"unsuccessful registration",
+  "msj_errorlogin":"Incorrect username or password... please try again"
 
 }

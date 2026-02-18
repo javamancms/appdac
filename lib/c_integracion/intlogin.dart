@@ -94,6 +94,7 @@ class ClienteLogin {
         return _procesarError(respuesta);
       }
     } catch (e) {
+      logear('error: ${e.toString()}');
       return RespuestaLogin.error(
         error: 'Error de conexión: ${e.toString()}',
         statusCode: 0,

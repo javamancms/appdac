@@ -8,7 +8,15 @@
   "urlverDeportesEstudiante":"https://n8n.nextgonsas.com.co/webhook/estudiante/deporte",
   "urlestudianteEnviarDocumentos":"https://n8n.nextgonsas.com.co/webhook/actualizar/documentos/estudante",
   "urlestudianteVerAsistencia":"https://n8n.nextgonsas.com.co/webhook/visualizacion/asistencia/estudiante",
-  "urlestudianteVerComunicados":"https://n8n.nextgonsas.com.co/webhook/comunicados/estudiantes"
-  
+  "urlestudianteVerComunicados":"https://n8n.nextgonsas.com.co/webhook/comunicados/estudiantes",
+  "urlconsultardeportes":"https://n8n.nextgonsas.com.co/webhook/deportes/administrador",
+   "urlconsultardeportesdisponibles":"https://n8n.nextgonsas.com.co/webhook/deportes/ofrecidos/estudiantes",
+   "urlactualizarinscripcionestudiante":"https://n8n.nextgonsas.com.co/webhook/actualizar/elementos/administrador/estudiante",
+   "urlcambiarestado":"https://n8n.nextgonsas.com.co/webhook/estado/administrador",
+   "asignardeportesaprofesor":"https://n8n.nextgonsas.com.co/webhook/actualizar/elementos/administrador/profesor",
+   "urlmodificardeporte":"https://n8n.nextgonsas.com.co/webhook/actualizar/elementos/administrador",
+   "urlverestudiantesadministrador":"https://n8n.nextgonsas.com.co/webhook/estudiantes/administrador",
+   "urlcambiarestadorevision":"https://n8n.nextgonsas.com.co/webhook/comentario/administrador",
+   "urlvermetodologos":"https://n8n.nextgonsas.com.co/webhook/metodologo/administrador"
    
 }

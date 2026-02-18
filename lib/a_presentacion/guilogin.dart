@@ -1,9 +1,8 @@
 import 'package:appdac/a_presentacion/dialogos_generales/dialogos.dart';
 import 'package:appdac/a_presentacion/tema/tema.dart';
-import 'package:appdac/b_control/estudiantes.dart';
-import 'package:appdac/b_control/sesion.dart';
+import 'package:appdac/b_control/bssesion.dart';
 import 'package:appdac/b_control/util/metodos.dart';
-import 'package:appdac/c_integracion/login.dart';
+import 'package:appdac/c_integracion/intlogin.dart';
 import 'package:appdac/config/app_config.dart';
 import 'package:appdac/generated/l10n.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +16,6 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
     ControlSesion controlsesion = context.watch<ControlSesion>();
 
     return Scaffold(
@@ -85,6 +83,8 @@ class LoginScreen extends StatelessWidget {
                     //controlsesion.login(context, 's.martinez', '12345');//EST00003
                     //controlsesion.login(context, 'm.cifuentes', '12345');//EST00008
 
+                    //controlsesion.login(context, 'js.castrogaray', '12345'); //ADM001
+
                     controlsesion.login(context, _usernameController.text, _passwordController.text);
                   },
                   style: AppColors.botonverde,
@@ -105,8 +105,10 @@ class LoginScreen extends StatelessWidget {
                 onPressed: () async {
                   String? usuario = await mostrarDialogoRecuperarContrasena(context);
                   if (usuario != null) {
-                    await ClienteRecuperarContrasena().recuperarContrasena(usuario!);
+                    await ClienteRecuperarContrasena().recuperarContrasena(usuario);
+                    // ignore: use_build_context_synchronously
                     mostrarMensajeInferior(context, S.of(context).msj_token_enviado);
+                    // ignore: use_build_context_synchronously
                     mostrarDialogoNuevaContrasenaValidacion(context, usuario);
                   }
                 },

@@ -7,8 +7,8 @@ import 'package:provider/provider.dart';
 
 // Importaciones necesarias (ajusta según tu proyecto)
 import 'package:appdac/a_presentacion/dialogos_generales/dialogos.dart';
-import 'package:appdac/b_control/estudiantes.dart';
-import 'package:appdac/b_control/sesion.dart';
+import 'package:appdac/b_control/bsestudiantes.dart';
+import 'package:appdac/b_control/bssesion.dart';
 import 'package:appdac/config/log.dart';
 import 'package:appdac/generated/l10n.dart';
 
@@ -382,7 +382,7 @@ class _DialogoActualizarDatosState extends State<DialogoActualizarDatos> {
     } catch (e) {
       mostrarMensajeInferior(
         context,
-        'Error al seleccionar archivo',
+        S.of(context).msj_errorseleccarchivo,
         colorFondo: Colors.red.shade700,
         colorFuente: Colors.white,
         tamanoFuente: 14,
@@ -414,7 +414,7 @@ class _DialogoActualizarDatosState extends State<DialogoActualizarDatos> {
     if (!_puedeEnviar()) {
       mostrarMensajeInferior(
         context,
-        'Debe seleccionar los tres documentos para enviar',
+        S.of(context).msj_errorselecctresarchivos,
         colorFondo: Colors.red,
         colorFuente: Colors.yellow,
         tamanoFuente: 15,
@@ -435,7 +435,7 @@ class _DialogoActualizarDatosState extends State<DialogoActualizarDatos> {
       // Mostrar mensaje de éxito y cerrar diálogo
       mostrarMensajeInferior(
         context,
-        'Documentos enviados exitosamente',
+        S.of(context).msj_docsenviados,
         colorFondo: Colors.green.shade700,
         colorFuente: Colors.white,
         tamanoFuente: 15,
@@ -445,7 +445,7 @@ class _DialogoActualizarDatosState extends State<DialogoActualizarDatos> {
     } catch (e) {
       mostrarMensajeInferior(
         context,
-        'Error al enviar documentos: $e',
+        '${S.of(context).msj_errorenvdocs} $e',
         colorFondo: Colors.red.shade700,
         colorFuente: Colors.white,
         tamanoFuente: 14,

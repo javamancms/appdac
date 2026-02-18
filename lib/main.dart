@@ -1,8 +1,9 @@
-import 'package:appdac/a_presentacion/tema/tema.dart';
-import 'package:appdac/b_control/estudiantes.dart';
+import 'package:appdac/b_control/bsdeportes.dart';
+import 'package:appdac/b_control/bsestudiantes.dart';
+import 'package:appdac/b_control/bsmetodologo.dart';
 import 'package:appdac/b_control/navegacion/router.dart';
-import 'package:appdac/b_control/profesores.dart';
-import 'package:appdac/b_control/sesion.dart';
+import 'package:appdac/b_control/bsprofesores.dart';
+import 'package:appdac/b_control/bssesion.dart';
 import 'package:appdac/config/config_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -53,6 +54,18 @@ class MainApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
            create: (context) => ControlInscribirDeportes(),
+         
+        ),
+        ChangeNotifierProvider(
+           create: (context) => ControlListaDeportesAdministrador(),
+         
+        ),
+        ChangeNotifierProvider(
+           create: (context) => ControlListaEstudiantesAdministrador(),
+         
+        ),
+        ChangeNotifierProvider(
+           create: (context) => ControlListaMetodologos(),
          
         ),
       ],

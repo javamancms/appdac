@@ -1,6 +1,6 @@
 import 'package:appdac/a_presentacion/tema/tema.dart';
-import 'package:appdac/b_control/estudiantes.dart';
-import 'package:appdac/b_control/sesion.dart';
+import 'package:appdac/b_control/bsestudiantes.dart';
+import 'package:appdac/b_control/bssesion.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 

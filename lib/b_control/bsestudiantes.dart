@@ -1,8 +1,7 @@
 import 'dart:io';
 
-import 'package:appdac/a_presentacion/dialogos_generales/dialogos.dart';
-import 'package:appdac/b_control/sesion.dart';
-import 'package:appdac/c_integracion/estudiantes.dart';
+import 'package:appdac/b_control/bssesion.dart';
+import 'package:appdac/c_integracion/intestudiantes.dart';
 import 'package:appdac/config/log.dart';
 import 'package:flutter/material.dart';
 
@@ -92,5 +91,36 @@ class ControlInscribirDeportes extends ChangeNotifier {
 
   static Future<bool> actualizarInscripcion(BuildContext context, List<Deporte> deportes) async {
     return await ClienteEstudiantes.actualizarInscripcionEstudiante(idEstudiante: ControlSesion.datosusuario!.idUsuario, deportes: deportes);
+  }
+
+  static Future<bool> actualizarInscripcionDesdeAdministrador(BuildContext context, String idEstudiante, List<Deporte> deportes) async {
+    return await ClienteEstudiantes.actualizarInscripcionEstudiante(idEstudiante: idEstudiante, deportes: deportes);
+  }
+}
+
+class ControlListaEstudiantesAdministrador extends ChangeNotifier {
+  List<Estudiante> estudiantes = [];
+
+  void cargarEstudiantes() async {
+    if (estudiantes.isEmpty) {
+      estudiantes = await ClienteEstudiantes().consultarEstudiantes();
+      logear('estudiantes: ${estudiantes.length}');
+      notifyListeners();
+    }
+  }
+
+  Future<void> cambiarEstadoEstudiante(String codigoEstudiante) async {
+    Estudiante modificado = estudiantes.firstWhere(
+      (analizado) => analizado.idEstudiante == codigoEstudiante,
+    );
+    modificado.activo = !modificado.activo;
+    
+    logear('cambiando estado estudiante ${await ClienteEstudiantes().cambiarEstado(codigoEstudiante)}');
+
+    notifyListeners();
+  }
+
+  void cambiarEstadoDeRevisionEstudiante(String idEstudiante, String estadoRevision, {String comentario = ''}) async {
+    print('-->> CAMBIAR ESTADO ESTUDIANTE respuesta=${await ClienteEstudiantes().cambiarEstadoRevision(idEstudiante: idEstudiante, estadoRevision: estadoRevision, comentario: comentario)}');
   }
 }

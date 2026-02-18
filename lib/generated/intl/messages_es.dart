@@ -124,6 +124,27 @@ class MessageLookup extends MessageLookupByLibrary {
     "msj_contrasenas_iguales": MessageLookupByLibrary.simpleMessage(
       "Las contraseñas coinciden",
     ),
+    "msj_docsenviados": MessageLookupByLibrary.simpleMessage(
+      "Documentos enviados exitosamente",
+    ),
+    "msj_errorenvdocs": MessageLookupByLibrary.simpleMessage(
+      "Error al enviar documentos:",
+    ),
+    "msj_errorlogin": MessageLookupByLibrary.simpleMessage(
+      "Usuario o Clave erronea... intente de nuevo",
+    ),
+    "msj_errorseleccarchivo": MessageLookupByLibrary.simpleMessage(
+      "Error al seleccionar archivo",
+    ),
+    "msj_errorselecctresarchivos": MessageLookupByLibrary.simpleMessage(
+      "Debe seleccionar los tres documentos para enviar",
+    ),
+    "msj_inscexitosa": MessageLookupByLibrary.simpleMessage(
+      "Inscripción exitosa, próximante te contactaremos para que selecciones tu talla de uniforme",
+    ),
+    "msj_inscnoexitosa": MessageLookupByLibrary.simpleMessage(
+      "inscripción no exitosa",
+    ),
     "msj_token_enviado": MessageLookupByLibrary.simpleMessage(
       "un token se ha enviado a su correo asociado",
     ),
