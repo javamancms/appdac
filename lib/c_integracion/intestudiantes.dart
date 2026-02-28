@@ -689,7 +689,7 @@ class ClienteEstudiantes {
       }
     } catch (e) {
       // Manejo de errores de conexión
-      throw Exception('Error al conectar con el servidor: $e');
+       throw Exception('Error al conectar con el servidor: $e');
     }
   }
 

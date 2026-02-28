@@ -13,11 +13,20 @@ class ControlSesion extends ChangeNotifier {
     datosusuario = await ClienteLogin().autenticar(credenciales!);
     if (datosusuario!.error == null) {
       context.push('/${datosusuario!.type}');
-    }
-    else{
+    } else {
       mostrarMensajeInferior(context, '${S.of(context).msj_errorlogin} ${datosusuario!.error}');
     }
+  }
 
-    
+  void enviarCorreoInscripcion(BuildContext context, String email) async {
+   
+    bool resultado = await ClienteLogin().enviarInscripcion(email);
+
+    if (resultado) {
+      mostrarMensajeInferior(context, S.of(context).msj_inscripcionenviada);
+    } else {
+      mostrarMensajeInferior(context, S.of(context).msj_inscripcionerror);
+      
+    }
   }
 }

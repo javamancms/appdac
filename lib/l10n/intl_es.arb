@@ -42,6 +42,10 @@
   "label_horarioexp":"Consultar horario",
   "label_nohorario":"No hay horario",
   "label_nohorarioexp":"Horarios por definir",
+  "label_enviarcomunicados":"Enviar comunicados",
+  "label_listaestudiantes":"Lista de Estudiantes",
+  "label_enviaranunciosgrupo":"Enviar anuncios al grupo",
+  "label_veralumnosinscritos":"Ver todos los alumnos inscritos",
   
   
   "label_nueva_contrasena":"Nueva Contraseña",
@@ -58,7 +62,9 @@
   "msj_errorenvdocs":"Error al enviar documentos:",
   "msj_inscexitosa":"Inscripción exitosa, próximante te contactaremos para que selecciones tu talla de uniforme",
   "msj_inscnoexitosa":"inscripción no exitosa",
-  "msj_errorlogin":"Usuario o Clave erronea... intente de nuevo"
+  "msj_errorlogin":"Usuario o Clave erronea... intente de nuevo",
+  "msj_inscripcionenviada":"Revisa tu correo electronico, hemos enviado un mensaje",
+  "msj_inscripcionerror":"No pudimos enviar el mensaje a tu correo, intenta más tarde"
 
   
 }

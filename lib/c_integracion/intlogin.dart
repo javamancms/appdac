@@ -3,7 +3,6 @@ import 'package:appdac/config/app_config.dart';
 import 'package:appdac/config/log.dart';
 import 'package:http/http.dart' as http;
 
-
 import 'package:path/path.dart';
 import 'dart:io';
 
@@ -32,16 +31,7 @@ class RespuestaLogin {
   final int? statusCode;
   final String? estadoDeRevision;
 
-  RespuestaLogin({
-    required this.ok,
-    required this.type,
-    required this.idUsuario,
-    required this.nombre,
-    required this.actualizacionDatos,
-    this.error,
-    this.statusCode,
-    this.estadoDeRevision
-  });
+  RespuestaLogin({required this.ok, required this.type, required this.idUsuario, required this.nombre, required this.actualizacionDatos, this.error, this.statusCode, this.estadoDeRevision});
 
   factory RespuestaLogin.fromJson(Map<String, dynamic> json) {
     return RespuestaLogin(
@@ -114,6 +104,43 @@ class ClienteLogin {
         error: 'Error del servidor (${respuesta.statusCode})',
         statusCode: respuesta.statusCode,
       );
+    }
+  }
+
+  Future<bool> enviarInscripcion(String email) async {
+    final String url = AppConfig.instance.parametros['urlincripcion'];
+
+    try {
+      // Crear el cuerpo de la petición
+      final Map<String, dynamic> body = {
+        'email': email,
+      };
+
+      // Realizar la petición POST
+      final response = await http.post(
+        Uri.parse(url),
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: json.encode(body),
+      );
+
+      // Verificar si la petición fue exitosa (código 200)
+      if (response.statusCode == 200) {
+        // Opcional: puedes decodificar la respuesta si necesitas validar algo más
+        // final Map<String, dynamic> responseData = json.decode(response.body);
+        // return responseData['success'] == true;
+
+        return true;
+      } else {
+        print('Error en la inscripción. Código: ${response.statusCode}');
+        print('Respuesta: ${response.body}');
+        return false;
+      }
+    } catch (e) {
+      print('Error de conexión: $e');
+      return false;
     }
   }
 }
@@ -258,10 +285,6 @@ class RespuestaNuevaContrasena {
 }
 
 class ClienteNuevaContrasena {
-
- 
-
-
   Future<RespuestaNuevaContrasena> establecerContrasena({
     required String usuario,
     required String token,
@@ -329,5 +352,4 @@ class ClienteNuevaContrasena {
       return RespuestaNuevaContrasena.exitoso();
     }
   }
-
 }

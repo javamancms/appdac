@@ -85,6 +85,8 @@ class LoginScreen extends StatelessWidget {
 
                     //controlsesion.login(context, 'js.castrogaray', '12345'); //ADM001
 
+                    //controlsesion.login(context, 'j.perez', '12345'); //PROF001
+
                     controlsesion.login(context, _usernameController.text, _passwordController.text);
                   },
                   style: AppColors.botonverde,
@@ -126,7 +128,11 @@ class LoginScreen extends StatelessWidget {
               // Link "Quiero Inscribirme"
               TextButton(
                 onPressed: () async {
-                  await abrirNavegador(AppConfig.instance.parametros['urlinscripcion']);
+                  //await abrirNavegador(AppConfig.instance.parametros['urlinscripcion']);
+                  String? email = await _mostrarDialogoInscripcion(context);
+                  if (email != null && email.isNotEmpty) {
+                    controlsesion.enviarCorreoInscripcion(context, email);
+                  }
                 },
                 child: Text(
                   S.of(context).label_link_quiero_inscribirme,
@@ -143,6 +149,76 @@ class LoginScreen extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  Future<String?> _mostrarDialogoInscripcion(BuildContext context) {
+    final TextEditingController emailController = TextEditingController();
+    final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+    return showDialog<String>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(S.of(context).label_link_quiero_inscribirme),
+          content: Form(
+            key: formKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text(
+                  'Ingresa tu correo electrónico para inscribirte:',
+                  style: TextStyle(fontSize: 14),
+                ),
+                const SizedBox(height: 16),
+                TextFormField(
+                  controller: emailController,
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: InputDecoration(
+                    labelText: 'Correo electrónico',
+                    hintText: 'ejemplo@correo.com',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    prefixIcon: const Icon(Icons.email),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Por favor ingresa un correo electrónico';
+                    }
+                    // Validación básica de email
+                    if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
+                      return 'Ingresa un correo electrónico válido';
+                    }
+                    return null;
+                  },
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text(
+                'Cancelar',
+                style: TextStyle(color: Colors.grey[600]),
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                if (formKey.currentState!.validate()) {
+                  Navigator.pop(context, emailController.text.trim());
+                }
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.verde,
+                foregroundColor: Colors.white,
+              ),
+              child: const Text('Enviar'),
+            ),
+          ],
+        );
+      },
     );
   }
 }

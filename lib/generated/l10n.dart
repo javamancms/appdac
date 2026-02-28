@@ -430,6 +430,46 @@ class S {
     );
   }
 
+  /// `Enviar comunicados`
+  String get label_enviarcomunicados {
+    return Intl.message(
+      'Enviar comunicados',
+      name: 'label_enviarcomunicados',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Lista de Estudiantes`
+  String get label_listaestudiantes {
+    return Intl.message(
+      'Lista de Estudiantes',
+      name: 'label_listaestudiantes',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enviar anuncios al grupo`
+  String get label_enviaranunciosgrupo {
+    return Intl.message(
+      'Enviar anuncios al grupo',
+      name: 'label_enviaranunciosgrupo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ver todos los alumnos inscritos`
+  String get label_veralumnosinscritos {
+    return Intl.message(
+      'Ver todos los alumnos inscritos',
+      name: 'label_veralumnosinscritos',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Nueva Contraseña`
   String get label_nueva_contrasena {
     return Intl.message(
@@ -560,6 +600,26 @@ class S {
     return Intl.message(
       'Usuario o Clave erronea... intente de nuevo',
       name: 'msj_errorlogin',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Revisa tu correo electronico, hemos enviado un mensaje`
+  String get msj_inscripcionenviada {
+    return Intl.message(
+      'Revisa tu correo electronico, hemos enviado un mensaje',
+      name: 'msj_inscripcionenviada',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No pudimos enviar el mensaje a tu correo, intenta más tarde`
+  String get msj_inscripcionerror {
+    return Intl.message(
+      'No pudimos enviar el mensaje a tu correo, intenta más tarde',
+      name: 'msj_inscripcionerror',
       desc: '',
       args: [],
     );

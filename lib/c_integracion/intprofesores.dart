@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:appdac/c_integracion/intdeportes.dart';
 import 'package:appdac/config/app_config.dart';
 import 'package:appdac/config/log.dart';
 import 'package:http/http.dart' as http;
@@ -102,6 +103,33 @@ class CambioEstadoRequest {
   Map<String, dynamic> toJson() => {
         "Codigo": codigo,
       };
+}
+
+class DeporteProfesor {
+  final String idDeporte;
+  final String nombreDeporte;
+
+  DeporteProfesor({
+    required this.idDeporte,
+    required this.nombreDeporte,
+  });
+
+  factory DeporteProfesor.fromJson(Map<String, dynamic> json) {
+    return DeporteProfesor(
+      idDeporte: json['id_deporte'] as String,
+      nombreDeporte: json['nombre_deporte'] as String,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id_deporte': idDeporte,
+      'nombre_deporte': nombreDeporte,
+    };
+  }
+
+  @override
+  String toString() => 'Deporte(idDeporte: $idDeporte, nombreDeporte: $nombreDeporte)';
 }
 
 class ClienteProfesores {
@@ -242,6 +270,48 @@ class ClienteProfesores {
       // En caso de error (sin conexión, timeout, etc.), retornar false
       print('Error al asignar deportes: $e');
       return false;
+    }
+  }
+
+  Future<List<DeporteProfesor>> verDeportesProfesor(String idProfesor) async {
+    String baseUrl = AppConfig.instance.parametros['urldeportesprofesor'];
+    try {
+      // Validar que el idProfesor no sea nulo o vacío
+      if (idProfesor.isEmpty) {
+        throw ArgumentError('El id del profesor no puede estar vacío');
+      }
+
+      // Preparar el cuerpo de la petición
+      final Map<String, dynamic> requestBody = {
+        'id_profesor': idProfesor,
+      };
+
+      // Realizar la petición POST
+      final response = await http.post(
+        Uri.parse(baseUrl),
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: jsonEncode(requestBody),
+      );
+
+      // Verificar el código de respuesta
+      if (response.statusCode == 200) {
+        // Decodificar la respuesta JSON
+        final List<dynamic> jsonResponse = jsonDecode(response.body);
+
+        // Convertir cada elemento de la lista a un objeto Deporte
+        final List<DeporteProfesor> deportes = jsonResponse.map((deporteJson) => DeporteProfesor.fromJson(deporteJson as Map<String, dynamic>)).toList();
+
+        return deportes;
+      } else {
+        // Manejar errores HTTP
+        throw Exception('Error al consultar deportes: ${response.statusCode} - ${response.reasonPhrase}');
+      }
+    } catch (e) {
+      // Re-lanzar la excepción para que el llamador la maneje
+      throw Exception('Error en la consulta de deportes: $e');
     }
   }
 }

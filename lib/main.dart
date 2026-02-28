@@ -68,6 +68,10 @@ class MainApp extends StatelessWidget {
            create: (context) => ControlListaMetodologos(),
          
         ),
+        ChangeNotifierProvider(
+           create: (context) => ControlListaDeportesProfesor(),
+         
+        ),
       ],
       child: MaterialApp.router(
         //theme: AppTheme.lightTheme,

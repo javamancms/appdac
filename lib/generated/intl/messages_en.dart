@@ -44,6 +44,12 @@ class MessageLookup extends MessageLookupByLibrary {
       "Example: john.jackson",
     ),
     "label_enviar": MessageLookupByLibrary.simpleMessage("Send"),
+    "label_enviaranunciosgrupo": MessageLookupByLibrary.simpleMessage(
+      "Send announcements to the group",
+    ),
+    "label_enviarcomunicados": MessageLookupByLibrary.simpleMessage(
+      "Send communications",
+    ),
     "label_estudiante": MessageLookupByLibrary.simpleMessage("Estudent"),
     "label_estudiantes": MessageLookupByLibrary.simpleMessage("Students"),
     "label_histasistencias": MessageLookupByLibrary.simpleMessage(
@@ -62,6 +68,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "label_link_quiero_inscribirme": MessageLookupByLibrary.simpleMessage(
       "I want to register",
+    ),
+    "label_listaestudiantes": MessageLookupByLibrary.simpleMessage(
+      "Student List",
     ),
     "label_mensaje": MessageLookupByLibrary.simpleMessage("Message:"),
     "label_metodologos": MessageLookupByLibrary.simpleMessage("Methodologists"),
@@ -103,6 +112,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "label_token": MessageLookupByLibrary.simpleMessage("token"),
     "label_usuario": MessageLookupByLibrary.simpleMessage("user:"),
+    "label_veralumnosinscritos": MessageLookupByLibrary.simpleMessage(
+      "Ver todos los alumnos inscritos",
+    ),
     "label_veranunciosgrupo": MessageLookupByLibrary.simpleMessage(
       "View group ads",
     ),
@@ -136,6 +148,12 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "msj_inscnoexitosa": MessageLookupByLibrary.simpleMessage(
       "unsuccessful registration",
+    ),
+    "msj_inscripcionenviada": MessageLookupByLibrary.simpleMessage(
+      "Check your email, we\'ve sent a message",
+    ),
+    "msj_inscripcionerror": MessageLookupByLibrary.simpleMessage(
+      "We were unable to send the message to your email address, please try again later",
     ),
     "msj_token_enviado": MessageLookupByLibrary.simpleMessage(
       "A token has been sent to your associated email address",

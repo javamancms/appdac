@@ -65,6 +65,9 @@ Widget menuGeneral(BuildContext context) {
           color: Colors.grey,
         ),
 
+        // Espacio flexible para empujar los elementos inferiores hacia abajo
+        const Spacer(),
+
         // Opción 2: Cerrar sesión
         ListTile(
           leading: const Icon(
@@ -89,11 +92,23 @@ Widget menuGeneral(BuildContext context) {
           },
         ),
 
-        // Espacio flexible para empujar elementos hacia arriba
-        const Spacer(),
-
         // Información de versión o footer
-        Padding(padding: const EdgeInsets.all(16.0), child: Divider()),
+        Padding(
+          padding: const EdgeInsets.all(1.0),
+          child: Column(
+            children: [
+              const Divider(),
+              const SizedBox(height: 8),
+              Text(
+                '',
+                style: TextStyle(
+                  fontSize: 12,
+                  color: Colors.grey[600],
+                ),
+              ),
+            ],
+          ),
+        ),
       ],
     ),
   );

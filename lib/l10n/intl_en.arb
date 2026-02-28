@@ -42,7 +42,11 @@
   "label_horarioexp":"Check schedule",
   "label_nohorario":"There is no schedule",
   "label_nohorarioexp":"Schedules to be determined",
-
+  "label_enviarcomunicados":"Send communications",
+  "label_listaestudiantes":"Student List",
+  "label_enviaranunciosgrupo":"Send announcements to the group",
+  "label_veralumnosinscritos":"Ver todos los alumnos inscritos",
+  
   
   "label_nueva_contrasena":"New Password",
   "label_nueva_contrasenaconfirmar":"Confirm Password",
@@ -58,6 +62,8 @@
   "msj_errorenvdocs":"Error sending documents:",
   "msj_inscexitosa":"Registration successful, we will contact you soon so you can select your uniform size",
   "msj_inscnoexitosa":"unsuccessful registration",
-  "msj_errorlogin":"Incorrect username or password... please try again"
+  "msj_errorlogin":"Incorrect username or password... please try again",
+  "msj_inscripcionenviada":"Check your email, we've sent a message",
+  "msj_inscripcionerror":"We were unable to send the message to your email address, please try again later"
 
 }

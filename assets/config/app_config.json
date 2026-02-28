@@ -17,6 +17,8 @@
    "urlmodificardeporte":"https://n8n.nextgonsas.com.co/webhook/actualizar/elementos/administrador",
    "urlverestudiantesadministrador":"https://n8n.nextgonsas.com.co/webhook/estudiantes/administrador",
    "urlcambiarestadorevision":"https://n8n.nextgonsas.com.co/webhook/comentario/administrador",
-   "urlvermetodologos":"https://n8n.nextgonsas.com.co/webhook/metodologo/administrador"
+   "urlvermetodologos":"https://n8n.nextgonsas.com.co/webhook/metodologo/administrador",
+   "urldeportesprofesor":"https://n8n.nextgonsas.com.co/webhook/profesor/deportes",
+   "urlincripcion":"https://n8n.nextgonsas.com.co/webhook/correo/quiero/inscribirme"
    
 }

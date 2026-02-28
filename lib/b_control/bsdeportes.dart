@@ -1,5 +1,6 @@
 import 'package:appdac/b_control/bssesion.dart';
 import 'package:appdac/c_integracion/intdeportes.dart';
+import 'package:appdac/c_integracion/intprofesores.dart';
 import 'package:flutter/material.dart';
 
 class ControlListaDeportesAdministrador extends ChangeNotifier {
@@ -18,5 +19,22 @@ class ControlListaDeportesAdministrador extends ChangeNotifier {
     deportes.clear();
     cargarListaDeportes();
     return resultado;
+  }
+}
+
+class ControlListaDeportesProfesor extends ChangeNotifier {
+  static List<DeporteProfesor> deportes = [];
+  DeporteProfesor? seleccionado;
+
+  void cargarListaDeportes() async {
+    if (deportes.isEmpty) {
+      deportes = (await ClienteProfesores().verDeportesProfesor(ControlSesion.datosusuario!.idUsuario));
+      notifyListeners();
+    }
+  }
+
+  void seleccionarDeporte(DeporteProfesor deporte) {
+    seleccionado = deporte;
+    notifyListeners();
   }
 }
