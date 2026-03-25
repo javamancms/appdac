@@ -1,11 +1,12 @@
 {
   
   "label_bienvenido":"Welcome",
-  "label_usuario":"user:",
-  "label_clave":"password:",
+  "label_usuario":"user",
+  "label_clave":"password",
   "label_boton_login":"Log in",
   "label_link_olvidaste_contrasena":"¿You forgot your password",
   "label_link_quiero_inscribirme":"I want to register",
+   "label_link_quiero_inscribirmeexp":"Enter your email address to register",
   "label_enviar":"Send",
   "label_cancelar":"Cancel",
   "label_recuperarcontrasenaexp":"Enter your username to recover your password",
@@ -30,8 +31,8 @@
   "label_comunicados":"Announcements",
   "label_veranunciosgrupo":"View group ads",
   "label_histasistencias":"Attendance History",
-  "label_titulo":"Tittle:",
-  "label_mensaje":"Message:",
+  "label_titulo":"Tittle",
+  "label_mensaje":"Message",
   "label_insdeportes":"Register for Sports",
   "label_deportesdisponibles":"Sports available:",
   "label_seleccionar":"SELECT",
@@ -46,6 +47,12 @@
   "label_listaestudiantes":"Student List",
   "label_enviaranunciosgrupo":"Send announcements to the group",
   "label_veralumnosinscritos":"Ver todos los alumnos inscritos",
+  "label_correoelectronico":"email",
+   "label_correoelectronicoejemplo":"example@email.com",
+   "label_configuracion":"Settings",
+   "label_cerrarsesion":"Sign out",
+  "label_enviarcomunicado":"Send Communication",
+
   
   
   "label_nueva_contrasena":"New Password",
@@ -64,6 +71,9 @@
   "msj_inscnoexitosa":"unsuccessful registration",
   "msj_errorlogin":"Incorrect username or password... please try again",
   "msj_inscripcionenviada":"Check your email, we've sent a message",
-  "msj_inscripcionerror":"We were unable to send the message to your email address, please try again later"
+  "msj_inscripcionerror":"We were unable to send the message to your email address, please try again later",
+  "msj_enviocomunicadoexitoso":"The statement has been sent",
+  "msj_enviocomunicadoerror":"The statement could not be sent",
+  "msj_correoinvalido":"Enter a valid email address"
 
 }

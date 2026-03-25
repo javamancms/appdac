@@ -19,6 +19,12 @@
    "urlcambiarestadorevision":"https://n8n.nextgonsas.com.co/webhook/comentario/administrador",
    "urlvermetodologos":"https://n8n.nextgonsas.com.co/webhook/metodologo/administrador",
    "urldeportesprofesor":"https://n8n.nextgonsas.com.co/webhook/profesor/deportes",
-   "urlincripcion":"https://n8n.nextgonsas.com.co/webhook/correo/quiero/inscribirme"
-   
+   "urlincripcion":"https://n8n.nextgonsas.com.co/webhook/correo/quiero/inscribirme",
+   "urlprofesorVerAsistencia":"https://n8n.nextgonsas.com.co/webhook/tabla-csv",
+   "urlprofesorVerEstudiantesDeporte":"https://n8n.nextgonsas.com.co/webhook/deporte_a_estudiante",
+   "urlprofesorEnviarComunicados":"https://n8n.nextgonsas.com.co/webhook/profesor/comunicados",
+   "urlprofesorLlenarAsistencia":"https://n8n.nextgonsas.com.co/webhook/llenar/asistencia",
+   "urlmetodologoVerDeportes":"https://n8n.nextgonsas.com.co/webhook/deportes/metodologo",
+   "urlmetodologoDocumentoAsistencia":"https://n8n.nextgonsas.com.co/webhook/documento/asistencia",
+   "urlmetodologoAgregarComentario":"https://n8n.nextgonsas.com.co/webhook/agregar/comentario/deportologo"
 }

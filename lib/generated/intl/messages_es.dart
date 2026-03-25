@@ -28,13 +28,23 @@ class MessageLookup extends MessageLookupByLibrary {
     "label_bienvenido": MessageLookupByLibrary.simpleMessage("Bienvenido"),
     "label_boton_login": MessageLookupByLibrary.simpleMessage("Iniciar Sesion"),
     "label_cancelar": MessageLookupByLibrary.simpleMessage("Cancelar"),
+    "label_cerrarsesion": MessageLookupByLibrary.simpleMessage("Cerrar sesión"),
     "label_certeps": MessageLookupByLibrary.simpleMessage(
       "Certificado de la EPS",
     ),
-    "label_clave": MessageLookupByLibrary.simpleMessage("clave:"),
+    "label_clave": MessageLookupByLibrary.simpleMessage("clave"),
     "label_comunicados": MessageLookupByLibrary.simpleMessage("Comunicados"),
+    "label_configuracion": MessageLookupByLibrary.simpleMessage(
+      "Configuración",
+    ),
     "label_consentimiento": MessageLookupByLibrary.simpleMessage(
       "Consentimiento Informado",
+    ),
+    "label_correoelectronico": MessageLookupByLibrary.simpleMessage(
+      "correo electrónico",
+    ),
+    "label_correoelectronicoejemplo": MessageLookupByLibrary.simpleMessage(
+      "ejemplo@emcorreo.com",
     ),
     "label_curso": MessageLookupByLibrary.simpleMessage("Curso"),
     "label_deportes": MessageLookupByLibrary.simpleMessage("Deportes"),
@@ -50,6 +60,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "label_enviar": MessageLookupByLibrary.simpleMessage("Enviar"),
     "label_enviaranunciosgrupo": MessageLookupByLibrary.simpleMessage(
       "Enviar anuncios al grupo",
+    ),
+    "label_enviarcomunicado": MessageLookupByLibrary.simpleMessage(
+      "Enviar Comunicado",
     ),
     "label_enviarcomunicados": MessageLookupByLibrary.simpleMessage(
       "Enviar comunicados",
@@ -75,10 +88,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "label_link_quiero_inscribirme": MessageLookupByLibrary.simpleMessage(
       "Quiero Inscribirme",
     ),
+    "label_link_quiero_inscribirmeexp": MessageLookupByLibrary.simpleMessage(
+      "Ingresa tu correo electrónico para inscribirte",
+    ),
     "label_listaestudiantes": MessageLookupByLibrary.simpleMessage(
       "Lista de Estudiantes",
     ),
-    "label_mensaje": MessageLookupByLibrary.simpleMessage("Mensaje:"),
+    "label_mensaje": MessageLookupByLibrary.simpleMessage("Mensaje"),
     "label_metodologos": MessageLookupByLibrary.simpleMessage("Metodologos"),
     "label_nohorario": MessageLookupByLibrary.simpleMessage("No hay horario"),
     "label_nohorarioexp": MessageLookupByLibrary.simpleMessage(
@@ -91,7 +107,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Confirmar Contraseña",
     ),
     "label_nueva_contrasenaexp": MessageLookupByLibrary.simpleMessage(
-      "el Token se enviará a tu correo",
+      "El token será enviado a tu correo",
     ),
     "label_perfil_administrador": MessageLookupByLibrary.simpleMessage(
       "Administrador",
@@ -114,12 +130,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "label_titmisdeportes": MessageLookupByLibrary.simpleMessage(
       "Mis Deportes",
     ),
-    "label_titulo": MessageLookupByLibrary.simpleMessage("Título:"),
+    "label_titulo": MessageLookupByLibrary.simpleMessage("Título"),
     "label_tituloactudocs": MessageLookupByLibrary.simpleMessage(
       "Actualizar Documentos",
     ),
     "label_token": MessageLookupByLibrary.simpleMessage("token"),
-    "label_usuario": MessageLookupByLibrary.simpleMessage("usuario:"),
+    "label_usuario": MessageLookupByLibrary.simpleMessage("usuario"),
     "label_veralumnosinscritos": MessageLookupByLibrary.simpleMessage(
       "Ver todos los alumnos inscritos",
     ),
@@ -136,8 +152,17 @@ class MessageLookup extends MessageLookupByLibrary {
     "msj_contrasenas_iguales": MessageLookupByLibrary.simpleMessage(
       "Las contraseñas coinciden",
     ),
+    "msj_correoinvalido": MessageLookupByLibrary.simpleMessage(
+      "Ingresa un correo electrónico válido",
+    ),
     "msj_docsenviados": MessageLookupByLibrary.simpleMessage(
       "Documentos enviados exitosamente",
+    ),
+    "msj_enviocomunicadoerror": MessageLookupByLibrary.simpleMessage(
+      "No se pudo enviar el comunicado",
+    ),
+    "msj_enviocomunicadoexitoso": MessageLookupByLibrary.simpleMessage(
+      "Se ha enviado el comunicado",
     ),
     "msj_errorenvdocs": MessageLookupByLibrary.simpleMessage(
       "Error al enviar documentos:",

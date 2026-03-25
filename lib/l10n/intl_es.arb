@@ -1,11 +1,12 @@
 {
   
   "label_bienvenido":"Bienvenido",
-  "label_usuario":"usuario:",
-  "label_clave":"clave:",
+  "label_usuario":"usuario",
+  "label_clave":"clave",
   "label_boton_login":"Iniciar Sesion",
   "label_link_olvidaste_contrasena":"¿Olvidaste tu contraseña",
   "label_link_quiero_inscribirme":"Quiero Inscribirme",
+  "label_link_quiero_inscribirmeexp":"Ingresa tu correo electrónico para inscribirte",
   "label_enviar":"Enviar",
   "label_cancelar":"Cancelar",
   "label_recuperarcontrasenaexp":"Ingrese su usuario para recuperar la contraseña",
@@ -30,8 +31,8 @@
   "label_comunicados":"Comunicados",
   "label_veranunciosgrupo":"Ver anuncios grupo",
   "label_histasistencias":"Historial de Asistencias",
-  "label_titulo":"Título:",
-  "label_mensaje":"Mensaje:",
+  "label_titulo":"Título",
+  "label_mensaje":"Mensaje",
   "label_insdeportes":"Inscribir Deportes",
   "label_deportesdisponibles":"Deportes disponibles:",
   "label_seleccionar":"SELECCIONAR",
@@ -46,11 +47,17 @@
   "label_listaestudiantes":"Lista de Estudiantes",
   "label_enviaranunciosgrupo":"Enviar anuncios al grupo",
   "label_veralumnosinscritos":"Ver todos los alumnos inscritos",
+  "label_correoelectronico":"correo electrónico",
+  "label_correoelectronicoejemplo":"ejemplo@emcorreo.com",
+  "label_configuracion":"Configuración",
+  "label_cerrarsesion":"Cerrar sesión",
+  "label_enviarcomunicado":"Enviar Comunicado",
+  
   
   
   "label_nueva_contrasena":"Nueva Contraseña",
   "label_nueva_contrasenaconfirmar":"Confirmar Contraseña",
-  "label_nueva_contrasenaexp":"el Token se enviará a tu correo",
+  "label_nueva_contrasenaexp":"El token será enviado a tu correo",
   "label_token":"token",
 
   "msj_token_enviado":"un token se ha enviado a su correo asociado",
@@ -64,7 +71,10 @@
   "msj_inscnoexitosa":"inscripción no exitosa",
   "msj_errorlogin":"Usuario o Clave erronea... intente de nuevo",
   "msj_inscripcionenviada":"Revisa tu correo electronico, hemos enviado un mensaje",
-  "msj_inscripcionerror":"No pudimos enviar el mensaje a tu correo, intenta más tarde"
+  "msj_inscripcionerror":"No pudimos enviar el mensaje a tu correo, intenta más tarde",
+  "msj_enviocomunicadoexitoso":"Se ha enviado el comunicado",
+  "msj_enviocomunicadoerror":"No se pudo enviar el comunicado",
+  "msj_correoinvalido":"Ingresa un correo electrónico válido"
 
   
 }

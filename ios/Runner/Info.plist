@@ -45,5 +45,65 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	
+	<!-- Permisos para descargar y guardar archivos en iOS -->
+	<key>UIFileSharingEnabled</key>
+	<true/>
+	<key>LSSupportsOpeningDocumentsInPlace</key>
+	<true/>
+	
+	<!-- Descripción de por qué la app necesita estos permisos -->
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Esta app necesita acceso para guardar los archivos descargados en tu dispositivo</string>
+	
+	<!-- Para iOS 14+ - Permiso para acceder a archivos locales -->
+	<key>NSDocumentsFolderUsageDescription</key>
+	<string>Esta app necesita acceso para guardar los archivos descargados en la carpeta de documentos</string>
+	
+	<!-- Para iOS 11+ - Permiso para descargar archivos -->
+	<key>NSDownloadsFolderUsageDescription</key>
+	<string>Esta app necesita acceso para guardar los archivos descargados en la carpeta de descargas</string>
+	
+	<!-- Permiso para mostrar notificaciones (opcional, para mostrar progreso de descarga) -->
+	<key>NSUserNotificationsUsageDescription</key>
+	<string>Esta app quiere enviarte notificaciones cuando se complete la descarga de archivos</string>
+	
+	<!-- Configuración para permitir HTTP (si es necesario) -->
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
+	
+	<!-- Tipos de documentos que la app puede abrir -->
+	<key>CFBundleDocumentTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeName</key>
+			<string>Excel Files</string>
+			<key>LSHandlerRank</key>
+			<string>Default</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>org.openxmlformats.spreadsheetml.sheet</string>
+				<string>com.microsoft.excel.xlsx</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeName</key>
+			<string>CSV Files</string>
+			<key>LSHandlerRank</key>
+			<string>Default</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>public.comma-separated-values-text</string>
+				<string>public.csv</string>
+			</array>
+		</dict>
+	</array>
+	
+	<!-- Configuración para exportar archivos a otras apps -->
+	<key>UISupportsDocumentBrowser</key>
+	<true/>
 </dict>
 </plist>

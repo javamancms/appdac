@@ -28,6 +28,10 @@ dependencies:
   url_launcher: ^6.3.2    # Para abrir enlaces
   go_router: ^16.1.0
 
+  #descarga
+  path_provider: ^2.1.0
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -46,16 +50,17 @@ flutter:
     - assets/config/app_config.json
     - assets/img/
 
+
+  fonts:
+    - family: AcuminVariableConcept  # Nombre que usarás en el código
+      fonts:
+        - asset: assets/fonts/Acumin Variable Concept.ttf
+          weight: 400  # Normal
+       
+
   # Internacionalización con flutter_intl
   generate: true  # Necesario para flutter_gen
   
-  # Si usas fuentes personalizadas (opcional)
-  # fonts:
-  #   - family: CustomFont
-  #     fonts:
-  #       - asset: assets/fonts/CustomFont-Regular.ttf
-  #       - asset: assets/fonts/CustomFont-Bold.ttf
-  #         weight: 700
 
 flutter_intl:
   enabled: true

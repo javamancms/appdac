@@ -12,8 +12,11 @@ import 'package:appdac/a_presentacion/estudiante/guihorario.dart';
 import 'package:appdac/a_presentacion/estudiante/guiopcionesestudiantes.dart';
 import 'package:appdac/a_presentacion/guilogin.dart';
 import 'package:appdac/a_presentacion/metodologo/guimetodologo.dart';
+import 'package:appdac/a_presentacion/profesor/guiasistencia.dart';
 import 'package:appdac/a_presentacion/profesor/guiopcionesprofesor.dart';
 import 'package:appdac/a_presentacion/profesor/guiprofesor.dart';
+import 'package:appdac/a_presentacion/profesor/guitomarasistencia.dart';
+import 'package:appdac/a_presentacion/profesor/guiverestudiantesdeporte.dart';
 import 'package:go_router/go_router.dart';
 
 final appRouter = GoRouter(
@@ -90,6 +93,21 @@ final appRouter = GoRouter(
       path: '/OpcionesProfesor',
       name: "OpcionesProfesor",
       builder: (context, state) => OpcionesProfesorScreen(),
+    ),
+    GoRoute(
+      path: '/VerAsistenciaProfesor',
+      name: "VerAsistenciaProfesor",
+      builder: (context, state) => AsistenciaProfesorScreen(),
+    ),
+    GoRoute(
+      path: '/VerDeporteEstudiantes',
+      name: "VerDeporteEstudiantes",
+      builder: (context, state) => DeporteEstudiantesScreen(),
+    ),
+    GoRoute(
+      path: '/TomarAsistencia',
+      name: "TomarAsistencia",
+      builder: (context, state) => TomarAsistenciaScreen(),
     ),
   ],
 );

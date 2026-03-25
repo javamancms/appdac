@@ -1,8 +1,11 @@
 import 'package:appdac/a_presentacion/tema/tema.dart';
 import 'package:appdac/b_control/bsestudiantes.dart';
 import 'package:appdac/b_control/bssesion.dart';
+import 'package:appdac/b_control/idioma/bsidiomas.dart';
+import 'package:appdac/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 Widget menuGeneral(BuildContext context) {
   return Drawer(
@@ -12,16 +15,11 @@ Widget menuGeneral(BuildContext context) {
         UserAccountsDrawerHeader(
           accountName: Text(
             ControlSesion.datosusuario != null ? ControlSesion.datosusuario!.nombre : '',
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-            ),
+            style: AppColors.textosubtituloblanco,
           ),
           accountEmail: Text(
             ControlSesion.datosusuario != null ? ControlSesion.datosusuario!.type : '',
-            style: const TextStyle(
-              fontSize: 14,
-            ),
+            style: AppColors.textosubtituloblanco,
           ),
           decoration: BoxDecoration(
             gradient: LinearGradient(
@@ -35,56 +33,84 @@ Widget menuGeneral(BuildContext context) {
           ),
         ),
 
-        // Opción 1: Configuración
         ListTile(
           leading: const Icon(
             Icons.settings,
             color: AppColors.verde,
           ),
-          title: const Text(
-            'Configuración',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
-            ),
+          title: Text(
+            S.of(context).label_configuracion,
+            style: AppColors.textosubtitulonegro
           ),
-          onTap: () {
-            Navigator.pop(context); // Cierra el drawer
-            // Navegar a la pantalla de configuración
-            // context.push('/configuracion');
-            //_mostrarMensaje(context, 'Configuración seleccionada');
-          },
         ),
 
-        // Divider entre opciones
+        // Selector de idioma
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          child: Row(
+            children: [
+              const Icon(
+                Icons.language,
+                color: AppColors.verde,
+                size: 24,
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Consumer<IdiomaHelper>(
+                  builder: (context, idiomaHelper, child) {
+                    return DropdownButton<Locale>(
+                      value: Locale(idiomaHelper.idiomaActualCodigo),
+                      isExpanded: true,
+                      underline: Container(),
+                      icon: const Icon(Icons.arrow_drop_down, color: AppColors.verde),
+                      items: IdiomaHelper.idiomasDisponibles.map((idioma) {
+                        return DropdownMenuItem<Locale>(
+                          value: Locale(idioma.codigo),
+                          child: Text(
+                            idioma.nombre,
+                            style: AppColors.textosubtitulonegro,
+                          ),
+                        );
+                      }).toList(),
+                      onChanged: (Locale? newLocale) async {
+                        if (newLocale != null) {
+                          // Guardar el idioma seleccionado
+                          await IdiomaHelper.guardarIdioma(newLocale.languageCode);
+                          
+                          // Cerrar el drawer
+                          Navigator.pop(context);
+                          
+                          // No necesitamos redirigir, el Consumer se encargará de rebuildear
+                        }
+                      },
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
+        ),
+
         const Divider(
           height: 1,
           thickness: 1,
           indent: 16,
           endIndent: 16,
-          color: Colors.grey,
+          color: AppColors.grisclaro,
         ),
 
-        // Espacio flexible para empujar los elementos inferiores hacia abajo
         const Spacer(),
 
-        // Opción 2: Cerrar sesión
         ListTile(
           leading: const Icon(
             Icons.logout,
-            color: Colors.red,
+            color: AppColors.rojo,
           ),
-          title: const Text(
-            'Cerrar sesión',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
-              color: Colors.red,
-            ),
+          title: Text(
+            S.of(context).label_cerrarsesion,
+            style: AppColors.textosubtitulorojo
           ),
           onTap: () {
-            //Navigator.pop(context); // Cierra el drawer
-            //_mostrarDialogoCerrarSesion(context);
             ControlListaDeportes.vaciarDeportes();
             ControlSesion.datosusuario = null;
             ControlSesion.credenciales = null;
@@ -92,7 +118,6 @@ Widget menuGeneral(BuildContext context) {
           },
         ),
 
-        // Información de versión o footer
         Padding(
           padding: const EdgeInsets.all(1.0),
           child: Column(
@@ -103,7 +128,7 @@ Widget menuGeneral(BuildContext context) {
                 '',
                 style: TextStyle(
                   fontSize: 12,
-                  color: Colors.grey[600],
+                  color: AppColors.grisclaro,
                 ),
               ),
             ],

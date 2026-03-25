@@ -65,14 +65,14 @@ class S {
     );
   }
 
-  /// `usuario:`
+  /// `usuario`
   String get label_usuario {
-    return Intl.message('usuario:', name: 'label_usuario', desc: '', args: []);
+    return Intl.message('usuario', name: 'label_usuario', desc: '', args: []);
   }
 
-  /// `clave:`
+  /// `clave`
   String get label_clave {
-    return Intl.message('clave:', name: 'label_clave', desc: '', args: []);
+    return Intl.message('clave', name: 'label_clave', desc: '', args: []);
   }
 
   /// `Iniciar Sesion`
@@ -100,6 +100,16 @@ class S {
     return Intl.message(
       'Quiero Inscribirme',
       name: 'label_link_quiero_inscribirme',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ingresa tu correo electrónico para inscribirte`
+  String get label_link_quiero_inscribirmeexp {
+    return Intl.message(
+      'Ingresa tu correo electrónico para inscribirte',
+      name: 'label_link_quiero_inscribirmeexp',
       desc: '',
       args: [],
     );
@@ -325,14 +335,14 @@ class S {
     );
   }
 
-  /// `Título:`
+  /// `Título`
   String get label_titulo {
-    return Intl.message('Título:', name: 'label_titulo', desc: '', args: []);
+    return Intl.message('Título', name: 'label_titulo', desc: '', args: []);
   }
 
-  /// `Mensaje:`
+  /// `Mensaje`
   String get label_mensaje {
-    return Intl.message('Mensaje:', name: 'label_mensaje', desc: '', args: []);
+    return Intl.message('Mensaje', name: 'label_mensaje', desc: '', args: []);
   }
 
   /// `Inscribir Deportes`
@@ -470,6 +480,56 @@ class S {
     );
   }
 
+  /// `correo electrónico`
+  String get label_correoelectronico {
+    return Intl.message(
+      'correo electrónico',
+      name: 'label_correoelectronico',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `ejemplo@emcorreo.com`
+  String get label_correoelectronicoejemplo {
+    return Intl.message(
+      'ejemplo@emcorreo.com',
+      name: 'label_correoelectronicoejemplo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Configuración`
+  String get label_configuracion {
+    return Intl.message(
+      'Configuración',
+      name: 'label_configuracion',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cerrar sesión`
+  String get label_cerrarsesion {
+    return Intl.message(
+      'Cerrar sesión',
+      name: 'label_cerrarsesion',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enviar Comunicado`
+  String get label_enviarcomunicado {
+    return Intl.message(
+      'Enviar Comunicado',
+      name: 'label_enviarcomunicado',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Nueva Contraseña`
   String get label_nueva_contrasena {
     return Intl.message(
@@ -490,10 +550,10 @@ class S {
     );
   }
 
-  /// `el Token se enviará a tu correo`
+  /// `El token será enviado a tu correo`
   String get label_nueva_contrasenaexp {
     return Intl.message(
-      'el Token se enviará a tu correo',
+      'El token será enviado a tu correo',
       name: 'label_nueva_contrasenaexp',
       desc: '',
       args: [],
@@ -620,6 +680,36 @@ class S {
     return Intl.message(
       'No pudimos enviar el mensaje a tu correo, intenta más tarde',
       name: 'msj_inscripcionerror',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Se ha enviado el comunicado`
+  String get msj_enviocomunicadoexitoso {
+    return Intl.message(
+      'Se ha enviado el comunicado',
+      name: 'msj_enviocomunicadoexitoso',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No se pudo enviar el comunicado`
+  String get msj_enviocomunicadoerror {
+    return Intl.message(
+      'No se pudo enviar el comunicado',
+      name: 'msj_enviocomunicadoerror',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ingresa un correo electrónico válido`
+  String get msj_correoinvalido {
+    return Intl.message(
+      'Ingresa un correo electrónico válido',
+      name: 'msj_correoinvalido',
       desc: '',
       args: [],
     );

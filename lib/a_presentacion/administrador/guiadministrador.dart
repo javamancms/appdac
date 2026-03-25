@@ -16,10 +16,6 @@ class AdministradorScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     ControlListaProfesores controlListaProfesores = context.watch<ControlListaProfesores>();
 
-    /*logear('------------------------------------------------');
-    logear(ControlSesion.datosusuario!.idUsuario);
-    logear('------------------------------------------------');*/
-
     final List<Map<String, dynamic>> paneles = [
       {
         'icon': Icons.person,
@@ -56,29 +52,43 @@ class AdministradorScreen extends StatelessWidget {
       canPop: false,
       child: Scaffold(
         appBar: AppBar(
-          title: Text(S.of(context).label_perfil_administrador),
+          title: Text(S.of(context).label_perfil_administrador, style: AppColors.textotitulonegro,),
+          //backgroundColor: AppColors.verde.withOpacity(0.8), // AppBar semi-transparente
+          elevation: 0,
         ),
         drawer: menuGeneral(context),
-        body: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: GridView.builder(
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2, // 2 columnas
-              crossAxisSpacing: 16, // Espacio horizontal
-              mainAxisSpacing: 16, // Espacio vertical
-              childAspectRatio: 1, // Cuadrados perfectos
+        body: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/img/logoirdcotafondo.jpeg'),
+              fit: BoxFit.contain, // La imagen se muestra completa sin recortarse
+              alignment: Alignment.center, // Centrada en la pantalla
+              opacity: 0.3,
+              // Opcional: color de fondo si la imagen no cubre toda el área
+              colorFilter: ColorFilter.mode(Colors.white, BlendMode.dstOver),
             ),
-            itemCount: paneles.length,
-            itemBuilder: (context, index) {
-              return PanelIconoInfo(
-                icon: paneles[index]['icon'] as IconData,
-                info: paneles[index]['title'] as String,
-                cardColor: AppColors.verde,
-                textColor: AppColors.blanco,
-                iconColor: AppColors.blanco,
-                onTap: paneles[index]['onTap'] as VoidCallback,
-              );
-            },
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: GridView.builder(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 16,
+                mainAxisSpacing: 16,
+                childAspectRatio: 1,
+              ),
+              itemCount: paneles.length,
+              itemBuilder: (context, index) {
+                return PanelIconoInfo(
+                  icon: paneles[index]['icon'] as IconData,
+                  info: paneles[index]['title'] as String,
+                  cardColor: AppColors.verde,
+                  textColor: AppColors.blanco,
+                  iconColor: AppColors.blanco,
+                  onTap: paneles[index]['onTap'] as VoidCallback,
+                );
+              },
+            ),
           ),
         ),
       ),

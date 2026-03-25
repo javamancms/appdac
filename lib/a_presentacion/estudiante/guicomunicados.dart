@@ -4,7 +4,7 @@ import 'package:appdac/config/log.dart';
 import 'package:appdac/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:appdac/generated/l10n.dart';
+
 
 class ComunicadosScreen extends StatelessWidget {
   const ComunicadosScreen({super.key});

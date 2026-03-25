@@ -11,7 +11,17 @@ class ControlSesion extends ChangeNotifier {
   void login(BuildContext context, String usuario, String clave) async {
     credenciales = Credenciales(username: usuario, password: clave);
     datosusuario = await ClienteLogin().autenticar(credenciales!);
+
+print('-----------------------------------------------------------------------');
+print('-----------------------------------------------------------------------');
+print('nombre ${datosusuario!.nombre}');
+print('tipo ${datosusuario!.type}');
+
+print('-----------------------------------------------------------------------');
+print('-----------------------------------------------------------------------');
+
     if (datosusuario!.error == null) {
+      
       context.push('/${datosusuario!.type}');
     } else {
       mostrarMensajeInferior(context, '${S.of(context).msj_errorlogin} ${datosusuario!.error}');

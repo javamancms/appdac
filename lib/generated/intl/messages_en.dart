@@ -26,11 +26,17 @@ class MessageLookup extends MessageLookupByLibrary {
     "label_bienvenido": MessageLookupByLibrary.simpleMessage("Welcome"),
     "label_boton_login": MessageLookupByLibrary.simpleMessage("Log in"),
     "label_cancelar": MessageLookupByLibrary.simpleMessage("Cancel"),
+    "label_cerrarsesion": MessageLookupByLibrary.simpleMessage("Sign out"),
     "label_certeps": MessageLookupByLibrary.simpleMessage("Certificate of EPS"),
-    "label_clave": MessageLookupByLibrary.simpleMessage("password:"),
+    "label_clave": MessageLookupByLibrary.simpleMessage("password"),
     "label_comunicados": MessageLookupByLibrary.simpleMessage("Announcements"),
+    "label_configuracion": MessageLookupByLibrary.simpleMessage("Settings"),
     "label_consentimiento": MessageLookupByLibrary.simpleMessage(
       "Informed consent",
+    ),
+    "label_correoelectronico": MessageLookupByLibrary.simpleMessage("email"),
+    "label_correoelectronicoejemplo": MessageLookupByLibrary.simpleMessage(
+      "example@email.com",
     ),
     "label_curso": MessageLookupByLibrary.simpleMessage("Course"),
     "label_deportes": MessageLookupByLibrary.simpleMessage("Sports"),
@@ -46,6 +52,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "label_enviar": MessageLookupByLibrary.simpleMessage("Send"),
     "label_enviaranunciosgrupo": MessageLookupByLibrary.simpleMessage(
       "Send announcements to the group",
+    ),
+    "label_enviarcomunicado": MessageLookupByLibrary.simpleMessage(
+      "Send Communication",
     ),
     "label_enviarcomunicados": MessageLookupByLibrary.simpleMessage(
       "Send communications",
@@ -69,10 +78,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "label_link_quiero_inscribirme": MessageLookupByLibrary.simpleMessage(
       "I want to register",
     ),
+    "label_link_quiero_inscribirmeexp": MessageLookupByLibrary.simpleMessage(
+      "Enter your email address to register",
+    ),
     "label_listaestudiantes": MessageLookupByLibrary.simpleMessage(
       "Student List",
     ),
-    "label_mensaje": MessageLookupByLibrary.simpleMessage("Message:"),
+    "label_mensaje": MessageLookupByLibrary.simpleMessage("Message"),
     "label_metodologos": MessageLookupByLibrary.simpleMessage("Methodologists"),
     "label_nohorario": MessageLookupByLibrary.simpleMessage(
       "There is no schedule",
@@ -106,12 +118,12 @@ class MessageLookup extends MessageLookupByLibrary {
       "Upload the following documents in PDF format",
     ),
     "label_titmisdeportes": MessageLookupByLibrary.simpleMessage("My Sports"),
-    "label_titulo": MessageLookupByLibrary.simpleMessage("Tittle:"),
+    "label_titulo": MessageLookupByLibrary.simpleMessage("Tittle"),
     "label_tituloactudocs": MessageLookupByLibrary.simpleMessage(
       "update documents",
     ),
     "label_token": MessageLookupByLibrary.simpleMessage("token"),
-    "label_usuario": MessageLookupByLibrary.simpleMessage("user:"),
+    "label_usuario": MessageLookupByLibrary.simpleMessage("user"),
     "label_veralumnosinscritos": MessageLookupByLibrary.simpleMessage(
       "Ver todos los alumnos inscritos",
     ),
@@ -128,8 +140,17 @@ class MessageLookup extends MessageLookupByLibrary {
     "msj_contrasenas_iguales": MessageLookupByLibrary.simpleMessage(
       "Passwords match",
     ),
+    "msj_correoinvalido": MessageLookupByLibrary.simpleMessage(
+      "Enter a valid email address",
+    ),
     "msj_docsenviados": MessageLookupByLibrary.simpleMessage(
       "Documentos enviados exitosamente",
+    ),
+    "msj_enviocomunicadoerror": MessageLookupByLibrary.simpleMessage(
+      "The statement could not be sent",
+    ),
+    "msj_enviocomunicadoexitoso": MessageLookupByLibrary.simpleMessage(
+      "The statement has been sent",
     ),
     "msj_errorenvdocs": MessageLookupByLibrary.simpleMessage(
       "Error sending documents:",

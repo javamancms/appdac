@@ -607,6 +607,7 @@ class ClienteEstudiantes {
 
   Future<String?> consultarComunicadosCSV({required String idDeporte}) async {
     try {
+      print('consultarComunicadosCSV: $idDeporte');
       String url = AppConfig.instance.parametros['urlestudianteVerComunicados'];
 
       // Headers para la petición
@@ -620,13 +621,14 @@ class ClienteEstudiantes {
         'id_deporte': idDeporte,
       };
 
+      print('consultarComunicadosCSV paso 2: ${json.encode(body)}}');
       // Realizar la petición POST
       final response = await http.post(
         Uri.parse(url),
         headers: headers,
         body: json.encode(body),
       );
-
+      print('consultarComunicadosCSV paso 3: ${response.body}');
       // Verificar el código de estado
       if (response.statusCode == 200) {
         // Decodificar la respuesta
@@ -681,6 +683,8 @@ class ClienteEstudiantes {
       );
 
       if (response.statusCode == 200) {
+        print('>>lista deportes: ${response.body}');
+
         final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
         return DeportesResponse.fromJson(jsonResponse);
       } else {
@@ -689,7 +693,8 @@ class ClienteEstudiantes {
       }
     } catch (e) {
       // Manejo de errores de conexión
-       throw Exception('Error al conectar con el servidor: $e');
+      print('Error al conectar con el servidor: $e');
+      throw Exception('Error al conectar con el servidor: $e');
     }
   }
 

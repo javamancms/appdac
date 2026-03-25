@@ -1,3 +1,4 @@
+import 'package:appdac/a_presentacion/tema/tema.dart';
 import 'package:flutter/material.dart';
 
 class PanelIconoInfo extends StatefulWidget {
@@ -73,11 +74,7 @@ class _PanelIconoInfoState extends State<PanelIconoInfo> {
                 Text(
                   widget.info,
                   textAlign: TextAlign.left,
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: textColor,
-                  ),
+                  style: AppColors.textosubtituloblanco
                 ),
 
                 // Texto infoAlterna sin negrita (solo si existe)

@@ -24,9 +24,7 @@ void mostrarMensajeInferior(
   );
 
   // Determinar color de fondo con fallback
-  final Color backgroundColor = colorFondo ?? 
-    theme.snackBarTheme.backgroundColor ?? 
-    theme.primaryColor.withOpacity(0.95);
+  final Color backgroundColor = colorFondo ?? theme.snackBarTheme.backgroundColor ?? theme.primaryColor.withOpacity(0.95);
 
   // Configurar contenido
   Widget contenido = icono != null
@@ -71,7 +69,6 @@ void mostrarMensajeInferior(
   );
 }
 
-
 Future<String?> mostrarDialogoRecuperarContrasena(BuildContext context) async {
   String? usuarioRecuperado;
   final TextEditingController controller = TextEditingController();
@@ -98,9 +95,10 @@ Future<String?> mostrarDialogoRecuperarContrasena(BuildContext context) async {
                 Text(
                   S.of(context).label_recuperarcontrasena,
                   style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
+                    fontSize: AppColors.fuenteTamanoSubtitulo,
+                    fontWeight: FontWeight.bold, // Esto ya hace el texto en negrita
                     color: AppColors.verde,
+                    fontFamily: AppColors.fuenteNombre,
                   ),
                 ),
 
@@ -116,44 +114,27 @@ Future<String?> mostrarDialogoRecuperarContrasena(BuildContext context) async {
 
                 // Campo de texto para el usuario
                 Form(
-                  key: formKey,
-                  child: TextFormField(
-                    controller: controller,
-                    decoration: InputDecoration(
-                      labelText: S.of(context).label_usuario,
-                      hintText: S.of(context).label_usuario,
-                      prefixIcon: const Icon(Icons.person_outline),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide(color: AppColors.verde), // Borde por defecto verde
+                    key: formKey,
+                    child: TextFormField(
+                      controller: controller,
+                      decoration: DecoracionCampoVerde(
+                        hintLetrero: S.of(context).label_usuario,
+                        letrero: S.of(context).label_usuario
                       ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide(color: AppColors.verde), // Borde cuando está habilitado
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide(color: AppColors.verde, width: 2), // Borde cuando está enfocado
-                      ),
-                      filled: true,
-                      fillColor: AppColors.blanco,
-                      labelStyle: TextStyle(color: AppColors.verde), // Color del label
-                    ),
-                    validator: (value) {
-                      if (value == null || value.trim().isEmpty) {
-                        return S.of(context).label_ingrese_usuario;
-                      }
-                      return null;
-                    },
-                    textInputAction: TextInputAction.done,
-                  ),
-                ),
+                      validator: (value) {
+                        if (value == null || value.trim().isEmpty) {
+                          return S.of(context).label_ingrese_usuario;
+                        }
+                        return null;
+                      },
+                      textInputAction: TextInputAction.done,
+                    )),
 
-                const SizedBox(height: 32),
+                const SizedBox(height: 12),
 
                 // Botones alineados a la derecha
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     // Botón Cancelar
                     TextButton(
@@ -163,7 +144,7 @@ Future<String?> mostrarDialogoRecuperarContrasena(BuildContext context) async {
                       style: AppColors.botonblanco,
                       child: Text(
                         S.of(context).label_cancelar,
-                        style: TextStyle(fontSize: 16),
+                        style: TextStyle(fontFamily: AppColors.fuenteNombre, fontSize: AppColors.fuenteTamanoSubtitulo, fontWeight: FontWeight.bold),
                       ),
                     ),
 
@@ -181,8 +162,9 @@ Future<String?> mostrarDialogoRecuperarContrasena(BuildContext context) async {
                       child: Text(
                         S.of(context).label_enviar,
                         style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
+                          fontFamily: AppColors.fuenteNombre,
+                          fontSize: AppColors.fuenteTamanoSubtitulo,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
@@ -196,6 +178,7 @@ Future<String?> mostrarDialogoRecuperarContrasena(BuildContext context) async {
     },
   );
 }
+
 
 void mostrarDialogoNuevaContrasenaValidacion(BuildContext context, String usuario) {
   final TextEditingController tokenController = TextEditingController();
@@ -218,19 +201,25 @@ void mostrarDialogoNuevaContrasenaValidacion(BuildContext context, String usuari
           return AlertDialog(
             title: Text(
               S.of(context).label_nueva_contrasena,
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: TextStyle(fontWeight: FontWeight.bold, fontFamily: AppColors.fuenteNombre, color: AppColors.verde, fontSize: AppColors.fuenteTamanoSubtitulo),
             ),
             content: SingleChildScrollView(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(S.of(context).label_nueva_contrasenaexp),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      S.of(context).label_nueva_contrasenaexp,
+                      style: AppColors.textoinformativogris,
+                    ),
+                  ),
                   const SizedBox(height: 20),
                   TextField(
                     controller: tokenController,
-                    decoration: InputDecoration(
-                      labelText: S.of(context).label_token,
-                      border: OutlineInputBorder(),
+                    decoration: DecoracionCampoVerde(
+                      letrero: S.of(context).label_token,
+                      hintLetrero: S.of(context).label_token,
                     ),
                   ),
                   const SizedBox(height: 16),
@@ -238,21 +227,20 @@ void mostrarDialogoNuevaContrasenaValidacion(BuildContext context, String usuari
                     controller: contrasenaController,
                     obscureText: true,
                     onChanged: (_) => validarContrasenas(),
-                    decoration: InputDecoration(
-                      labelText: S.of(context).label_nueva_contrasena,
-                      border: OutlineInputBorder(),
-                    ),
+                    decoration: DecoracionCampoVerde(
+                      letrero: S.of(context).label_nueva_contrasena,
+                      hintLetrero: S.of(context).label_nueva_contrasena
+                    )
                   ),
                   const SizedBox(height: 16),
                   TextField(
                     controller: confirmacionController,
                     obscureText: true,
                     onChanged: (_) => validarContrasenas(),
-                    decoration: InputDecoration(
-                      labelText: S.of(context).label_nueva_contrasenaconfirmar,
-                      border: OutlineInputBorder(),
-                      errorText: contrasenasCoinciden || confirmacionController.text.isEmpty ? null : S.of(context).msj_contrasenas_diferentes,
-                    ),
+                    decoration: DecoracionCampoVerde(
+                      letrero: S.of(context).label_nueva_contrasenaconfirmar,
+                      hintLetrero: S.of(context).label_nueva_contrasenaconfirmar,
+                    )
                   ),
                   if (contrasenasCoinciden && contrasenaController.text.isNotEmpty)
                     Padding(
@@ -271,9 +259,11 @@ void mostrarDialogoNuevaContrasenaValidacion(BuildContext context, String usuari
                 ],
               ),
             ),
+            actionsAlignment: MainAxisAlignment.center, // Botones centrados
             actions: [
               TextButton(
                 onPressed: () => Navigator.pop(context),
+                style: AppColors.botonblanco,
                 child: Text(S.of(context).label_cancelar),
               ),
               ElevatedButton(
@@ -285,6 +275,7 @@ void mostrarDialogoNuevaContrasenaValidacion(BuildContext context, String usuari
                         mostrarMensajeInferior(context, respuesta.mensaje!);
                       }
                     : null,
+                style: AppColors.botonverde,
                 child: Text(S.of(context).label_enviar),
               ),
             ],
