@@ -1,7 +1,10 @@
+import 'package:appdac/a_presentacion/tema/iconos.dart';
+import 'package:appdac/a_presentacion/tema/tema.dart';
 import 'package:appdac/b_control/bsdeportes.dart';
 import 'package:appdac/b_control/bsprofesores.dart';
 import 'package:appdac/b_control/bssesion.dart';
 import 'package:appdac/c_integracion/intprofesores.dart';
+import 'package:appdac/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -66,12 +69,10 @@ class _TomarAsistenciaScreenState extends State<TomarAsistenciaScreen> {
         return StatefulBuilder(
           builder: (context, setState) {
             return AlertDialog(
-              title: const Text(
-                'Detalles Asistencia',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.green,
-                ),
+              backgroundColor: AppColors.blanco,
+              title: Text(
+                S.of(context).label_detallesasistencia,
+                style: AppColors.textotituloverde,
               ),
               content: SingleChildScrollView(
                 child: Column(
@@ -79,60 +80,61 @@ class _TomarAsistenciaScreenState extends State<TomarAsistenciaScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // Selector de lugar
-                    const Text(
-                      'Lugar:',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 14,
-                      ),
+                    Text(
+                      S.of(context).label_lugar,
+                      style: AppColors.textosubtitulonegro,
                     ),
                     const SizedBox(height: 8),
+
+                    // DropdownButton simplificado y con padding interno
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 12),
                       decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey.shade300),
-                        borderRadius: BorderRadius.circular(8),
+                        color: AppColors.gris.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(
+                          color: AppColors.verde,
+                          width: 1,
+                        ),
                       ),
-                      child: DropdownButton<String>(
-                        value: lugarSeleccionado,
-                        isExpanded: true,
-                        icon: const Icon(Icons.arrow_drop_down),
-                        elevation: 16,
-                        underline: const SizedBox(),
-                        onChanged: (String? nuevoValor) {
-                          setState(() {
-                            lugarSeleccionado = nuevoValor!;
-                          });
-                        },
-                        items: opcionesLugar.map<DropdownMenuItem<String>>((String valor) {
-                          return DropdownMenuItem<String>(
-                            value: valor,
-                            child: Text(valor),
-                          );
-                        }).toList(),
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 12), // 👈 SEPARACIÓN DEL MARGEN IZQUIERDO
+                        child: DropdownButton<String>(
+                          value: lugarSeleccionado,
+                          isExpanded: true,
+                          icon: const Icon(Icons.arrow_drop_down),
+                          elevation: 16,
+                          underline: const SizedBox(),
+                          onChanged: (String? nuevoValor) {
+                            setState(() {
+                              lugarSeleccionado = nuevoValor!;
+                            });
+                          },
+                          items: opcionesLugar.map<DropdownMenuItem<String>>((String valor) {
+                            return DropdownMenuItem<String>(
+                              value: valor,
+                              child: Text(
+                                valor,
+                                style: AppColors.textosecundarionegro,
+                              ),
+                            );
+                          }).toList(),
+                        ),
                       ),
                     ),
+
                     const SizedBox(height: 16),
 
                     // Campo de observaciones
-                    const Text(
-                      'Observaciones:',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 14,
-                      ),
+                    Text(
+                      S.of(context).label_observaciones,
+                      style: AppColors.textosubtitulonegro,
                     ),
                     const SizedBox(height: 8),
                     TextField(
                       controller: observacionesController,
                       maxLines: 3,
-                      decoration: InputDecoration(
-                        hintText: 'Ingrese observaciones adicionales...',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        filled: true,
-                        fillColor: Colors.grey.shade50,
+                      decoration: DecoracionCampoVerdeFondoGris(
+                        letrero: S.of(context).label_observacionesadicionales,
                       ),
                     ),
 
@@ -149,21 +151,15 @@ class _TomarAsistenciaScreenState extends State<TomarAsistenciaScreen> {
                         ),
                         const SizedBox(width: 8),
                         Text(
-                          'Estudiantes: ${estudiantesFiltrados.length}',
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14,
-                          ),
+                          '${S.of(context).label_estudiantes}: ${estudiantesFiltrados.length}',
+                          style: AppColors.textosubtitulonegro,
                         ),
                       ],
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      'Se registrará la asistencia para todos los estudiantes mostrados.',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.grey.shade600,
-                      ),
+                      S.of(context).label_observacionesadicionalesexp,
+                      style: AppColors.textoinformativogris,
                     ),
                   ],
                 ),
@@ -174,8 +170,9 @@ class _TomarAsistenciaScreenState extends State<TomarAsistenciaScreen> {
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  child: const Text(
-                    'Cancelar',
+                  style: AppColors.botonblanco,
+                  child: Text(
+                    S.of(context).label_cancelar,
                     style: TextStyle(
                       color: Colors.grey,
                       fontSize: 16,
@@ -185,7 +182,7 @@ class _TomarAsistenciaScreenState extends State<TomarAsistenciaScreen> {
 
                 // Botón Guardar
                 ElevatedButton(
-                  onPressed: () async{
+                  onPressed: () async {
                     await _guardarAsistencia(
                       context,
                       controllistadeporte!,
@@ -195,14 +192,8 @@ class _TomarAsistenciaScreenState extends State<TomarAsistenciaScreen> {
                     );
                     Navigator.of(context).pop();
                   },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green,
-                    foregroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
-                  child: const Text('Guardar'),
+                  style: AppColors.botonverde,
+                  child: Text(S.of(context).label_enviar),
                 ),
               ],
             );
@@ -227,9 +218,34 @@ class _TomarAsistenciaScreenState extends State<TomarAsistenciaScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Tomar Asistencia'),
-        backgroundColor: Colors.green,
-        foregroundColor: Colors.white,
+        backgroundColor: AppColors.blanco,
+        title: SizedBox(
+          width: double.infinity,
+          child: Text(
+            S.of(context).label_tomarasistencia,
+            style: AppColors.textotitulonegro,
+            maxLines: 2, // Permite hasta 2 líneas
+            overflow: TextOverflow.ellipsis, // Muestra "..." si es muy largo
+            textAlign: TextAlign.center,
+          ),
+        ),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios),
+          onPressed: () => Navigator.of(context).pop(),
+          color: AppColors.verde,
+        ),
+        centerTitle: true,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: IconoAsistencia(
+              color: AppColors.blanco,
+              backgroundColor: AppColors.verde,
+              size: 30,
+              borderRadius: 10,
+            ),
+          ),
+        ],
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(60),
           child: Padding(
@@ -237,180 +253,155 @@ class _TomarAsistenciaScreenState extends State<TomarAsistenciaScreen> {
             child: TextField(
               controller: searchController,
               onChanged: _actualizarFiltro,
-              decoration: InputDecoration(
-                hintText: 'Buscar estudiante...',
-                prefixIcon: const Icon(Icons.search, color: Colors.white),
-                suffixIcon: filtroBusqueda.isNotEmpty
-                    ? IconButton(
-                        icon: const Icon(Icons.clear, color: Colors.white),
-                        onPressed: () {
-                          searchController.clear();
-                          _actualizarFiltro('');
-                        },
-                      )
-                    : null,
-                filled: true,
-                fillColor: Colors.white.withOpacity(0.2),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(25),
-                  borderSide: BorderSide.none,
-                ),
-                hintStyle: const TextStyle(color: Colors.white70),
-              ),
-              style: const TextStyle(color: Colors.white),
+              decoration: DecoracionCampoVerde(icono: Icons.search, letrero: S.of(context).label_buscarestudiante),
+              style: AppColors.textosubtitulonegro,
             ),
           ),
         ),
       ),
-      body: estudiantesFiltrados.isEmpty
-          ? Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    filtroBusqueda.isEmpty ? Icons.people_outline : Icons.search_off,
-                    size: 80,
-                    color: Colors.grey.shade400,
-                  ),
-                  const SizedBox(height: 16),
-                  Text(
-                    filtroBusqueda.isEmpty ? 'No hay estudiantes registrados' : 'No se encontraron estudiantes',
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.grey.shade600,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ],
-              ),
-            )
-          : ListView.builder(
-              padding: const EdgeInsets.all(12),
-              itemCount: estudiantesFiltrados.length,
-              itemBuilder: (context, index) {
-                EstudianteDeporte estudiante = estudiantesFiltrados[index];
-
-                // Inicializar estado si no existe
-                if (!estadosAsistencia.containsKey(estudiante.id)) {
-                  estadosAsistencia[estudiante.id] = 'Asistió';
-                }
-
-                return Card(
-                  elevation: 2,
-                  margin: const EdgeInsets.only(bottom: 8),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                    child: Row(
-                      children: [
-                        // Icono de estudiante
-                        Container(
-                          width: 40,
-                          height: 40,
-                          decoration: BoxDecoration(
-                            color: Colors.green.shade100,
-                            shape: BoxShape.circle,
-                          ),
-                          child: Icon(
-                            Icons.person,
-                            size: 24,
-                            color: Colors.green.shade800,
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-
-                        // Nombre del estudiante
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                estudiante.nombre,
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                              Text(
-                                'Matrícula: ${estudiante.matriculas[0]}',
-                                style: const TextStyle(
-                                  fontSize: 12,
-                                  color: Colors.grey,
-                                ),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                              Text(
-                                'Estado: ${estudiante.status}',
-                                style: const TextStyle(
-                                  fontSize: 12,
-                                  color: Colors.grey,
-                                ),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ],
-                          ),
-                        ),
-
-                        const SizedBox(width: 8),
-
-                        // Selector de asistencia compacto
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 8),
-                          decoration: BoxDecoration(
-                            color: Colors.grey.shade50,
-                            borderRadius: BorderRadius.circular(8),
-                            border: Border.all(
-                              color: Colors.grey.shade300,
-                            ),
-                          ),
-                          child: DropdownButton<String>(
-                            value: estudiante.status,
-                            icon: const Icon(Icons.arrow_drop_down, size: 20),
-                            elevation: 8,
-                            style: TextStyle(
-                              color: Colors.green.shade800,
-                              fontSize: 14,
-                            ),
-                            underline: const SizedBox(),
-                            onChanged: (String? nuevoValor) {
-                              setState(() {
-                                estudiante.status = nuevoValor!;
-                              });
-                            },
-                            items: opcionesAsistencia.map<DropdownMenuItem<String>>((String valor) {
-                              return DropdownMenuItem<String>(
-                                value: valor,
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Icon(
-                                      _getIconForEstado(valor),
-                                      size: 16,
-                                      color: _getColorForEstado(valor),
-                                    ),
-                                    const SizedBox(width: 4),
-                                    Text(
-                                      valor,
-                                      style: const TextStyle(fontSize: 13),
-                                    ),
-                                  ],
-                                ),
-                              );
-                            }).toList(),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              },
+      body: Container(
+          decoration: BoxDecoration(
+            color: AppColors.blanco,
+            image: DecorationImage(
+              image: AssetImage('assets/img/logoirdcotafondo.png'),
+              fit: BoxFit.contain, // La imagen se muestra completa sin recortarse
+              alignment: Alignment.center, // Centrada en la pantalla
+              opacity: 0.3,
+              // Opcional: color de fondo si la imagen no cubre toda el área
+              colorFilter: ColorFilter.mode(Colors.white, BlendMode.dstOver),
             ),
+          ),
+          child: estudiantesFiltrados.isEmpty
+              ? Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        filtroBusqueda.isEmpty ? Icons.people_outline : Icons.search_off,
+                        size: 80,
+                        color: Colors.grey.shade400,
+                      ),
+                      const SizedBox(height: 16),
+                      Text(
+                        filtroBusqueda.isEmpty ? 'No hay estudiantes registrados' : 'No se encontraron estudiantes',
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.grey.shade600,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              : ListView.builder(
+                  padding: const EdgeInsets.all(12),
+                  itemCount: estudiantesFiltrados.length,
+                  itemBuilder: (context, index) {
+                    EstudianteDeporte estudiante = estudiantesFiltrados[index];
+
+                    // Inicializar estado si no existe
+                    if (!estadosAsistencia.containsKey(estudiante.id)) {
+                      estadosAsistencia[estudiante.id] = 'Asistió';
+                    }
+
+                    return Card(
+                      elevation: 2,
+                      margin: const EdgeInsets.only(bottom: 8),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                        child: Row(
+                          children: [
+                            // Icono de estudiante
+
+                            const SizedBox(width: 12),
+
+                            // Nombre del estudiante
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    estudiante.nombre,
+                                    style: AppColors.textosubtitulonegro,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                  Text(
+                                    '${S.of(context).label_matricula}: ${estudiante.matriculas[0]}',
+                                    style: AppColors.textosecundariogris,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                  Text(
+                                    '${S.of(context).label_estado}: ${estudiante.status}',
+                                    style: const TextStyle(
+                                      fontSize: 12,
+                                      color: Colors.grey,
+                                    ),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ],
+                              ),
+                            ),
+
+                            const SizedBox(width: 8),
+
+                            // Selector de asistencia compacto
+                            Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 8),
+                              decoration: BoxDecoration(
+                                color: Colors.grey.shade50,
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(
+                                  color: Colors.grey.shade300,
+                                ),
+                              ),
+                              child: DropdownButton<String>(
+                                value: estudiante.status,
+                                icon: const Icon(Icons.arrow_drop_down, size: 20),
+                                elevation: 8,
+                                style: TextStyle(
+                                  color: Colors.green.shade800,
+                                  fontSize: 14,
+                                ),
+                                underline: const SizedBox(),
+                                onChanged: (String? nuevoValor) {
+                                  setState(() {
+                                    estudiante.status = nuevoValor!;
+                                  });
+                                },
+                                items: opcionesAsistencia.map<DropdownMenuItem<String>>((String valor) {
+                                  return DropdownMenuItem<String>(
+                                    value: valor,
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Icon(
+                                          _getIconForEstado(valor),
+                                          size: 16,
+                                          color: _getColorForEstado(valor),
+                                        ),
+                                        const SizedBox(width: 4),
+                                        Text(
+                                          valor,
+                                          style: const TextStyle(fontSize: 13),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                }).toList(),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                )),
       floatingActionButton: Padding(
         padding: const EdgeInsets.only(bottom: 16, right: 16),
         child: SizedBox(
@@ -418,26 +409,15 @@ class _TomarAsistenciaScreenState extends State<TomarAsistenciaScreen> {
           height: 45,
           child: ElevatedButton(
             onPressed: estudiantesFiltrados.isEmpty ? null : _mostrarDialogoDetalles,
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.green,
-              foregroundColor: Colors.white,
-              disabledBackgroundColor: Colors.grey.shade300,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(25),
-              ),
-              elevation: 5,
-            ),
-            child: const Row(
+            style: AppColors.botonverde,
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.save, size: 18),
+                //Icon(Icons.save, size: 18),
                 SizedBox(width: 6),
                 Text(
-                  'Guardar',
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  S.of(context).label_enviar,
+                  style: AppColors.textosubtituloblanco,
                 ),
               ],
             ),

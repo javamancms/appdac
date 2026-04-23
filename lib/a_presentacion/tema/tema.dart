@@ -12,6 +12,7 @@ class AppColors {
 
   static const Color rojo = Color.fromARGB(255, 232, 74, 74);
   static const Color azul = Color.fromARGB(255, 17, 184, 235);
+  static const Color azulrey = Colors.blue;
   static const Color amarillo = Color.fromARGB(255, 255, 207, 6);
   static const Color cafe = Color.fromARGB(255, 130, 72, 15);
   static const Color blanco = Colors.white;
@@ -87,19 +88,61 @@ class AppColors {
     fontWeight: FontWeight.bold,
     color: AppColors.negro,
   );
-  
+
+  static TextStyle textosubtituloverde = TextStyle(
+    fontFamily: fuenteNombre,
+    fontSize: fuenteTamanoSubtitulo,
+    fontWeight: FontWeight.bold,
+    color: AppColors.verde,
+  );
+
+  static TextStyle textosubtitulogris = TextStyle(
+    fontFamily: fuenteNombre,
+    fontSize: fuenteTamanoSubtitulo,
+    fontWeight: FontWeight.bold,
+    color: AppColors.gris,
+  );
+
   static TextStyle textosubtitulorojo = TextStyle(
     fontFamily: fuenteNombre,
     fontSize: fuenteTamanoSubtitulo,
     fontWeight: FontWeight.bold,
     color: AppColors.rojo,
   );
-  
+
   static TextStyle textotitulonegro = TextStyle(
     fontFamily: fuenteNombre,
     fontSize: fuenteTamanoTitulo,
     fontWeight: FontWeight.bold,
     color: AppColors.negro,
+  );
+
+  static TextStyle textosecundarionegro = TextStyle(
+    fontFamily: fuenteNombre,
+    fontSize: fuenteTamanoSecundario,
+    fontWeight: FontWeight.bold,
+    color: AppColors.negro,
+  );
+
+  static TextStyle textosecundarioblanco = TextStyle(
+    fontFamily: fuenteNombre,
+    fontSize: fuenteTamanoSecundario,
+    fontWeight: FontWeight.bold,
+    color: AppColors.blanco,
+  );
+  
+  static TextStyle textosecundariogris = TextStyle(
+    fontFamily: fuenteNombre,
+    fontSize: fuenteTamanoSecundario,
+    fontWeight: FontWeight.bold,
+    color: AppColors.gris,
+  );
+
+  static TextStyle textosecundarioverde = TextStyle(
+    fontFamily: fuenteNombre,
+    fontSize: fuenteTamanoSecundario,
+    fontWeight: FontWeight.bold,
+    color: AppColors.verde,
   );
 
   static TextStyle textosubtituloblanco = TextStyle(
@@ -137,6 +180,33 @@ class DecoracionCampoVerde extends InputDecoration {
           ),
           filled: true,
           fillColor: AppColors.blanco,
+          //labelStyle: TextStyle(color: AppColors.verde, fontFamily: AppColors.fuenteNombre, fontSize: AppColors.fuenteTamanoSubtitulo, fontWeight: FontWeight.bold), // Color del label
+          labelStyle: TextStyle(color: AppColors.verde, fontWeight: FontWeight.bold, fontFamily: AppColors.fuenteNombre, fontSize: AppColors.fuenteTamanoSecundario), // Color del label siempre rojo
+          hintStyle: TextStyle(color: AppColors.grisclaro, fontWeight: FontWeight.bold, fontFamily: AppColors.fuenteNombre, fontSize: AppColors.fuenteTamanoSecundario), // Colo
+        );
+}
+
+class DecoracionCampoVerdeFondoGris extends InputDecoration {
+  DecoracionCampoVerdeFondoGris({letrero, hintLetrero, IconData? icono})
+      : super(
+          labelText: letrero,
+          hintText: hintLetrero,
+          
+          prefixIcon: icono != null ? Icon(icono) : null,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: BorderSide(color: AppColors.verde), // Borde por defecto verde
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: BorderSide(color: AppColors.verde), // Borde cuando está habilitado
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: BorderSide(color: AppColors.verde, width: 2), // Borde cuando está enfocado
+          ),
+          filled: true,
+          fillColor: AppColors.grisclaro.withOpacity(0.3),
           //labelStyle: TextStyle(color: AppColors.verde, fontFamily: AppColors.fuenteNombre, fontSize: AppColors.fuenteTamanoSubtitulo, fontWeight: FontWeight.bold), // Color del label
           labelStyle: TextStyle(color: AppColors.verde, fontWeight: FontWeight.bold, fontFamily: AppColors.fuenteNombre, fontSize: AppColors.fuenteTamanoSecundario), // Color del label siempre rojo
           hintStyle: TextStyle(color: AppColors.grisclaro, fontWeight: FontWeight.bold, fontFamily: AppColors.fuenteNombre, fontSize: AppColors.fuenteTamanoSecundario), // Colo

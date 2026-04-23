@@ -1,3 +1,4 @@
+import 'package:appdac/a_presentacion/tema/tema.dart';
 import 'package:appdac/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
@@ -8,6 +9,7 @@ class HorarioScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: AppColors.blanco,
         title: Text(
           S.of(context).label_horario,
           style: TextStyle(

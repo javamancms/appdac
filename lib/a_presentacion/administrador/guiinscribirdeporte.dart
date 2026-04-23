@@ -69,6 +69,7 @@ class VerDeportesEstudiantesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: AppColors.blanco,
         title: Text('Inscribir Deportes'),
       ),
       body: Center(

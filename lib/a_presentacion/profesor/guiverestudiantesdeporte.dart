@@ -1,6 +1,7 @@
 import 'package:appdac/a_presentacion/tema/tema.dart';
 import 'package:appdac/b_control/bsprofesores.dart';
 import 'package:appdac/c_integracion/intprofesores.dart';
+import 'package:appdac/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -13,22 +14,68 @@ class DeporteEstudiantesScreen extends StatelessWidget {
     List<EstudianteDeporte> estudiantes = controllistadeporte.estudiantes;
 
     return Scaffold(
-      appBar: AppBar(
+        /*appBar: AppBar(
         title: Text('Estudiantes (${estudiantes.length})'),
-      ),
-      body: estudiantes.isEmpty
-          ? const Center(
-              child: Text('No hay estudiantes para mostrar'),
-            )
-          : ListView.builder(
-              padding: const EdgeInsets.all(12),
-              itemCount: estudiantes.length,
-              itemBuilder: (context, index) {
-                final estudiante = estudiantes[index];
-                return EstudianteCard(estudiante: estudiante);
-              },
+      ),*/
+        appBar: AppBar(
+          backgroundColor: AppColors.blanco,
+          title: Center(
+            child: Text(
+              '${S.of(context).label_estudiantes} (${estudiantes.length})',
+              style: AppColors.textotitulonegro,
             ),
-    );
+          ),
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios),
+            onPressed: () => Navigator.of(context).pop(),
+            color: AppColors.verde,
+          ),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: AppColors.verde,
+                ),
+                child: Icon(
+                  Icons.menu_book,
+                  size: 30,
+                  color: AppColors.blanco,
+                ),
+              ),
+            )
+            /*IconoDeporte(
+              color: AppColors.blanco,
+              backgroundColor: AppColors.verde,
+              size: 30,
+              borderRadius: 10,
+            )*/
+          ],
+        ),
+        body: Container(
+          decoration: BoxDecoration(
+            color: AppColors.blanco, 
+            image: DecorationImage(
+              image: AssetImage('assets/img/logoirdcotafondo.png'),
+              fit: BoxFit.contain,
+              alignment: Alignment.center,
+              opacity: 0.3,
+              // Elimina el colorFilter
+            ),
+          ),
+          child: estudiantes.isEmpty
+              ? const Center(
+                  child: Text('No hay estudiantes para mostrar'),
+                )
+              : ListView.builder(
+                  padding: const EdgeInsets.all(12),
+                  itemCount: estudiantes.length,
+                  itemBuilder: (context, index) {
+                    final estudiante = estudiantes[index];
+                    return EstudianteCard(estudiante: estudiante);
+                  },
+                ),
+        ));
   }
 }
 
@@ -66,7 +113,7 @@ class _EstudianteCardState extends State<EstudianteCard> {
                 _isExpanded = !_isExpanded;
               });
             },
-            leading: Container(
+            /*leading: Container(
               width: 50,
               height: 50,
               decoration: BoxDecoration(
@@ -78,41 +125,31 @@ class _EstudianteCardState extends State<EstudianteCard> {
                 color: Colors.blue,
                 size: 30,
               ),
-            ),
+            ),*/
             title: Row(
               children: [
                 Expanded(
                   child: Text(
                     estudiante.nombre,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                    ),
+                    style: AppColors.textosubtitulonegro,
                   ),
                 ),
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    color: estudiante.activo ? Colors.green : Colors.red,
+                    color: estudiante.activo ? AppColors.verde : AppColors.rojo,
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Text(
-                    estudiante.activo ? 'Activo' : 'Inactivo',
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 12,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    estudiante.activo ? S.of(context).label_activo : S.of(context).label_inactivo,
+                    style: AppColors.textosecundarioblanco,
                   ),
                 ),
               ],
             ),
             subtitle: Text(
               'ID: ${estudiante.idEstudiante}',
-              style: const TextStyle(
-                fontSize: 14,
-                color: Colors.grey,
-              ),
+              style: AppColors.textosecundarionegro,
             ),
             trailing: Icon(
               _isExpanded ? Icons.expand_less : Icons.expand_more,
@@ -139,14 +176,14 @@ class _EstudianteCardState extends State<EstudianteCard> {
                   // Email
                   _buildInfoRow(
                     icon: Icons.email,
-                    label: 'Email',
+                    label: S.of(context).label_email,
                     value: estudiante.email,
                   ),
 
                   // EPS
                   _buildInfoRow(
                     icon: Icons.health_and_safety,
-                    label: 'EPS',
+                    label: S.of(context).label_eps,
                     value: estudiante.eps,
                   ),
 
@@ -154,7 +191,7 @@ class _EstudianteCardState extends State<EstudianteCard> {
                   if (estudiante.alergias != null && estudiante.alergias!.isNotEmpty)
                     _buildInfoRow(
                       icon: Icons.warning_amber_rounded,
-                      label: 'Alergias',
+                      label: S.of(context).label_alergias,
                       value: estudiante.alergias!.join(', '),
                       color: Colors.orange,
                     ),
@@ -163,7 +200,7 @@ class _EstudianteCardState extends State<EstudianteCard> {
                   if (estudiante.nombreMedicamento != null && estudiante.nombreMedicamento!.isNotEmpty)
                     _buildInfoRow(
                       icon: Icons.medication,
-                      label: 'Medicamentos',
+                      label: S.of(context).label_tomamedicamentos,
                       value: estudiante.nombreMedicamento!,
                       color: Colors.purple,
                     ),
@@ -172,7 +209,7 @@ class _EstudianteCardState extends State<EstudianteCard> {
                   if (estudiante.condicionesMedicas != null && estudiante.condicionesMedicas!.isNotEmpty)
                     _buildInfoRow(
                       icon: Icons.medical_services,
-                      label: 'Condiciones médicas',
+                      label: S.of(context).label_condicionesmedicas,
                       value: estudiante.condicionesMedicas!.join(', '),
                       color: Colors.red,
                     ),
@@ -180,7 +217,7 @@ class _EstudianteCardState extends State<EstudianteCard> {
                   // Estado de revisión
                   _buildInfoRow(
                     icon: Icons.assignment,
-                    label: 'Estado de revisión',
+                    label: S.of(context).label_estadoderevision,
                     value: estudiante.estadoRevision,
                     color: _getEstadoColor(estudiante.estadoRevision),
                   ),
@@ -206,7 +243,7 @@ class _EstudianteCardState extends State<EstudianteCard> {
           Icon(
             icon,
             size: 20,
-            color: color ?? Colors.grey.shade600,
+            color: color ?? AppColors.gris,
           ),
           const SizedBox(width: 12),
           Expanded(
@@ -215,20 +252,12 @@ class _EstudianteCardState extends State<EstudianteCard> {
               children: [
                 Text(
                   label,
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.grey.shade600,
-                    fontWeight: FontWeight.w500,
-                  ),
+                  style: AppColors.textoinformativogris,
                 ),
                 const SizedBox(height: 2),
                 Text(
-                  value.isNotEmpty ? value : 'No especificado',
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: color ?? Colors.black87,
-                    fontWeight: value.isNotEmpty ? FontWeight.normal : FontWeight.w300,
-                  ),
+                  value.isNotEmpty ? value : '---',
+                  style: AppColors.textosecundarioverde,
                 ),
               ],
             ),

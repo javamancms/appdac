@@ -2,6 +2,7 @@ import 'package:appdac/a_presentacion/dialogos_generales/dialogos.dart';
 import 'package:appdac/a_presentacion/tema/tema.dart';
 import 'package:appdac/c_integracion/intmetodologo.dart';
 import 'package:appdac/config/log.dart';
+import 'package:appdac/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
 class ControlListaMetodologos extends ChangeNotifier {
@@ -49,9 +50,9 @@ class ControlComentarios extends ChangeNotifier {
 
   Future<void> enviarComentarioCurso(BuildContext context, String idDeporte, String comentario) async {
       if(await enviarComentario(idDeporte, comentario)){
-        mostrarMensajeInferior(context, 'Mensaje enviado con éxito', colorFondo: AppColors.verde, colorFuente: AppColors.blanco);
+        mostrarMensajeInferior(context, S.of(context).msj_mensajeenviadoexito, colorFondo: AppColors.verde, colorFuente: AppColors.blanco);
       }else{
-        mostrarMensajeInferior(context, 'Mensaje enviado con éxito', colorFondo: AppColors.rojo, colorFuente: AppColors.blanco);
+        mostrarMensajeInferior(context, S.of(context).msj_mensajeenviadoerror, colorFondo: AppColors.rojo, colorFuente: AppColors.blanco);
       }
     
   }

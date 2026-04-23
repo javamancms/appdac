@@ -82,12 +82,8 @@ class LoginScreen extends StatelessWidget {
                     //controlsesion.login(context, 'ag.giraldo', '12345');//EST00001
                     //controlsesion.login(context, 's.martinez', '12345');//EST00003
                     //controlsesion.login(context, 'm.cifuentes', '12345');//EST00008
-
                     //controlsesion.login(context, 'js.castrogaray', '12345'); //ADM001
-
-
                     //controlsesion.login(context, 'j.perez', '12345'); //PROF001
-
                     //controlsesion.login(context, 'c.morales', '12345'); //MET001
 
                     controlsesion.login(context, _usernameController.text, _passwordController.text);

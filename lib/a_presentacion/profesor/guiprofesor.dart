@@ -1,5 +1,6 @@
 import 'package:appdac/a_presentacion/estudiante/guienviardocumentos.dart';
 import 'package:appdac/a_presentacion/guigeneral/menugeneral.dart';
+import 'package:appdac/a_presentacion/tema/iconos.dart';
 import 'package:appdac/a_presentacion/tema/tema.dart';
 import 'package:appdac/b_control/bsdeportes.dart';
 import 'package:appdac/b_control/bssesion.dart';
@@ -43,7 +44,7 @@ class _ProfesorScreenState extends State<ProfesorScreen> {
   @override
   Widget build(BuildContext context) {
     ControlListaDeportesProfesor consultadeportes = context.watch<ControlListaDeportesProfesor>();
-    
+
     if (ControlSesion.datosusuario != null) {
       consultadeportes.cargarListaDeportes();
     }
@@ -53,124 +54,139 @@ class _ProfesorScreenState extends State<ProfesorScreen> {
       canPop: false,
       child: Scaffold(
         appBar: AppBar(
-          title: Text(S.of(context).label_titmisdeportes),
+          
+          backgroundColor: AppColors.blanco,
+          title: Text(
+            S.of(context).label_titmisdeportes,
+            style: AppColors.textotitulonegro,
+          ),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: IconoDeporte(
+                color: AppColors.blanco,
+                backgroundColor: AppColors.verde,
+                size: 30,
+                borderRadius: 10,
+              ),
+            )
+          ],
         ),
         drawer: menuGeneral(context),
-        body: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-           
+        body: Container(
+          decoration: BoxDecoration(
+            color: AppColors.blanco, // Color de fondo real de tu app
+            image: DecorationImage(
+              image: AssetImage('assets/img/logoirdcotafondo.png'),
+              fit: BoxFit.contain,
+              alignment: Alignment.center,
+              opacity: 0.3,
+              // Elimina el colorFilter que puede estar causando problemas
+            ),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                const SizedBox(height: 16), // Espacio entre el botón y la lista
 
+                // GridView de deportes
+                Expanded(
+                  child: GridView.builder(
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 16.0,
+                      mainAxisSpacing: 16.0,
+                      childAspectRatio: 0.85,
+                    ),
+                    itemCount: ldeportes.length,
+                    itemBuilder: (context, index) {
+                      final deporte = ldeportes[index];
 
-              const SizedBox(height: 16), // Espacio entre el botón y la lista
-
-              // GridView de deportes
-              Expanded(
-                child: GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 16.0,
-                    mainAxisSpacing: 16.0,
-                    childAspectRatio: 0.85,
-                  ),
-                  itemCount: ldeportes.length,
-                  itemBuilder: (context, index) {
-                    final deporte = ldeportes[index];
-
-                    return GestureDetector(
-                      onTap: () {
-                        consultadeportes.seleccionarDeporte(deporte);
-                        context.push('/OpcionesProfesor');
-                      },
-                      child: Card(
-                        elevation: 4.0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12.0),
-                        ),
-                        child: Container(
-                          decoration: BoxDecoration(
+                      return GestureDetector(
+                        onTap: () {
+                          consultadeportes.seleccionarDeporte(deporte);
+                          context.push('/OpcionesProfesor');
+                        },
+                        child: Card(
+                          elevation: 4.0,
+                          shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12.0),
-                            gradient: LinearGradient(
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                              colors: [
-                                AppColors.verde,
-                                AppColors.verdeclaro,
-                              ],
-                            ),
                           ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(12.0),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Container(
-                                  padding: const EdgeInsets.all(8.0),
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Colors.white,
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.black.withOpacity(0.1),
-                                        blurRadius: 4.0,
-                                        offset: const Offset(0, 2),
-                                      ),
-                                    ],
-                                  ),
-                                  child: const Icon(
-                                    Icons.sports_soccer,
-                                    size: 32.0,
-                                    color: Colors.green,
-                                  ),
-                                ),
-                                Flexible(
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                                    child: Text(
-                                      deporte.nombreDeporte,
-                                      style: const TextStyle(
-                                        fontSize: 11.0, // Tamaño más pequeño
-                                        fontWeight: FontWeight.bold,
-                                        color: AppColors.blanco,
-                                        height: 1.3,
-                                        letterSpacing: -0.2, // Reduce ligeramente el espacio entre letras
-                                      ),
-                                      textAlign: TextAlign.center,
-                                      maxLines: 2,
-                                      overflow: TextOverflow.visible,
-                                      softWrap: true,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12.0),
+                              gradient: LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                                colors: [
+                                  AppColors.verde,
+                                  AppColors.verdeclaro,
+                                ],
+                              ),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(12.0),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: [
+                                  Container(
+                                    padding: const EdgeInsets.all(8.0),
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Colors.white,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black.withOpacity(0.1),
+                                          blurRadius: 4.0,
+                                          offset: const Offset(0, 2),
+                                        ),
+                                      ],
                                     ),
-                                  ),
-                                ),
-                                Container(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 8.0,
-                                    vertical: 3.0,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: AppColors.blanco,
-                                    borderRadius: BorderRadius.circular(15.0),
-                                  ),
-                                  child: Text(
-                                    'ID: ${deporte.idDeporte}',
-                                    style: TextStyle(
-                                      fontSize: 11.0,
+                                    child: IconoDeporte(
+                                      backgroundColor: AppColors.blanco,
                                       color: AppColors.verde,
-                                      fontWeight: FontWeight.w500,
+                                      size: 40,
                                     ),
                                   ),
-                                ),
-                              ],
+                                  Flexible(
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                                      child: Text(
+                                        deporte.nombreDeporte,
+                                        style: AppColors.textosubtituloblanco,
+                                        textAlign: TextAlign.center,
+                                        maxLines: 2,
+                                        overflow: TextOverflow.visible,
+                                        softWrap: true,
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 8.0,
+                                      vertical: 3.0,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: AppColors.blanco,
+                                      borderRadius: BorderRadius.circular(15.0),
+                                    ),
+                                    child: Text(
+                                      'ID: ${deporte.idDeporte}',
+                                      style: AppColors.textosecundarioverde,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    );
-                  },
+                      );
+                    },
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

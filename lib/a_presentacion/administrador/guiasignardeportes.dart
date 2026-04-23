@@ -6,6 +6,7 @@ import 'package:appdac/b_control/bssesion.dart';
 import 'package:appdac/c_integracion/intdeportes.dart';
 import 'package:appdac/c_integracion/intprofesores.dart';
 import 'package:appdac/config/log.dart';
+import 'package:appdac/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -303,7 +304,7 @@ class __ListaDeportesConCheckboxState extends State<_ListaDeportesConCheckbox> {
                                 
                                   List<Deporte> deportesSeleccionados = controlListaDeportes.deportes.where((deporte) => _seleccionados[deporte.idDeporte] == true).toList();
                                   bool resultado=(await controllistaprofesores.asignarDeportesAProfesor('profesor',widget.profesor.idProfesor,deportesSeleccionados));
-                                  mostrarMensajeInferior(context, resultado?'Asignacioón exitosa':'No se pudo realizar la asignación', colorFondo: resultado? AppColors.verde: AppColors.rojo);
+                                  mostrarMensajeInferior(context, resultado?S.of(context).msj_asignacionexitosa :S.of(context).msj_asignacionerronea, colorFondo: resultado? AppColors.verde: AppColors.rojo);
                                   controllistaprofesores.cargarProfesores(ControlSesion.datosusuario!.idUsuario);
                                   Navigator.of(context).pop(deportesSeleccionados);
                                 }

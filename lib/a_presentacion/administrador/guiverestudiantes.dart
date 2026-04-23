@@ -1,6 +1,8 @@
 import 'package:appdac/a_presentacion/administrador/guiinscribirdeporte.dart';
+import 'package:appdac/a_presentacion/tema/tema.dart';
 import 'package:appdac/b_control/bsestudiantes.dart';
 import 'package:appdac/c_integracion/intestudiantes.dart';
+import 'package:appdac/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -23,22 +25,52 @@ class EstudiantesScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Lista de estudiantes'),
-        centerTitle: true,
-        backgroundColor: Colors.blue,
-        foregroundColor: Colors.white,
-      ),
-      body: estudiantes.isEmpty
-          ? const Center(
-              child: Text(
-                'Cargando estudiantes...',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
-              ),
-            )
-          : EstudianteList(
-              estudiantes: estudiantes,
-              onUrlTap: _abrirUrl,
+        backgroundColor: AppColors.blanco,
+        title: Center(
+          child: Text(
+            S.of(context).label_listaestudiantes,
+            style: AppColors.textotitulonegro,
+          ),
+        ),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios),
+          onPressed: () => Navigator.of(context).pop(),
+          color: AppColors.verde,
+        ),
+        actions: [
+          Container(
+            width: 40,
+            height: 30,
+            decoration: BoxDecoration(color: AppColors.verde, borderRadius: BorderRadius.circular(10)),
+            child: Icon(
+              Icons.menu_book,
+              color: AppColors.blanco,
             ),
+          ),
+        ],
+      ),
+      body: Container(
+        decoration: BoxDecoration(
+          color: AppColors.blanco, 
+          image: DecorationImage(
+            image: AssetImage('assets/img/logoirdcotafondo.png'),
+            fit: BoxFit.contain,
+            alignment: Alignment.center,
+            opacity: 0.3,
+          ),
+        ),
+        child: estudiantes.isEmpty
+            ? const Center(
+                child: Text(
+                  'Cargando estudiantes...',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                ),
+              )
+            : EstudianteList(
+                estudiantes: estudiantes,
+                onUrlTap: _abrirUrl,
+              ),
+      ),
     );
   }
 }
@@ -62,7 +94,7 @@ class _EstudianteListState extends State<EstudianteList> {
   List<Estudiante> _filteredEstudiantes = [];
   String _searchQuery = '';
   String _estadoFiltro = 'Todos';
-  
+
   // Conjunto para trackear qué estudiantes están en proceso de cambio
   final Set<String> _estudiantesEnProceso = {};
 
@@ -140,7 +172,7 @@ class _EstudianteListState extends State<EstudianteList> {
     try {
       final controllistaestudiantes = context.read<ControlListaEstudiantesAdministrador>();
       await controllistaestudiantes.cambiarEstadoEstudiante(estudiante.idEstudiante);
-      
+
       // Mostrar mensaje de éxito
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -157,7 +189,7 @@ class _EstudianteListState extends State<EstudianteList> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Error al cambiar estado: $e'),
-            backgroundColor: Colors.red,
+            backgroundColor: AppColors.rojo,
             duration: const Duration(seconds: 3),
           ),
         );
@@ -180,11 +212,11 @@ class _EstudianteListState extends State<EstudianteList> {
           padding: const EdgeInsets.fromLTRB(12, 12, 12, 4),
           child: Container(
             decoration: BoxDecoration(
-              color: Colors.grey.shade100,
+              color: AppColors.grisclaro,
               borderRadius: BorderRadius.circular(12),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.grey.withOpacity(0.3),
+                  color: AppColors.verde,
                   spreadRadius: 1,
                   blurRadius: 3,
                   offset: const Offset(0, 1),
@@ -193,18 +225,7 @@ class _EstudianteListState extends State<EstudianteList> {
             ),
             child: TextField(
               controller: _searchController,
-              decoration: InputDecoration(
-                hintText: 'Buscar por nombre o documento...',
-                prefixIcon: const Icon(Icons.search, color: Colors.blue),
-                suffixIcon: _searchQuery.isNotEmpty
-                    ? IconButton(
-                        icon: const Icon(Icons.clear, color: Colors.grey),
-                        onPressed: _limpiarBusqueda,
-                      )
-                    : null,
-                border: InputBorder.none,
-                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-              ),
+              decoration: DecoracionCampoVerde(icono: Icons.search, hintLetrero: S.of(context).label_buscarestudiante),
             ),
           ),
         ),
@@ -217,60 +238,37 @@ class _EstudianteListState extends State<EstudianteList> {
             child: Row(
               children: [
                 _FiltroButton(
-                  label: 'Todos',
+                  label: S.of(context).label_todos,
                   icon: Icons.people,
                   isSelected: _estadoFiltro == 'Todos',
                   onTap: () => _cambiarFiltroEstado('Todos'),
                 ),
                 const SizedBox(width: 8),
                 _FiltroButton(
-                  label: 'En revisión',
+                  label: S.of(context).label_revision,
                   icon: Icons.pending_actions,
                   isSelected: _estadoFiltro == 'En revision',
-                  color: Colors.orange,
+                  color: AppColors.naranja,
                   onTap: () => _cambiarFiltroEstado('En revision'),
                 ),
                 const SizedBox(width: 8),
                 _FiltroButton(
-                  label: 'Verificado',
+                  label: S.of(context).label_verificado,
                   icon: Icons.verified,
                   isSelected: _estadoFiltro == 'Verificado',
-                  color: Colors.green,
+                  color: AppColors.verde,
                   onTap: () => _cambiarFiltroEstado('Verificado'),
                 ),
                 const SizedBox(width: 8),
                 _FiltroButton(
-                  label: 'Devuelto',
+                  label: S.of(context).label_devuelto,
                   icon: Icons.assignment_return,
                   isSelected: _estadoFiltro == 'Devuelto',
-                  color: Colors.red,
+                  color: AppColors.rojo,
                   onTap: () => _cambiarFiltroEstado('Devuelto'),
                 ),
               ],
             ),
-          ),
-        ),
-
-        // Indicador de filtro activo
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Row(
-            children: [
-              Icon(
-                Icons.filter_list,
-                size: 16,
-                color: Colors.grey.shade600,
-              ),
-              const SizedBox(width: 4),
-              Text(
-                'Filtro activo: $_estadoFiltro',
-                style: TextStyle(
-                  fontSize: 12,
-                  color: Colors.grey.shade600,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ],
           ),
         ),
 
@@ -284,14 +282,14 @@ class _EstudianteListState extends State<EstudianteList> {
                       Icon(
                         Icons.search_off,
                         size: 64,
-                        color: Colors.grey.shade400,
+                        color: AppColors.grisclaro,
                       ),
                       const SizedBox(height: 16),
                       Text(
                         'No se encontraron estudiantes',
                         style: TextStyle(
                           fontSize: 16,
-                          color: Colors.grey.shade600,
+                          color: AppColors.gris,
                         ),
                       ),
                       const SizedBox(height: 8),
@@ -299,7 +297,7 @@ class _EstudianteListState extends State<EstudianteList> {
                         'Intenta con otro término de búsqueda o filtro',
                         style: TextStyle(
                           fontSize: 14,
-                          color: Colors.grey.shade500,
+                          color: AppColors.grisclaro,
                         ),
                       ),
                     ],
@@ -311,7 +309,7 @@ class _EstudianteListState extends State<EstudianteList> {
                   itemBuilder: (context, index) {
                     final estudiante = _filteredEstudiantes[index];
                     final bool estaEnProceso = _estudiantesEnProceso.contains(estudiante.idEstudiante);
-                    
+
                     return EstudianteCard(
                       estudiante: estudiante,
                       onUrlTap: widget.onUrlTap,
@@ -328,7 +326,7 @@ class _EstudianteListState extends State<EstudianteList> {
           Container(
             padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
             decoration: BoxDecoration(
-              color: Colors.grey.shade200,
+              color: AppColors.grisclaro,
               borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(12),
                 topRight: Radius.circular(12),
@@ -341,7 +339,7 @@ class _EstudianteListState extends State<EstudianteList> {
                   'Mostrando ${_filteredEstudiantes.length} de ${widget.estudiantes.length} estudiantes',
                   style: TextStyle(
                     fontSize: 12,
-                    color: Colors.grey.shade700,
+                    color: AppColors.gris,
                   ),
                 ),
                 if (_searchQuery.isNotEmpty || _estadoFiltro != 'Todos')
@@ -378,7 +376,7 @@ class _FiltroButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color selectedColor = color ?? Colors.blue;
+    final Color selectedColor = color ?? AppColors.azulrey;
 
     return InkWell(
       onTap: onTap,
@@ -404,11 +402,7 @@ class _FiltroButton extends StatelessWidget {
             const SizedBox(width: 6),
             Text(
               label,
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-                color: isSelected ? selectedColor : Colors.grey.shade700,
-              ),
+              style: AppColors.textosecundarionegro,
             ),
           ],
         ),
@@ -458,13 +452,13 @@ class _EstudianteCardState extends State<EstudianteCard> with SingleTickerProvid
   Color _getColorForEstado(String estado) {
     switch (estado) {
       case 'En revision':
-        return Colors.orange;
+        return AppColors.naranja;
       case 'Verificado':
-        return Colors.green;
+        return AppColors.verde;
       case 'Devuelto':
-        return Colors.red;
+        return AppColors.rojo;
       default:
-        return Colors.grey;
+        return AppColors.grisclaro;
     }
   }
 
@@ -480,7 +474,7 @@ class _EstudianteCardState extends State<EstudianteCard> with SingleTickerProvid
     final String estado_revision = 'En revision';
     final String estado_verificado = 'Verificado';
     final String estado_devuelto = 'Devuelto';
-    
+
     return Card(
       margin: const EdgeInsets.only(bottom: 12),
       elevation: 3,
@@ -502,11 +496,7 @@ class _EstudianteCardState extends State<EstudianteCard> with SingleTickerProvid
                       _buildHighlightedText(
                         nombreCompleto,
                         widget.searchQuery,
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: widget.estaEnProceso ? Colors.grey[600] : null,
-                        ),
+                        style: AppColors.textosubtitulonegro,
                       ),
                       const SizedBox(height: 4),
                       // Badge de estado de revisión
@@ -516,21 +506,13 @@ class _EstudianteCardState extends State<EstudianteCard> with SingleTickerProvid
                           color: _getColorForEstado(estudiante.estadoRevision).withOpacity(0.1),
                           borderRadius: BorderRadius.circular(12),
                           border: Border.all(
-                            color: widget.estaEnProceso 
-                                ? Colors.grey 
-                                : _getColorForEstado(estudiante.estadoRevision),
+                            color: widget.estaEnProceso ? AppColors.grisclaro : _getColorForEstado(estudiante.estadoRevision),
                             width: 1,
                           ),
                         ),
                         child: Text(
-                          widget.estaEnProceso ? 'Actualizando...' : estudiante.estadoRevision,
-                          style: TextStyle(
-                            fontSize: 11,
-                            color: widget.estaEnProceso 
-                                ? Colors.grey 
-                                : _getColorForEstado(estudiante.estadoRevision),
-                            fontWeight: FontWeight.bold,
-                          ),
+                          widget.estaEnProceso ? '...' : estudiante.estadoRevision,
+                          style: AppColors.textosubtituloverde,
                         ),
                       ),
                     ],
@@ -550,15 +532,15 @@ class _EstudianteCardState extends State<EstudianteCard> with SingleTickerProvid
                               height: 20,
                               child: CircularProgressIndicator(
                                 strokeWidth: 2,
-                                valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+                                valueColor: AlwaysStoppedAnimation<Color>(AppColors.azulrey),
                               ),
                             ),
                             const SizedBox(height: 4),
                             Text(
-                              'Actualizando...',
+                              '...',
                               style: TextStyle(
                                 fontSize: 10,
-                                color: Colors.grey[600],
+                                color: AppColors.gris,
                               ),
                             ),
                           ],
@@ -568,18 +550,14 @@ class _EstudianteCardState extends State<EstudianteCard> with SingleTickerProvid
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Text(
-                            estudiante.activo ? 'Activo' : 'Inactivo',
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: estudiante.activo ? Colors.green : Colors.red,
-                              fontWeight: FontWeight.w500,
-                            ),
+                            estudiante.activo ? S.of(context).label_activo : S.of(context).label_inactivo,
+                            style: AppColors.textosecundarionegro,
                           ),
                           Checkbox(
                             value: estudiante.activo,
                             onChanged: (bool? value) => widget.onToggleActivo(),
-                            activeColor: Colors.green,
-                            checkColor: Colors.white,
+                            activeColor: AppColors.verde,
+                            checkColor: AppColors.blanco,
                           ),
                         ],
                       ),
@@ -591,30 +569,25 @@ class _EstudianteCardState extends State<EstudianteCard> with SingleTickerProvid
                 const SizedBox(height: 8),
                 _InfoRow(
                   icon: Icons.badge,
-                  label: 'Documento',
+                  label: S.of(context).label_documento,
                   value: _buildHighlightedText(
                     estudiante.documento.toString(),
                     widget.searchQuery,
-                    style: TextStyle(
-                      color: widget.estaEnProceso ? Colors.grey[600] : null,
-                    ),
+                    style: AppColors.textosubtitulonegro,
                   ),
                 ),
                 const SizedBox(height: 4),
                 _InfoRow(
                   icon: Icons.person,
-                  label: 'Usuario',
+                  label: S.of(context).label_usuario,
                   value: Text(
                     estudiante.usuario.isNotEmpty ? estudiante.usuario.first : 'Sin usuario',
-                    style: TextStyle(
-                      fontSize: 13,
-                      color: widget.estaEnProceso ? Colors.grey[600] : null,
-                    ),
+                    style: AppColors.textosubtitulonegro,
                   ),
                 ),
               ],
             ),
-            onTap: widget.estaEnProceso 
+            onTap: widget.estaEnProceso
                 ? null // Deshabilitar tap mientras procesa
                 : () {
                     setState(() {
@@ -645,13 +618,14 @@ class _EstudianteCardState extends State<EstudianteCard> with SingleTickerProvid
                     ),
                     child: TabBar(
                       controller: _tabController,
-                      labelColor: Colors.blue,
-                      unselectedLabelColor: Colors.grey,
-                      indicatorColor: Colors.blue,
-                      tabs: const [
-                        Tab(text: 'Salud'),
-                        Tab(text: 'Identificación'),
-                        Tab(text: 'Familia'),
+                      labelColor: AppColors.azulrey,
+                      unselectedLabelColor: AppColors.gris,
+                      indicatorColor: AppColors.azulrey,
+                      labelStyle: AppColors.textosubtitulonegro,
+                      tabs: [
+                        Tab(text: S.of(context).label_salud),
+                        Tab(text: S.of(context).label_identificacion),
+                        Tab(text: S.of(context).label_familia),
                       ],
                     ),
                   ),
@@ -669,29 +643,29 @@ class _EstudianteCardState extends State<EstudianteCard> with SingleTickerProvid
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              _InfoRow(icon: Icons.medical_services, label: 'EPS', value: Text(estudiante.eps)),
+                              _InfoRow(icon: Icons.medical_services, label: S.of(context).label_eps, value: Text(estudiante.eps)),
                               const SizedBox(height: 4),
-                              _InfoRow(icon: Icons.health_and_safety, label: 'Régimen EPS', value: Text(estudiante.tipoRegimenEps)),
+                              _InfoRow(icon: Icons.health_and_safety, label: S.of(context).label_regimaneps, value: Text(estudiante.tipoRegimenEps)),
                               const SizedBox(height: 4),
-                              _InfoRow(icon: Icons.bloodtype, label: 'Grupo Sanguíneo', value: Text(estudiante.grupoSanguineo)),
+                              _InfoRow(icon: Icons.bloodtype, label: S.of(context).label_gruposanguineo, value: Text(estudiante.grupoSanguineo)),
                               const SizedBox(height: 4),
-                              if (estudiante.alergias != null && estudiante.alergias!.isNotEmpty) _InfoRow(icon: Icons.warning, label: 'Alergias', value: Text(estudiante.alergias!)),
+                              if (estudiante.alergias != null && estudiante.alergias!.isNotEmpty) _InfoRow(icon: Icons.warning, label: S.of(context).label_alergias, value: Text(estudiante.alergias!)),
                               const SizedBox(height: 4),
-                              _InfoRow(icon: Icons.medication, label: 'Toma Medicamentos', value: Text(estudiante.tomaMedicamentos)),
+                              _InfoRow(icon: Icons.medication, label: S.of(context).label_tomamedicamentos, value: Text(estudiante.tomaMedicamentos)),
                               const SizedBox(height: 4),
                               if (estudiante.condicionesMedicas != null && estudiante.condicionesMedicas!.isNotEmpty)
-                                _InfoRow(icon: Icons.health_and_safety, label: 'Condiciones Médicas', value: Text(estudiante.condicionesMedicas!)),
+                                _InfoRow(icon: Icons.health_and_safety, label: S.of(context).label_condicionesmedicas, value: Text(estudiante.condicionesMedicas!)),
                               const SizedBox(height: 4),
-                              _InfoRow(icon: Icons.sick, label: 'Enfermedades Previas', value: Text(estudiante.enfermedadesPrevias)),
+                              _InfoRow(icon: Icons.sick, label: S.of(context).label_enfermedadesprevias, value: Text(estudiante.enfermedadesPrevias)),
                               const SizedBox(height: 4),
-                              _InfoRow(icon: Icons.local_hospital, label: 'Cirugías Previas', value: Text(estudiante.cirugiasPrevias)),
+                              _InfoRow(icon: Icons.local_hospital, label: S.of(context).label_cirugiasprevias, value: Text(estudiante.cirugiasPrevias)),
                               const SizedBox(height: 4),
-                              _InfoRow(icon: Icons.sports_mma, label: 'Lesiones Previas', value: Text(estudiante.lesionesPrevias)),
+                              _InfoRow(icon: Icons.sports_mma, label: S.of(context).label_lesionesprevias, value: Text(estudiante.lesionesPrevias)),
                               const SizedBox(height: 8),
                               if (estudiante.copiaCertificadoEps.isNotEmpty)
                                 _DocumentoLink(
                                   icon: Icons.assignment,
-                                  label: 'Certificado EPS',
+                                  label: S.of(context).label_certificadoeps,
                                   archivo: estudiante.copiaCertificadoEps.first,
                                   onTap: widget.onUrlTap,
                                 ),
@@ -704,35 +678,35 @@ class _EstudianteCardState extends State<EstudianteCard> with SingleTickerProvid
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              _InfoRow(icon: Icons.email, label: 'Email', value: Text(estudiante.email)),
+                              _InfoRow(icon: Icons.email, label: S.of(context).label_email, value: Text(estudiante.email)),
                               const SizedBox(height: 4),
-                              _InfoRow(icon: Icons.wc, label: 'Género', value: Text(estudiante.genero)),
+                              _InfoRow(icon: Icons.wc, label: S.of(context).label_genero, value: Text(estudiante.genero)),
                               const SizedBox(height: 4),
-                              _InfoRow(icon: Icons.location_city, label: 'Lugar Nacimiento', value: Text(estudiante.lugarNacimiento)),
+                              _InfoRow(icon: Icons.location_city, label: S.of(context).label_lugarnacimiento, value: Text(estudiante.lugarNacimiento)),
                               const SizedBox(height: 4),
-                              _InfoRow(icon: Icons.location_on, label: 'Lugar Expedición', value: Text(estudiante.lugarExpedicion)),
+                              _InfoRow(icon: Icons.location_on, label: S.of(context).label_lugarexpedicion, value: Text(estudiante.lugarExpedicion)),
                               const SizedBox(height: 4),
-                              _InfoRow(icon: Icons.home, label: 'Dirección', value: Text(estudiante.direccion)),
+                              _InfoRow(icon: Icons.home, label: S.of(context).label_direccion, value: Text(estudiante.direccion)),
                               const SizedBox(height: 4),
-                              _InfoRow(icon: Icons.landscape, label: 'Vereda/Sector', value: Text(estudiante.veredaSector)),
+                              _InfoRow(icon: Icons.landscape, label: S.of(context).label_veredasector, value: Text(estudiante.veredaSector)),
                               const SizedBox(height: 4),
-                              _InfoRow(icon: Icons.school, label: 'Institución Educativa', value: Text(estudiante.institucionEducativa)),
+                              _InfoRow(icon: Icons.school, label: S.of(context).label_instieducativa, value: Text(estudiante.institucionEducativa)),
                               const SizedBox(height: 4),
-                              _InfoRow(icon: Icons.grade, label: 'Grado Escolar', value: Text(estudiante.gradoEscolar)),
+                              _InfoRow(icon: Icons.grade, label: S.of(context).label_gradoescolar, value: Text(estudiante.gradoEscolar)),
                               const SizedBox(height: 4),
-                              _InfoRow(icon: Icons.people, label: 'Tipo Población', value: Text(estudiante.tipoPoblacion)),
+                              _InfoRow(icon: Icons.people, label: S.of(context).label_tipopoblacion, value: Text(estudiante.tipoPoblacion)),
                               const SizedBox(height: 8),
                               if (estudiante.identificacion.isNotEmpty)
                                 _DocumentoLink(
                                   icon: Icons.badge,
-                                  label: 'DOCUMENTO ID',
+                                  label: S.of(context).label_documentoid,
                                   archivo: estudiante.identificacion.first,
                                   onTap: widget.onUrlTap,
                                 ),
                               if (estudiante.consentimiento != null && estudiante.consentimiento!.isNotEmpty)
                                 _DocumentoLink(
                                   icon: Icons.description,
-                                  label: 'CONSENTIMIENTO',
+                                  label: S.of(context).label_consentimientodoc,
                                   archivo: estudiante.consentimiento!.first,
                                   onTap: widget.onUrlTap,
                                 ),
@@ -745,13 +719,13 @@ class _EstudianteCardState extends State<EstudianteCard> with SingleTickerProvid
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              _InfoRow(icon: Icons.person, label: 'Nombres Acudiente', value: Text(estudiante.nombresAcudiente1)),
+                              _InfoRow(icon: Icons.person, label: S.of(context).label_nombresacudiente, value: Text(estudiante.nombresAcudiente1)),
                               const SizedBox(height: 4),
-                              _InfoRow(icon: Icons.person_outline, label: 'Apellidos Acudiente', value: Text(estudiante.apellidosAcudiente1)),
+                              _InfoRow(icon: Icons.person_outline, label: S.of(context).label_apellidosacudiente, value: Text(estudiante.apellidosAcudiente1)),
                               const SizedBox(height: 4),
-                              _InfoRow(icon: Icons.badge, label: 'Documento Acudiente', value: Text(estudiante.documentoAcudiente1.toString())),
+                              _InfoRow(icon: Icons.badge, label: S.of(context).label_documentoacudiente, value: Text(estudiante.documentoAcudiente1.toString())),
                               const SizedBox(height: 4),
-                              _InfoRow(icon: Icons.phone, label: 'Celular Acudiente', value: Text(estudiante.celularAcudiente1)),
+                              _InfoRow(icon: Icons.phone, label: S.of(context).label_celularacudiente, value: Text(estudiante.celularAcudiente1)),
                             ],
                           ),
                         ),
@@ -769,15 +743,8 @@ class _EstudianteCardState extends State<EstudianteCard> with SingleTickerProvid
                         await inscripciondeportes.cargarDeportes(estudiante.idEstudiante);
                         VerDeportesEstudiantesScreen.mostrarDialogo(context, estudiante);
                       },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blue,
-                        foregroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(vertical: 12),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                      child: const Text('Editar cursos'),
+                      style: AppColors.botonverde,
+                      child: Text(S.of(context).label_editarcursos),
                     ),
                   ),
 
@@ -825,7 +792,7 @@ class _EstudianteCardState extends State<EstudianteCard> with SingleTickerProvid
                                 });
                                 // Aquí puedes guardar el motivo junto con el cambio de estado
                                 print('Motivo de devolución: $motivo');
-                                controllistaestudiantes.cambiarEstadoDeRevisionEstudiante(estudiante.idEstudiante, newValue,comentario: motivo);
+                                controllistaestudiantes.cambiarEstadoDeRevisionEstudiante(estudiante.idEstudiante, newValue, comentario: motivo);
 
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
@@ -873,36 +840,22 @@ class _EstudianteCardState extends State<EstudianteCard> with SingleTickerProvid
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text(
-            'Motivo Devolución',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Colors.red,
-            ),
+          title: Text(
+            S.of(context).label_motivodevolucion,
+            style: AppColors.textotitulonegro,
           ),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'Por favor ingrese el motivo de la devolución:',
-                style: TextStyle(fontSize: 14),
+              Text(
+                S.of(context).label_motivodevolucionexp,
+                style: AppColors.textoinformativogris,
               ),
               const SizedBox(height: 16),
               TextField(
                 controller: motivoController,
-                decoration: InputDecoration(
-                  hintText: 'Escriba el motivo aquí...',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                    borderSide: const BorderSide(color: Colors.red, width: 2),
-                  ),
-                  filled: true,
-                  fillColor: Colors.grey.shade50,
-                ),
+                decoration: DecoracionCampoVerde(),
                 maxLines: 3,
                 autofocus: true,
               ),
@@ -911,9 +864,10 @@ class _EstudianteCardState extends State<EstudianteCard> with SingleTickerProvid
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(null),
-              child: const Text(
-                'Cancelar',
-                style: TextStyle(color: Colors.grey),
+              style: AppColors.botonblanco,
+              child: Text(
+                S.of(context).label_cancelar,
+                style: TextStyle(color: AppColors.gris),
               ),
             ),
             ElevatedButton(
@@ -922,7 +876,7 @@ class _EstudianteCardState extends State<EstudianteCard> with SingleTickerProvid
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                       content: Text('Debe ingresar un motivo'),
-                      backgroundColor: Colors.red,
+                      backgroundColor: AppColors.rojo,
                       duration: Duration(seconds: 2),
                     ),
                   );
@@ -930,11 +884,8 @@ class _EstudianteCardState extends State<EstudianteCard> with SingleTickerProvid
                 }
                 Navigator.of(context).pop(motivoController.text.trim());
               },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.red,
-                foregroundColor: Colors.white,
-              ),
-              child: const Text('Aceptar'),
+              style: AppColors.botonverde,
+              child: Text(S.of(context).label_enviar),
             ),
           ],
         );
@@ -967,7 +918,7 @@ class _EstudianteCardState extends State<EstudianteCard> with SingleTickerProvid
         TextSpan(
           text: text.substring(index, index + query.length),
           style: const TextStyle(
-            backgroundColor: Colors.yellow,
+            backgroundColor: AppColors.amarillo,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -1010,19 +961,19 @@ class _DocumentoLink extends StatelessWidget {
         ),
         child: Row(
           children: [
-            Icon(icon, color: Colors.blue, size: 20),
+            Icon(icon, color: AppColors.azulrey, size: 20),
             const SizedBox(width: 8),
             Expanded(
               child: Text(
                 label,
                 style: const TextStyle(
-                  color: Colors.blue,
+                  color: AppColors.azulrey,
                   decoration: TextDecoration.underline,
                   fontWeight: FontWeight.bold,
                 ),
               ),
             ),
-            const Icon(Icons.open_in_new, color: Colors.blue, size: 16),
+            const Icon(Icons.open_in_new, color: AppColors.azulrey, size: 16),
           ],
         ),
       ),
@@ -1046,17 +997,13 @@ class _InfoRow extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Icon(icon, size: 16, color: Colors.grey.shade600),
+        Icon(icon, size: 16, color: AppColors.gris),
         const SizedBox(width: 8),
         SizedBox(
           width: 120,
           child: Text(
             '$label:',
-            style: TextStyle(
-              fontWeight: FontWeight.w500,
-              color: Colors.grey.shade700,
-              fontSize: 13,
-            ),
+            style: AppColors.textosubtitulonegro,
           ),
         ),
         Expanded(child: value),

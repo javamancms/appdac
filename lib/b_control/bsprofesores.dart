@@ -76,9 +76,9 @@ class ControlListaDeporte extends ChangeNotifier {
 
     AsistenciaRequest asistencia=AsistenciaRequest(idDeporte: idDeporte,idProfesor: idProfesor,lugar: lugar, observaciones: observaciones,fecha: fechaFormateada, asistencias: lasistencia);
     if(await ClienteProfesores().llenarAsistencia(asistencia)){
-      mostrarMensajeInferior(context, 'Asistencia registrada',colorFondo: AppColors.verde, colorFuente: AppColors.blanco);
+      mostrarMensajeInferior(context, S.of(context).msj_asistenciaregistrada,colorFondo: AppColors.verde, colorFuente: AppColors.blanco);
     }else{
-      mostrarMensajeInferior(context, 'Asistencia registrada',colorFondo: AppColors.rojo, colorFuente: AppColors.negro);
+      mostrarMensajeInferior(context, S.of(context).msj_asistencianoregistrada,colorFondo: AppColors.rojo, colorFuente: AppColors.negro);
     }
   }
 }

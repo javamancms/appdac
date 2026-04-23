@@ -1,7 +1,9 @@
 import 'package:appdac/a_presentacion/dialogos_generales/dialogos.dart';
+import 'package:appdac/a_presentacion/tema/iconos.dart';
 import 'package:appdac/a_presentacion/tema/tema.dart';
 import 'package:appdac/b_control/bsdeportes.dart';
 import 'package:appdac/c_integracion/intdeportes.dart';
+import 'package:appdac/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -38,237 +40,256 @@ class _DeportesScreenState extends State<DeportesScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Deportes'),
-        backgroundColor: Colors.blue,
-        foregroundColor: Colors.white,
-        elevation: 0,
-      ),
-      body: Column(
-        children: [
-          // Cuadro de búsqueda
-          Container(
-            padding: const EdgeInsets.all(16),
-            color: Colors.blue,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(30),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
-                    blurRadius: 8,
-                    offset: const Offset(0, 2),
-                  ),
-                ],
-              ),
-              child: TextField(
-                controller: _searchController,
-                onChanged: (value) {
-                  setState(() {
-                    _searchQuery = value;
-                  });
-                },
-                decoration: InputDecoration(
-                  hintText: 'Buscar deporte...',
-                  prefixIcon: const Icon(Icons.search, color: Colors.blue),
-                  suffixIcon: _searchQuery.isNotEmpty
-                      ? IconButton(
-                          icon: const Icon(Icons.clear, color: Colors.grey),
-                          onPressed: () {
-                            _searchController.clear();
-                            setState(() {
-                              _searchQuery = '';
-                            });
-                          },
-                        )
-                      : null,
-                  border: InputBorder.none,
-                  contentPadding: const EdgeInsets.symmetric(vertical: 12),
-                ),
-              ),
-            ),
+        backgroundColor: AppColors.blanco,
+        title: Center(
+          child: Text(
+            S.of(context).label_listadeportes,
+            style: AppColors.textotitulonegro,
           ),
-
-          // Contador de resultados
-          if (deportesFiltrados.isNotEmpty)
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              alignment: Alignment.centerLeft,
-              child: Text(
-                '${deportesFiltrados.length} deporte${deportesFiltrados.length != 1 ? 's' : ''} encontrado${deportesFiltrados.length != 1 ? 's' : ''}',
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Colors.grey[600],
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ),
-
-          // Lista de deportes
-          Expanded(
-            child: deportesFiltrados.isEmpty
-                ? Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          _searchQuery.isEmpty ? Icons.sports_soccer : Icons.search_off,
-                          size: 64,
-                          color: Colors.grey[400],
-                        ),
-                        const SizedBox(height: 16),
-                        Text(
-                          _searchQuery.isEmpty ? 'No hay deportes disponibles' : 'No se encontraron deportes para "${_searchQuery}"',
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.grey[600],
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                        if (_searchQuery.isNotEmpty) ...[
-                          const SizedBox(height: 8),
-                          TextButton(
-                            onPressed: () {
-                              _searchController.clear();
-                              setState(() {
-                                _searchQuery = '';
-                              });
-                            },
-                            child: const Text('Limpiar búsqueda'),
-                          ),
-                        ],
-                      ],
-                    ),
-                  )
-                : ListView.builder(
-                    padding: const EdgeInsets.all(8),
-                    itemCount: deportesFiltrados.length,
-                    itemBuilder: (context, index) {
-                      final deporte = deportesFiltrados[index];
-
-                      return GestureDetector(
-                        onTap: () {
-                          _mostrarDialogoDetalles(context, deporte, controlListaDeportes);
-                        },
-                        child: Card(
-                          margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 8),
-                          elevation: 3,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                            side: BorderSide(
-                              color: deporte.ofrecidoALosPadres ? Colors.green : Colors.transparent,
-                              width: 2,
-                            ),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(16),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                // Fila superior: Nombre del deporte y checkbox
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    // Nombre del deporte (expandido)
-                                    Expanded(
-                                      child: Text(
-                                        deporte.nombreDeporte,
-                                        style: const TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                        softWrap: true,
-                                        maxLines: null,
-                                      ),
-                                    ),
-
-                                    // Checkbox y etiqueta
-                                    Column(
-                                      children: [
-                                        Checkbox(
-                                          value: deporte.ofrecidoALosPadres,
-                                          onChanged: null, // Solo lectura
-                                          activeColor: Colors.green,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(4),
-                                          ),
-                                        ),
-                                        const Text(
-                                          'Ofrecido a\npadres',
-                                          style: TextStyle(
-                                            fontSize: 10,
-                                            color: Colors.grey,
-                                          ),
-                                          textAlign: TextAlign.center,
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-
-                                const SizedBox(height: 12),
-
-                                // Línea divisoria decorativa
-                                Container(
-                                  height: 1,
-                                  color: Colors.grey[200],
-                                ),
-
-                                const SizedBox(height: 12),
-
-                                // Grid de información
-                                Wrap(
-                                  spacing: 16,
-                                  runSpacing: 8,
-                                  children: [
-                                    // ID
-                                    _buildInfoChip(
-                                      icon: Icons.tag,
-                                      label: 'ID: ${deporte.idDeporte}',
-                                      color: Colors.blue,
-                                    ),
-
-                                    // Edad mínima
-                                    _buildInfoChip(
-                                      icon: Icons.arrow_downward,
-                                      label: 'Mín: ${deporte.edadMinima} años',
-                                      color: Colors.orange,
-                                    ),
-
-                                    // Edad máxima
-                                    _buildInfoChip(
-                                      icon: Icons.arrow_upward,
-                                      label: 'Máx: ${deporte.edadMaxima} años',
-                                      color: Colors.orange,
-                                    ),
-
-                                    // Estudiantes permitidos
-                                    _buildInfoChip(
-                                      icon: Icons.people,
-                                      label: '${deporte.cantidadEstudiantesPermitidos} estudiantes',
-                                      color: Colors.purple,
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-          ),
+        ),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios),
+          onPressed: () => Navigator.of(context).pop(),
+          color: AppColors.verde,
+        ),
+        actions: [
+          IconoDeporte(
+            color: AppColors.blanco,
+            backgroundColor: AppColors.verde,
+            size: 60,
+            borderRadius: 10,
+          )
         ],
+        bottom: PreferredSize(
+          preferredSize: Size.fromHeight(70.0),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+              controller: _searchController,
+              onChanged: (value) {
+                setState(() {
+                  _searchQuery = value;
+                });
+              },
+              decoration: InputDecoration(
+                hintText: S.of(context).label_buscardeporte,
+                prefixIcon: Icon(Icons.search),
+                suffixIcon: _searchQuery.isNotEmpty
+                    ? IconButton(
+                        icon: Icon(Icons.clear),
+                        onPressed: () {
+                          _searchController.clear();
+                          setState(() {
+                            _searchQuery = '';
+                          });
+                        },
+                      )
+                    : null,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                filled: true,
+                fillColor: Colors.white,
+                helperText: S.of(context).label_buscardeporteexp,
+                helperStyle: AppColors.textoinformativogris,
+              ),
+            ),
+          ),
+        ),
       ),
+      body: Container(
+        decoration: BoxDecoration(
+          color: AppColors.blanco, 
+          image: DecorationImage(
+            image: AssetImage('assets/img/logoirdcotafondo.png'),
+            fit: BoxFit.contain,
+            alignment: Alignment.center,
+            opacity: 0.3,
+          ),
+        ),
+        child: Column(
+          children: [
+            // Contador de resultados
+            if (deportesFiltrados.isNotEmpty)
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  '${deportesFiltrados.length} ${S.of(context).label_deportesencontrados}',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.grey[600],
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
 
-      // Botón flotante para agregar
-      /*floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          _mostrarDialogoAgregarDeporte(context);
-        },
-        backgroundColor: Colors.blue,
-        child: const Icon(Icons.add),
-      ),*/
+            // Lista de deportes
+            Expanded(
+              child: deportesFiltrados.isEmpty
+                  ? Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            _searchQuery.isEmpty ? Icons.sports_soccer : Icons.search_off,
+                            size: 64,
+                            color: Colors.grey[400],
+                          ),
+                          const SizedBox(height: 16),
+                          Text(
+                            _searchQuery.isEmpty ? 'No hay deportes disponibles' : 'No se encontraron deportes para "${_searchQuery}"',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.grey[600],
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                          if (_searchQuery.isNotEmpty) ...[
+                            const SizedBox(height: 8),
+                            TextButton(
+                              onPressed: () {
+                                _searchController.clear();
+                                setState(() {
+                                  _searchQuery = '';
+                                });
+                              },
+                              child: const Text('Limpiar búsqueda'),
+                            ),
+                          ],
+                        ],
+                      ),
+                    )
+                  : ListView.builder(
+                      padding: const EdgeInsets.all(8),
+                      itemCount: deportesFiltrados.length,
+                      itemBuilder: (context, index) {
+                        final deporte = deportesFiltrados[index];
+
+                        return GestureDetector(
+                          onTap: () {
+                            _mostrarDialogoDetalles(context, deporte, controlListaDeportes);
+                          },
+                          child: Card(
+                            margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 8),
+                            elevation: 3,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              side: BorderSide(
+                                color: AppColors.blanco,
+                                width: 2,
+                              ),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(16),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  // Fila superior: Nombre del deporte a la izquierda y checkbox a la derecha
+                                  Row(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      // Columna izquierda: Nombre del deporte
+                                      Expanded(
+                                        child: Text(
+                                          deporte.nombreDeporte,
+                                          style: AppColors.textosubtitulonegro,
+                                          softWrap: true,
+                                          maxLines: null,
+                                        ),
+                                      ),
+                                      // Columna derecha: Checkbox y etiqueta en fila
+                                      Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Checkbox(
+                                            value: deporte.ofrecidoALosPadres,
+                                            onChanged: null,
+                                            activeColor: AppColors.verde,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(4),
+                                            ),
+                                          ),
+                                          Text(
+                                            S.of(context).label_ofrecidoapadres,
+                                            style: AppColors.textosecundarionegro,
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+
+                                  // ID del deporte
+                                  Text(
+                                    'ID: ${deporte.idDeporte}',
+                                    style: AppColors.textosubtitulogris,
+                                  ),
+
+                                  const SizedBox(height: 12),
+
+                                  // Línea divisoria decorativa
+                                  Container(
+                                    height: 1,
+                                    color: Colors.grey[200],
+                                  ),
+
+                                  const SizedBox(height: 12),
+
+                                  // Fila de información: Estudiantes, Edad mínima, Edad máxima - CORREGIDO CON WRAP
+                                  Wrap(
+                                    spacing: 16,
+                                    runSpacing: 8,
+                                    children: [
+                                      // Cantidad de estudiantes
+                                      _buildInfoItem(
+                                        icon: Icons.people,
+                                        label: '${deporte.cantidadEstudiantesPermitidos} estudiantes',
+                                      ),
+                                      // Edad mínima
+                                      _buildInfoItem(
+                                        icon: Icons.arrow_downward,
+                                        label: 'Mín: ${deporte.edadMinima} años',
+                                      ),
+                                      // Edad máxima
+                                      _buildInfoItem(
+                                        icon: Icons.arrow_upward,
+                                        label: 'Máx: ${deporte.edadMaxima} años',
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // Widget auxiliar para crear elementos de información en fila
+  Widget _buildInfoItem({
+    required IconData icon,
+    required String label,
+  }) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(
+          icon,
+          size: 16,
+          color: AppColors.verde,
+        ),
+        const SizedBox(width: 4),
+        Text(
+          label,
+          style: AppColors.textosecundarionegro,
+        ),
+      ],
     );
   }
 
@@ -324,16 +345,12 @@ class _DeportesScreenState extends State<DeportesScreen> {
             return AlertDialog(
               title: Row(
                 children: [
-                  Icon(Icons.sports, color: AppColors.verde),
+                  IconoDeporte(backgroundColor: AppColors.verde, color: AppColors.blanco,borderRadius: 10,size: 30,),
                   const SizedBox(width: 10),
                   Expanded(
                     child: Text(
-                      'Editar Deporte',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.verde,
-                      ),
+                      S.of(context).label_editardeporte,
+                      style: AppColors.textotitulonegro,
                     ),
                   ),
                 ],
@@ -352,15 +369,11 @@ class _DeportesScreenState extends State<DeportesScreen> {
                         decoration: BoxDecoration(
                           color: AppColors.verde.withOpacity(0.1),
                           borderRadius: BorderRadius.circular(8),
-                          border: Border.all(color: AppColors.verde.withOpacity(0.3)),
+                          border: Border.all(color: AppColors.verde),
                         ),
                         child: Text(
                           deporte.nombreDeporte,
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.verde,
-                          ),
+                          style: AppColors.textosubtituloverde,
                           textAlign: TextAlign.center,
                         ),
                       ),
@@ -374,7 +387,7 @@ class _DeportesScreenState extends State<DeportesScreen> {
                       // Edad mínima (editable)
                       _buildCampoEditable(
                         icon: Icons.arrow_downward,
-                        label: 'Edad mínima:',
+                        label: S.of(context).label_edadminima,
                         controller: _edadMinimaController,
                         keyboardType: TextInputType.number,
                       ),
@@ -383,7 +396,7 @@ class _DeportesScreenState extends State<DeportesScreen> {
                       // Edad máxima (editable)
                       _buildCampoEditable(
                         icon: Icons.arrow_upward,
-                        label: 'Edad máxima:',
+                        label: S.of(context).label_edadmaxima,
                         controller: _edadMaximaController,
                         keyboardType: TextInputType.number,
                       ),
@@ -392,7 +405,7 @@ class _DeportesScreenState extends State<DeportesScreen> {
                       // Estudiantes permitidos (editable)
                       _buildCampoEditable(
                         icon: Icons.people,
-                        label: 'Estudiantes permitidos:',
+                        label: S.of(context).label_estudiantespermitidos,
                         controller: _estudiantesController,
                         keyboardType: TextInputType.number,
                       ),
@@ -406,17 +419,13 @@ class _DeportesScreenState extends State<DeportesScreen> {
                             Icon(
                               Icons.family_restroom,
                               size: 20,
-                              color: _ofrecidoALosPadres ? AppColors.verde : Colors.grey,
+                              color: _ofrecidoALosPadres ? AppColors.verde : AppColors.grisclaro,
                             ),
                             const SizedBox(width: 12),
                             Expanded(
                               child: Text(
-                                'Ofrecido a padres:',
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.grey,
-                                ),
+                                S.of(context).label_ofrecidoapadres,
+                                style: AppColors.textosecundarionegro,
                               ),
                             ),
                             Row(
@@ -439,12 +448,8 @@ class _DeportesScreenState extends State<DeportesScreen> {
                                   ),
                                 ),
                                 Text(
-                                  _ofrecidoALosPadres ? 'Sí' : 'No',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
-                                    color: _ofrecidoALosPadres ? AppColors.verde : Colors.red,
-                                  ),
+                                  _ofrecidoALosPadres ? S.of(context).label_si : S.of(context).label_no,
+                                  style: AppColors.textosecundarionegro,
                                 ),
                               ],
                             ),
@@ -467,7 +472,7 @@ class _DeportesScreenState extends State<DeportesScreen> {
                             const SizedBox(width: 8),
                             Expanded(
                               child: Text(
-                                'Los cambios se aplicarán al deporte seleccionado',
+                                S.of(context).msj_deporteseleccionado,
                                 style: TextStyle(
                                   fontSize: 11,
                                   color: AppColors.verde,
@@ -492,15 +497,9 @@ class _DeportesScreenState extends State<DeportesScreen> {
                       Expanded(
                         child: TextButton(
                           onPressed: () => Navigator.of(context).pop(),
-                          style: TextButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
-                            minimumSize: const Size(80, 40),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                          ),
+                          style: AppColors.botonblanco,
                           child: Text(
-                            'Cancelar',
+                            S.of(context).label_cancelar,
                             style: TextStyle(
                               color: AppColors.verde,
                               fontSize: 13,
@@ -515,28 +514,18 @@ class _DeportesScreenState extends State<DeportesScreen> {
                       Expanded(
                         child: ElevatedButton(
                           onPressed: () async {
-                            
-                            bool resultado = await controllistadeportes.modificarDeporte('deporte', deporte.idDeporte, int.tryParse(_estudiantesController.text)!, _ofrecidoALosPadres??false,
+                            bool resultado = await controllistadeportes.modificarDeporte('deporte', deporte.idDeporte, int.tryParse(_estudiantesController.text)!, _ofrecidoALosPadres ?? false,
                                 int.tryParse(_edadMinimaController.text)!, int.tryParse(_edadMaximaController.text)!);
                             if (resultado) {
-                              mostrarMensajeInferior(context, 'El deporte se actualizó con éxito', colorFondo: AppColors.verde);
-                              
+                              mostrarMensajeInferior(context, S.of(context).msj_deporteactualizadoconexito, colorFondo: AppColors.verde);
                             } else {
-                              mostrarMensajeInferior(context, 'El deporte no se pudo actualizar', colorFondo: AppColors.rojo);
+                              mostrarMensajeInferior(context, S.of(context).msj_deporteactualizadoconerror, colorFondo: AppColors.rojo);
                             }
                             Navigator.of(context).pop();
                           },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.verde,
-                            foregroundColor: Colors.white,
-                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
-                            minimumSize: const Size(80, 40),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                          ),
-                          child: const Text(
-                            'Guardar',
+                          style: AppColors.botonverde,
+                          child: Text(
+                            S.of(context).label_guardar,
                             style: TextStyle(
                               fontSize: 13,
                               fontWeight: FontWeight.bold,
@@ -556,7 +545,7 @@ class _DeportesScreenState extends State<DeportesScreen> {
     );
   }
 
-// Widget auxiliar para campos editables con AppColors.verde
+  // Widget auxiliar para campos editables con AppColors.verde
   Widget _buildCampoEditable({
     required IconData icon,
     required String label,
@@ -573,11 +562,7 @@ class _DeportesScreenState extends State<DeportesScreen> {
             flex: 2,
             child: Text(
               label,
-              style: const TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
-                color: Colors.grey,
-              ),
+              style: AppColors.textosecundarionegro,
             ),
           ),
           Expanded(
@@ -601,11 +586,7 @@ class _DeportesScreenState extends State<DeportesScreen> {
                   borderSide: BorderSide(color: AppColors.verde.withOpacity(0.3)),
                 ),
               ),
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
-                color: AppColors.verde,
-              ),
+              style: AppColors.textosecundarionegro,
             ),
           ),
         ],
@@ -613,7 +594,7 @@ class _DeportesScreenState extends State<DeportesScreen> {
     );
   }
 
-// Widget auxiliar para filas de detalles (solo lectura)
+  // Widget auxiliar para filas de detalles (solo lectura)
   Widget _buildDetalleRow(IconData icon, String label, String value) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
@@ -623,21 +604,13 @@ class _DeportesScreenState extends State<DeportesScreen> {
           const SizedBox(width: 12),
           Text(
             label,
-            style: const TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
-              color: Colors.grey,
-            ),
+            style: AppColors.textosecundarionegro,
           ),
           const SizedBox(width: 8),
           Expanded(
             child: Text(
               value,
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
-                color: AppColors.verde,
-              ),
+              style: AppColors.textosecundarionegro,
               textAlign: TextAlign.right,
             ),
           ),
@@ -645,30 +618,4 @@ class _DeportesScreenState extends State<DeportesScreen> {
       ),
     );
   }
-
-  // Función para mostrar diálogo de agregar deporte
-  /*void _mostrarDialogoAgregarDeporte(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Agregar Deporte'),
-          content: const Text('Funcionalidad en desarrollo'),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text('Cancelar'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-                // Aquí iría la lógica para agregar
-              },
-              child: const Text('Agregar'),
-            ),
-          ],
-        );
-      },
-    );
-  }*/
 }

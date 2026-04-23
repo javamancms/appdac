@@ -3,7 +3,6 @@ import 'package:appdac/a_presentacion/tema/tema.dart';
 import 'package:appdac/a_presentacion/widgetspersonalizados/paneliconoinfo.dart';
 import 'package:appdac/b_control/bsprofesores.dart';
 import 'package:appdac/b_control/bssesion.dart';
-import 'package:appdac/config/log.dart';
 import 'package:appdac/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -28,22 +27,22 @@ class AdministradorScreen extends StatelessWidget {
       {
         'icon': Icons.sports,
         'title': S.of(context).label_deportes,
-        'onTap': (){
-           context.push('/VerDeportesAdministrador');
+        'onTap': () {
+          context.push('/VerDeportesAdministrador');
         },
       },
       {
         'icon': Icons.menu_book,
         'title': S.of(context).label_estudiantes,
-        'onTap': (){
-           context.push('/VerEstudiantesAdministrador');
+        'onTap': () {
+          context.push('/VerEstudiantesAdministrador');
         },
       },
       {
         'icon': Icons.timeline,
         'title': S.of(context).label_metodologos,
-        'onTap': (){
-           context.push('/VerMetodologosAdministrador');
+        'onTap': () {
+          context.push('/VerMetodologosAdministrador');
         },
       },
     ];
@@ -52,20 +51,24 @@ class AdministradorScreen extends StatelessWidget {
       canPop: false,
       child: Scaffold(
         appBar: AppBar(
-          title: Text(S.of(context).label_perfil_administrador, style: AppColors.textotitulonegro,),
+          backgroundColor: AppColors.blanco,
+          title: Text(
+            S.of(context).label_perfil_administrador,
+            style: AppColors.textotitulonegro,
+          ),
           //backgroundColor: AppColors.verde.withOpacity(0.8), // AppBar semi-transparente
           elevation: 0,
         ),
         drawer: menuGeneral(context),
         body: Container(
           decoration: BoxDecoration(
+            color: AppColors.blanco, 
             image: DecorationImage(
-              image: AssetImage('assets/img/logoirdcotafondo.jpeg'),
-              fit: BoxFit.contain, // La imagen se muestra completa sin recortarse
-              alignment: Alignment.center, // Centrada en la pantalla
+              image: AssetImage('assets/img/logoirdcotafondo.png'),
+              fit: BoxFit.contain,
+              alignment: Alignment.center,
               opacity: 0.3,
-              // Opcional: color de fondo si la imagen no cubre toda el área
-              colorFilter: ColorFilter.mode(Colors.white, BlendMode.dstOver),
+              // Elimina el colorFilter
             ),
           ),
           child: Padding(

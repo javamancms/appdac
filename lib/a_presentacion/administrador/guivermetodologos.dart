@@ -1,6 +1,9 @@
+import 'package:appdac/a_presentacion/tema/iconos.dart';
+import 'package:appdac/a_presentacion/tema/tema.dart';
 import 'package:appdac/b_control/bsmetodologo.dart';
 import 'package:appdac/b_control/bssesion.dart';
 import 'package:appdac/c_integracion/intmetodologo.dart';
+import 'package:appdac/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -15,14 +18,46 @@ class MetodologosScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Lista Metodologos'),
-        backgroundColor: Colors.blue,
-        foregroundColor: Colors.white,
-        elevation: 2,
+        backgroundColor: AppColors.blanco,
+        title: Center(
+          child: Text(
+            S.of(context).label_listametodologos,
+            style: AppColors.textotitulonegro,
+          ),
+        ),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios),
+          onPressed: () => Navigator.of(context).pop(),
+          color: AppColors.verde,
+        ),
+        actions: [
+          Container(
+            width: 40,
+            height: 30,
+            decoration: BoxDecoration(color: AppColors.verde, borderRadius: BorderRadius.circular(10)),
+            child: IconoMetodologo(
+              color: AppColors.blanco,
+              backgroundColor: AppColors.verde,
+              size: 60,
+              borderRadius: 10,
+            ),
+          ),
+        ],
       ),
-      body: MetodologosLista(
-        metodologos: metodologos,
-        controlmetodologos: controlmetodologos,
+      body: Container(
+        decoration: BoxDecoration(
+          color: AppColors.blanco, 
+          image: DecorationImage(
+            image: AssetImage('assets/img/logoirdcotafondo.png'),
+            fit: BoxFit.contain,
+            alignment: Alignment.center,
+            opacity: 0.3,
+          ),
+        ),
+        child: MetodologosLista(
+          metodologos: metodologos,
+          controlmetodologos: controlmetodologos,
+        ),
       ),
     );
   }
@@ -45,7 +80,7 @@ class MetodologosLista extends StatefulWidget {
 class _MetodologosListaState extends State<MetodologosLista> {
   final TextEditingController _busquedaController = TextEditingController();
   String _filtroBusqueda = '';
-  
+
   // Conjunto para trackear qué metodólogos están en proceso de cambio
   final Set<String> _metodologosEnProceso = {};
 
@@ -79,7 +114,7 @@ class _MetodologosListaState extends State<MetodologosLista> {
 
     try {
       await widget.controlmetodologos.cambiarEstadoMetodologo(metodologo.idMetodologo);
-      
+
       // Mostrar mensaje de éxito
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -121,16 +156,7 @@ class _MetodologosListaState extends State<MetodologosLista> {
           padding: const EdgeInsets.all(16.0),
           child: TextField(
             controller: _busquedaController,
-            decoration: InputDecoration(
-              hintText: 'Buscar por nombre...',
-              prefixIcon: const Icon(Icons.search),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              filled: true,
-              fillColor: Colors.grey[100],
-              contentPadding: const EdgeInsets.symmetric(vertical: 0),
-            ),
+            decoration: DecoracionCampoVerde(icono: Icons.search, hintLetrero: S.of(context).label_buscarmetodologo),
             onChanged: (value) {
               setState(() {
                 _filtroBusqueda = value;
@@ -145,7 +171,7 @@ class _MetodologosListaState extends State<MetodologosLista> {
           child: Row(
             children: [
               Text(
-                '${metodologosFiltrados.length} metodólogo${metodologosFiltrados.length != 1 ? 's' : ''} encontrado${metodologosFiltrados.length != 1 ? 's' : ''}',
+                '${metodologosFiltrados.length} ${S.of(context).label_metodologosencontrados}',
                 style: TextStyle(
                   color: Colors.grey[600],
                   fontSize: 14,
@@ -196,7 +222,7 @@ class _MetodologosListaState extends State<MetodologosLista> {
                   itemBuilder: (context, index) {
                     final metodologo = metodologosFiltrados[index];
                     final bool estaEnProceso = _metodologosEnProceso.contains(metodologo.idMetodologo);
-                    
+
                     return MetodologoCard(
                       metodologo: metodologo,
                       estaEnProceso: estaEnProceso,
@@ -240,11 +266,11 @@ class MetodologoCard extends StatelessWidget {
       ),
       color: estaEnProceso ? Colors.grey[200] : null,
       child: Padding(
-        padding: const EdgeInsets.all(12),
+        padding: const EdgeInsets.all(20),
         child: Row(
           children: [
             // Avatar con iniciales
-            CircleAvatar(
+            /*CircleAvatar(
               radius: 25,
               backgroundColor: Colors.blue.withOpacity(0.1),
               child: estaEnProceso
@@ -257,18 +283,16 @@ class MetodologoCard extends StatelessWidget {
                       ),
                     )
                   : Text(
-                      metodologo.nombre.isNotEmpty 
-                          ? metodologo.nombre.split(' ').map((e) => e[0]).take(2).join() 
-                          : '??',
+                      metodologo.nombre.isNotEmpty ? metodologo.nombre.split(' ').map((e) => e[0]).take(2).join() : '??',
                       style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                         color: Colors.blue,
                       ),
                     ),
-            ),
+            ),*/
 
-            const SizedBox(width: 16),
+            //const SizedBox(width: 16),
 
             // Información del metodólogo
             Expanded(
@@ -285,7 +309,7 @@ class MetodologoCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    'Usuario: ${metodologo.usuario}',
+                    '${S.of(context).label_usuario}: ${metodologo.usuario}',
                     style: TextStyle(
                       fontSize: 14,
                       color: estaEnProceso ? Colors.grey[500] : Colors.grey[600],
@@ -351,7 +375,7 @@ class MetodologoCard extends StatelessWidget {
                           ),
                           const SizedBox(width: 4),
                           Text(
-                            metodologo.activo ? 'Activo' : 'Inactivo',
+                            metodologo.activo ? S.of(context).label_activo : S.of(context).label_inactivo,
                             style: TextStyle(
                               fontSize: 12,
                               color: _getColorByEstado(),

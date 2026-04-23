@@ -694,7 +694,8 @@ class ClienteEstudiantes {
     } catch (e) {
       // Manejo de errores de conexión
       print('Error al conectar con el servidor: $e');
-      throw Exception('Error al conectar con el servidor: $e');
+      //throw Exception('Error al conectar con el servidor: $e');
+      return DeportesResponse(ok: true, deportes: [], total: 0);
     }
   }
 

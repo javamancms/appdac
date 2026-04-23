@@ -1,18 +1,19 @@
 import 'package:appdac/a_presentacion/administrador/guiasignardeportes.dart';
+import 'package:appdac/a_presentacion/tema/iconos.dart';
+import 'package:appdac/a_presentacion/tema/tema.dart';
 import 'package:appdac/b_control/bsdeportes.dart';
 import 'package:appdac/b_control/bsprofesores.dart';
 import 'package:appdac/b_control/bssesion.dart';
 import 'package:appdac/c_integracion/intdeportes.dart';
 import 'package:appdac/c_integracion/intprofesores.dart';
+import 'package:appdac/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ProfesorCard extends StatefulWidget {
-  final IconData icon;
   final Profesor profesor;
 
   const ProfesorCard({
-    required this.icon,
     required this.profesor,
   });
 
@@ -25,9 +26,8 @@ class _ProfesorCardState extends State<ProfesorCard> {
 
   @override
   Widget build(BuildContext context) {
-    ControlListaDeportesAdministrador controllistadeportesadministrador = 
-        context.watch<ControlListaDeportesAdministrador>();
-    
+    ControlListaDeportesAdministrador controllistadeportesadministrador = context.watch<ControlListaDeportesAdministrador>();
+
     return GestureDetector(
       onTap: () async {
         final deportesSeleccionados = await showDialog<List<Deporte>>(
@@ -43,19 +43,20 @@ class _ProfesorCardState extends State<ProfesorCard> {
       child: Card(
         elevation: 4,
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        color: Colors.white, // Fondo blanco
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Row(
             children: [
               // Columna izquierda: Icono
               Padding(
-                padding: const EdgeInsets.only(right: 16),
-                child: Icon(
-                  widget.icon,
-                  size: 40,
-                  color: Theme.of(context).primaryColor,
-                ),
-              ),
+                  padding: const EdgeInsets.only(right: 16),
+                  child: IconoProfesor(
+                    backgroundColor: AppColors.blanco,
+                    color: AppColors.verde,
+                    borderRadius: 10,
+                    size: 40,
+                  )),
 
               // Columna central: Nombre y ID
               Expanded(
@@ -64,20 +65,14 @@ class _ProfesorCardState extends State<ProfesorCard> {
                   children: [
                     Text(
                       widget.profesor.nombre,
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: AppColors.textosubtitulonegro,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
                     const SizedBox(height: 4),
                     Text(
                       'ID: ${widget.profesor.idProfesor}',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.grey[600],
-                      ),
+                      style: AppColors.textosecundarionegro,
                     ),
                   ],
                 ),
@@ -95,16 +90,35 @@ class _ProfesorCardState extends State<ProfesorCard> {
                           height: 20,
                           child: CircularProgressIndicator(
                             strokeWidth: 2,
-                            valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+                            valueColor: AlwaysStoppedAnimation<Color>(AppColors.verde), // Indicador verde
                           ),
                         )
                       else
-                        Checkbox(
-                          value: widget.profesor.activo,
-                          onChanged: _procesando ? null : (value) => _cambiarEstadoActivo(value),
+                        Theme(
+                          data: Theme.of(context).copyWith(
+                            checkboxTheme: CheckboxThemeData(
+                              fillColor: MaterialStateProperty.resolveWith<Color?>(
+                                (Set<MaterialState> states) {
+                                  if (states.contains(MaterialState.selected)) {
+                                    return Colors.green; // Checkbox seleccionado verde
+                                  }
+                                  return null; // Mantener el color por defecto para no seleccionado
+                                },
+                              ),
+                            ),
+                          ),
+                          child: Checkbox(
+                            value: widget.profesor.activo,
+                            onChanged: _procesando ? null : (value) => _cambiarEstadoActivo(value),
+                            activeColor: AppColors.verde, // Color del checkbox cuando está activo
+                            checkColor: AppColors.blanco, // Color del checkmark
+                          ),
                         ),
                       const SizedBox(width: 4),
-                      const Text('Activo'),
+                      Text(
+                        S.of(context).label_activo,
+                        style: AppColors.textosecundarionegro,
+                      ),
                     ],
                   ),
                   const SizedBox(height: 8),
@@ -121,10 +135,10 @@ class _ProfesorCardState extends State<ProfesorCard> {
   Future<void> _cambiarEstadoActivo(bool? value) async {
     // Evitar múltiples ejecuciones
     if (_procesando) return;
-    
+
     // Verificar que value no sea null
     if (value == null) return;
-    
+
     setState(() {
       _procesando = true;
     });
@@ -139,24 +153,23 @@ class _ProfesorCardState extends State<ProfesorCard> {
 
       // Obtener los controladores usando context.read
       final controllistaprofesores = context.read<ControlListaProfesores>();
-      
+
       // Llamar a los servicios
       await controllistaprofesores.cambiarEstadoProfesor(widget.profesor.idProfesor);
       await controllistaprofesores.cargarProfesores(ControlSesion.datosusuario!.idUsuario);
-      
     } catch (e) {
       // Manejar error si es necesario
       print('Error al cambiar estado: $e');
-      
+
       // Revertir cambio en caso de error usando el estado anterior
       widget.profesor.activo = estadoAnterior;
       setState(() {});
-      
+
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Error al cambiar estado: $e'),
-            backgroundColor: Colors.red,
+            backgroundColor: AppColors.rojo,
           ),
         );
       }
