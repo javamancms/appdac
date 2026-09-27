@@ -1,7 +1,7 @@
 name: appdac
 description: "A new Flutter project."
 publish_to: 'none'
-version: 2.0.0+11  # Formato: versionName+versionCode
+version: 2.0.0+12  # Formato: versionName+versionCode
 
 environment:
   sdk: '>=3.6.2 <4.0.0'  # Corregido: rango de versión
@@ -13,7 +13,7 @@ dependencies:
   # Internacionalización
   flutter_localizations:
     sdk: flutter
-  intl: ^0.19.0  # Requerido para flutter_intl
+  intl: ^0.20.2  # Requerido para flutter_intl
 
   
   # Dependencias opcionales recomendadas para una app completa
