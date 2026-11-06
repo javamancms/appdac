@@ -1,7 +1,7 @@
 name: appdac
 description: "A new Flutter project."
 publish_to: 'none'
-version: 2.0.0+12  # Formato: versionName+versionCode
+version: 2.0.0+13  # Formato: versionName+versionCode
 
 environment:
   sdk: '>=3.6.2 <4.0.0'  # Corregido: rango de versión

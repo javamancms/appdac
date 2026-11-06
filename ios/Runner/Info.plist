@@ -62,6 +62,10 @@
 	<string>Esta app necesita acceso para guardar los archivos descargados en la carpeta de documentos</string>
 	<key>NSDownloadsFolderUsageDescription</key>
 	<string>Esta app necesita acceso para guardar los archivos descargados en la carpeta de descargas</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Esta app necesita acceso a la cámara para tomar fotos que puedas adjuntar a los documentos que envías</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Esta app necesita acceso a tus fotos para que puedas seleccionar y adjuntar archivos a los documentos que envías</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>Esta app necesita acceso para guardar los archivos descargados en tu dispositivo</string>
 	<key>NSUserNotificationsUsageDescription</key>
